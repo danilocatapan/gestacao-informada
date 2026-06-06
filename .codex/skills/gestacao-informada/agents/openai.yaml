@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gestacao Informada"
+  short_description: "Orienta o desenvolvimento seguro do portal"
+  default_prompt: "Use as regras do projeto para planejar e executar esta tarefa no Gestacao Informada."
