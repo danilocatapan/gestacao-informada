@@ -1,4 +1,4 @@
 interface:
-  display_name: "Gestacao Informada"
-  short_description: "Orienta o desenvolvimento seguro do portal"
+  display_name: "Gestação Informada"
+  short_description: "Informação e apoio para famílias após perdas gestacionais."
   default_prompt: "Use as regras do projeto para planejar e executar esta tarefa no Gestacao Informada."
