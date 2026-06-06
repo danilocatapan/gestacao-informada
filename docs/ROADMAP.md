@@ -6,18 +6,18 @@
 - [x] Criar documentação e instruções iniciais do repositório
 - [ ] Publicar repositório e configurar proteção da branch principal
 - [ ] Definir responsáveis por revisão clínica, psicológica e jurídica
-- [ ] Definir stack técnica e arquitetura inicial
-- [ ] Definir identidade visual
+- [x] Definir stack técnica e arquitetura inicial
+- [x] Definir identidade visual
 
 ## Fase 1 — MVP Editorial
 
-- [ ] Definir modelo de conteúdo com autoria, fontes e data de revisão
-- [ ] Criar páginas dos quatro pilares iniciais
+- [x] Definir modelo de conteúdo com autoria, fontes e data de revisão
+- [x] Criar páginas dos quatro pilares iniciais
 - [ ] Publicar primeiros seis conteúdos revisados
 - [ ] Criar checklist de preparação para consulta
 - [ ] Criar glossário clínico
 - [ ] Implementar busca
-- [ ] Publicar privacidade, termos e política editorial
+- [ ] Publicar privacidade, termos e política editorial (placeholders internos criados; aguardam revisao juridica)
 
 ## Fase 2 — Recursos de Apoio
 
@@ -39,6 +39,6 @@
 - relação institucional do portal com o Dr. Rodrigo Berger;
 - profissionais responsáveis pelas revisões;
 - modelo de sustentabilidade do projeto;
-- CMS e fluxo de aprovação editorial;
+- CMS visual e fluxo de aprovacao editorial por profissionais nao tecnicos;
 - requisitos jurídicos e de privacidade;
 - métricas de impacto.

@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopicCard from '../components/TopicCard.astro';
+import { site } from '../lib/site';
+import { withBaseUrl } from '../lib/urls';
+
+const topics = [
+  {
+    title: 'Entender a perda',
+    description: 'Um ponto de partida respeitoso para compreender termos, dúvidas e próximos passos possíveis.',
+    href: 'entender-a-perda/',
+    icon: '♡',
+  },
+  {
+    title: 'Trombofilias e investigação',
+    description: 'Uma área em preparação para explicar conceitos e divergências com responsabilidade.',
+    href: 'trombofilias-e-investigacao/',
+    icon: '⌁',
+  },
+  {
+    title: 'Acolhimento e luto',
+    description: 'Informação para validar o luto e apoiar pessoas, famílias e redes de cuidado.',
+    href: 'acolhimento-e-luto/',
+    icon: '◡',
+  },
+  {
+    title: 'Direitos',
+    description: 'Orientação institucional sobre os materiais jurídicos que serão desenvolvidos.',
+    href: 'direitos/',
+    icon: '§',
+  },
+];
+---
+
+<BaseLayout title={site.name} description={site.description}>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Ciência que acolhe</span>
+        <h1>Informação segura para atravessar uma perda gestacional.</h1>
+        <p class="lead">
+          Um portal brasileiro em construção para reunir clareza, acolhimento e orientação responsável,
+          sempre com fontes rastreáveis e revisão profissional.
+        </p>
+        <div class="actions">
+          <a class="button" href={withBaseUrl('entender-a-perda/')}>Encontrar um ponto de partida</a>
+          <a class="button secondary" href={withBaseUrl('acolhimento-e-luto/')}>Conhecer o espaço de acolhimento</a>
+        </div>
+      </div>
+      <div class="hero-mark" aria-hidden="true">
+        <img src={withBaseUrl('brand/symbol.png')} alt="" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Cada passo importa</span>
+        <h2>Comece pelo que você precisa hoje</h2>
+        <p>As áreas abaixo apresentam o propósito do portal enquanto os materiais especializados passam por revisão.</p>
+      </div>
+      <div class="topic-grid">
+        {topics.map((topic) => <TopicCard {...topic} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section principles">
+    <div class="container">
+      <span class="eyebrow">Nosso compromisso</span>
+      <h2>Clareza sem atalhos. Acolhimento sem falsas promessas.</h2>
+      <div class="principle-grid">
+        <div class="principle"><h3>Informação revisável</h3><p>Conteúdos clínicos só serão publicados com autoria, fontes e revisão profissional visíveis.</p></div>
+        <div class="principle"><h3>Segurança primeiro</h3><p>O portal não oferece diagnóstico, prescrição ou orientação individualizada.</p></div>
+        <div class="principle"><h3>Linguagem humana</h3><p>Tratamos a perda gestacional e o luto com respeito à singularidade de cada família.</p></div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

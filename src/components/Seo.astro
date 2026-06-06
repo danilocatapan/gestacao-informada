@@ -1,0 +1,48 @@
+---
+import { site } from '../lib/site';
+import { withBaseUrl, withCanonicalUrl } from '../lib/urls';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  additionalStructuredData?: Record<string, unknown>[];
+}
+
+const { title, description, path = '', additionalStructuredData = [] } = Astro.props;
+const pageTitle = title === site.name ? title : `${title} | ${site.name}`;
+const canonical = withCanonicalUrl(path);
+const image = withCanonicalUrl('brand/og-default.png');
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.name,
+    url: withCanonicalUrl(),
+    description: site.description,
+    inLanguage: 'pt-BR',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: site.name,
+    url: withCanonicalUrl(),
+    logo: withCanonicalUrl('brand/symbol.png'),
+  },
+  ...additionalStructuredData,
+];
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<link rel="icon" type="image/png" href={withBaseUrl('brand/favicon.png')} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={image} />
+<meta name="twitter:card" content="summary_large_image" />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />

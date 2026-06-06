@@ -1,0 +1,29 @@
+---
+import ContentNotice from '../components/ContentNotice.astro';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  path: string;
+}
+
+const { title, description, eyebrow, path } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} path={path}>
+  <section class="page-hero">
+    <div class="container narrow">
+      <span class="eyebrow">{eyebrow}</span>
+      <h1>{title}</h1>
+      <p class="lead">{description}</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="container article-grid">
+      <article class="prose"><slot /></article>
+      <ContentNotice />
+    </div>
+  </section>
+</BaseLayout>

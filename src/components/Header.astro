@@ -1,0 +1,25 @@
+---
+import { site } from '../lib/site';
+import { withBaseUrl } from '../lib/urls';
+
+const links = [
+  ['Entender a perda', 'entender-a-perda/'],
+  ['Trombofilias', 'trombofilias-e-investigacao/'],
+  ['Acolhimento', 'acolhimento-e-luto/'],
+  ['Direitos', 'direitos/'],
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={withBaseUrl()} aria-label={`${site.name}, página inicial`}>
+      <img src={withBaseUrl('brand/symbol.png')} width="56" height="56" alt="" />
+      <span><strong>Gestação</strong><small>Informada</small></span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <ul>
+        {links.map(([label, path]) => <li><a href={withBaseUrl(path)}>{label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</header>

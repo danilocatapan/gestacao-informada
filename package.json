@@ -1,0 +1,30 @@
+{
+  "name": "gestacao-informada",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint": "astro check",
+    "check": "astro check",
+    "test:content": "node scripts/test-content.mjs",
+    "test:build": "node scripts/test-build.mjs",
+    "test": "npm run lint && npm run test:content && npm run build && npm run test:build",
+    "prepare": "simple-git-hooks"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/poppins": "^5.2.7",
+    "astro": "^6.4.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "simple-git-hooks": "^2.13.1",
+    "typescript": "^5.9.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run test:content"
+  }
+}

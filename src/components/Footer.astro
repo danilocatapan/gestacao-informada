@@ -1,0 +1,24 @@
+---
+import { site } from '../lib/site';
+import { withBaseUrl } from '../lib/urls';
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand" href={withBaseUrl()}>
+        <img src={withBaseUrl('brand/symbol.png')} width="54" height="54" alt="" />
+        <span><strong>{site.name}</strong><small>{site.tagline}</small></span>
+      </a>
+    </div>
+    <div>
+      <strong>Informação responsável</strong>
+      <p>Este portal é educativo e não substitui avaliação, diagnóstico ou tratamento individualizado.</p>
+    </div>
+    <div>
+      <strong>Documentos legais</strong>
+      <p>Privacidade, termos e política editorial estão em preparação e aguardam revisão jurídica.</p>
+    </div>
+  </div>
+  <div class="container footer-bottom">© 2026 Gestação Informada.</div>
+</footer>

@@ -29,6 +29,18 @@ Use a skill local `.codex/skills/gestacao-informada/SKILL.md` em tarefas de prod
 - Garantir acessibilidade e experiencia responsiva nas interfaces.
 - Nunca incluir segredos ou credenciais no repositorio.
 
+## Regras canonicas de implementacao
+
+- Nao adicionar framework de componentes por padrao. Islands React ou Preact exigem necessidade real e decisao registrada.
+- Usar `withBaseUrl()` para paths relativos e `withCanonicalUrl()` para URLs absolutas. Nao concatenar o base path manualmente.
+- Conteudo medico deve residir na collection `articles`, nunca hardcoded em componentes ou paginas.
+- Artigos medicos somente podem gerar rota publica com `status: approved` e todos os requisitos editoriais preenchidos.
+- Toda ocorrencia publicavel de termo sensivel exige uma excecao documentada em `safetyReview`.
+- `npm run test:content` deve rodar antes do commit. O CI e o gate obrigatorio para merge e deploy.
+- Toda entrega de interface deve ser validada com Playwright em desktop e mobile, cobrindo todas as rotas e fluxos alterados.
+- Salvar screenshots de evidencia em `docs/qa/screenshots/` e verificar overflow, componentes quebrados e erros de console.
+- Todo texto visivel da interface deve estar em portugues do Brasil, com linguagem clara, limpa, profissional e acolhedora.
+
 ## Economia de tokens e contexto
 
 - Sempre prefixar com `rtk` os comandos de terminal compativeis para reduzir o consumo de tokens.

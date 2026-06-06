@@ -17,3 +17,43 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 **Decisao:** nenhum conteudo clinico sera considerado publicavel sem fonte, autoria, data de revisao e aprovacao profissional.
 
 **Motivo:** o portal aborda temas de saude com potencial de influenciar decisoes de alto risco.
+
+## 2026-06-06 — Astro estatico como stack do MVP
+
+**Status:** aceita
+
+**Decisao:** usar Astro na major estavel definida no `package.json`, TypeScript, geracao estatica e CSS proprio. Frameworks de componentes nao serao instalados por padrao; islands futuras exigem necessidade real e decisao registrada.
+
+**Motivo:** o MVP e editorial e prioriza desempenho, SEO, acessibilidade e minimo JavaScript.
+
+## 2026-06-06 — Conteudo versionado e collections separadas
+
+**Status:** aceita
+
+**Decisao:** usar Markdown versionado como CMS do MVP, separado em collections para paginas institucionais, artigos medicos, documentos legais, notas de revisao e contribuidores. Autoria e revisao usam referencias tipadas.
+
+**Motivo:** manter rastreabilidade e bloquear publicacao incompleta. Um CMS visual fica adiado ate existir fluxo editorial com revisores; Decap, Sanity, Storyblok, Contentful e Strapi permanecem alternativas futuras.
+
+## 2026-06-06 — Gate editorial de termos sensiveis
+
+**Status:** aceita
+
+**Decisao:** conteudo publicavel com termos sensiveis deve possuir excecao tipada em `safetyReview`. O pre-commit executa a verificacao local e o CI e o gate obrigatorio para merge e deploy.
+
+**Motivo:** termos podem ser necessarios em contexto educativo, mas exigem justificativa e revisao documentadas.
+
+## 2026-06-06 — URLs e hospedagem temporaria
+
+**Status:** aceita
+
+**Decisao:** publicar temporariamente no GitHub Pages com base `/gestacao-informada`, trailing slash obrigatoria e helpers centralizados para URLs relativas e canonicas.
+
+**Motivo:** impedir links quebrados sob subdiretorio e manter SEO consistente durante o MVP.
+
+## 2026-06-06 — Paginas legais e identidade provisoria
+
+**Status:** aceita
+
+**Decisao:** manter privacidade, termos e politica editorial como placeholders internos sem rotas ate aprovacao juridica. Versionar as pranchas de identidade e usar ativos rasterizados derivados provisoriamente.
+
+**Motivo:** nao publicar texto juridico sem revisao e permitir que o MVP aplique a identidade enquanto os arquivos vetoriais finais nao existem.
