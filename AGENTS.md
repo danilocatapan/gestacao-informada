@@ -28,3 +28,12 @@ Use a skill local `.codex/skills/gestacao-informada/SKILL.md` em tarefas de prod
 - Incluir testes proporcionais ao risco quando houver codigo.
 - Garantir acessibilidade e experiencia responsiva nas interfaces.
 - Nunca incluir segredos ou credenciais no repositorio.
+
+## Economia de tokens e contexto
+
+- Sempre prefixar com `rtk` os comandos de terminal compativeis para reduzir o consumo de tokens.
+- Quando `rtk` nao executar diretamente um cmdlet interno do PowerShell, preferir um comando equivalente compativel ou usar `rtk proxy`; executar sem `rtk` apenas quando nao houver alternativa funcional.
+- Consultar o contexto do projeto de forma incremental: comecar por este arquivo, pela skill local e pelos documentos obrigatorios relevantes para a tarefa.
+- Usar buscas direcionadas, como `rtk rg`, antes de abrir arquivos inteiros ou explorar diretorios amplos.
+- Evitar reler arquivos, carregar saidas extensas ou incluir contexto que nao contribua diretamente para a tarefa atual.
+- Usar `rtk gain` periodicamente para acompanhar a economia de tokens.
