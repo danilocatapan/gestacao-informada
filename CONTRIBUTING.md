@@ -25,6 +25,7 @@ npm run check
 npm run test:content
 npm run build
 npm run test:build
+npm run test:e2e
 ```
 
 O hook de pre-commit executa `test:content`. O CI continua sendo o gate obrigatorio para merge e deploy.

@@ -6,6 +6,8 @@
 .playwright-mcp
 node_modules
 dist
+test-results
+playwright-report
 build
 coverage
 *.local

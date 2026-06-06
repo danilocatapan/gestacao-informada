@@ -2,6 +2,8 @@
 title: "Direitos após uma perda gestacional"
 description: "Uma área em preparação para reunir orientação jurídica clara, atualizada e revisada."
 eyebrow: "Informação prática"
+contentType: "institutional-page"
+clinical: false
 status: "approved"
 updatedAt: "2026-06-06"
 ---

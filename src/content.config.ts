@@ -3,6 +3,7 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const status = z.enum(['draft', 'in-review', 'approved']);
+const contentType = z.enum(['article', 'institutional-page', 'legal-document', 'checklist', 'glossary-entry']);
 const sourceType = z.enum(['guideline', 'review', 'law', 'institutional', 'other']);
 
 const source = z.object({
@@ -26,6 +27,8 @@ const pages = defineCollection({
     title: z.string().min(1),
     description: z.string().min(1),
     eyebrow: z.string().min(1),
+    contentType,
+    clinical: z.literal(false),
     status,
     updatedAt: z.coerce.date(),
   }),
@@ -38,6 +41,10 @@ const articles = defineCollection({
       title: z.string().min(1),
       description: z.string().min(1),
       category: z.string().min(1),
+      objective: z.string().min(1),
+      audience: z.string().min(1),
+      contentType: z.literal('article'),
+      clinical: z.boolean(),
       status,
       authoredBy: reference('contributors').optional(),
       reviewedBy: reference('contributors').optional(),
@@ -48,7 +55,7 @@ const articles = defineCollection({
       safetyReview: z.array(safetyReview).default([]),
     })
     .superRefine((article, ctx) => {
-      if (article.status !== 'approved') return;
+      if (article.status !== 'approved' || !article.clinical) return;
 
       if (!article.authoredBy) {
         ctx.addIssue({ code: 'custom', message: 'Artigo aprovado exige autoria.', path: ['authoredBy'] });
@@ -67,14 +74,26 @@ const articles = defineCollection({
 
 const legal = defineCollection({
   loader: glob({ base: './src/content/legal', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
-    title: z.string().min(1),
-    description: z.string().min(1),
-    status,
-    reviewedBy: z.string().optional(),
-    reviewedAt: z.coerce.date().optional(),
-    updatedAt: z.coerce.date(),
-  }),
+  schema: z
+    .object({
+      title: z.string().min(1),
+      description: z.string().min(1),
+      contentType: z.literal('legal-document'),
+      clinical: z.literal(false),
+      status,
+      reviewedBy: z.string().optional(),
+      reviewedAt: z.coerce.date().optional(),
+      updatedAt: z.coerce.date(),
+    })
+    .superRefine((document, ctx) => {
+      if (document.status !== 'approved') return;
+      if (!document.reviewedBy) {
+        ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige revisor.', path: ['reviewedBy'] });
+      }
+      if (!document.reviewedAt) {
+        ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige data de revisão.', path: ['reviewedAt'] });
+      }
+    }),
 });
 
 const reviewNotes = defineCollection({

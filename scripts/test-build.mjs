@@ -2,8 +2,9 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 
 const dist = path.join(process.cwd(), 'dist');
+const content = path.join(process.cwd(), 'src', 'content');
 const base = 'gestacao-informada';
-const expectedPages = ['', 'entender-a-perda', 'trombofilias-e-investigacao', 'acolhimento-e-luto', 'direitos'];
+const expectedPages = ['', 'entender-a-perda', 'trombofilias-e-investigacao', 'acolhimento-e-luto', 'direitos', 'materiais', 'sobre'];
 const failures = [];
 const exists = async (file) => { try { await access(file); return true; } catch { return false; } };
 
@@ -17,8 +18,27 @@ for (const page of expectedPages) {
   if (/(?:href|src)="\/(?!gestacao-informada\/)/g.test(html)) failures.push(`Link ou ativo sem base path em /${page}/`);
 }
 
-for (const forbidden of ['legal', path.join('artigos', 'rascunho-principios-editoriais')]) {
-  if (await exists(path.join(dist, forbidden))) failures.push(`Conteúdo não publicável presente em dist/${forbidden}`);
+async function markdownFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  return (await Promise.all(entries.map((entry) => entry.isDirectory() ? markdownFiles(path.join(directory, entry.name)) : path.join(directory, entry.name))))
+    .flat()
+    .filter((file) => /\.(md|mdx)$/i.test(file));
+}
+
+for (const collection of ['pages', 'articles', 'legal']) {
+  for (const file of await markdownFiles(path.join(content, collection))) {
+    const source = await readFile(file, 'utf8');
+    if (/^status:\s*["']?approved/m.test(source)) continue;
+    const id = path.basename(file).replace(/\.(md|mdx)$/i, '');
+    const routes = collection === 'articles'
+      ? [path.join('artigos', id)]
+      : collection === 'legal'
+        ? [id, path.join('legal', id)]
+        : [id];
+    for (const route of routes) {
+      if (await exists(path.join(dist, route))) failures.push(`Conteúdo não publicável presente em dist/${route}`);
+    }
+  }
 }
 const robots = await readFile(path.join(dist, 'robots.txt'), 'utf8');
 if (!robots.includes(`https://danilocatapan.github.io/${base}/sitemap-index.xml`)) failures.push('robots.txt não aponta para sitemap-index.xml canônico.');

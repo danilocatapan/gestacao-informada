@@ -2,6 +2,10 @@
 title: "Princípios para futuros conteúdos clínicos"
 description: "Rascunho interno usado para validar o fluxo editorial seguro."
 category: "Governança editorial"
+objective: "Validar o fluxo editorial seguro para futuros conteúdos clínicos."
+audience: "Equipe editorial e revisores profissionais."
+contentType: "article"
+clinical: true
 status: "draft"
 lastUpdatedAt: "2026-06-06"
 medicalDisclaimer: "Conteúdo educativo que não substitui avaliação profissional."

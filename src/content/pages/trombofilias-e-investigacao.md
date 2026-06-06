@@ -2,6 +2,8 @@
 title: "Trombofilias e investigação"
 description: "Uma área para explicar conceitos, limites das evidências e perguntas importantes com responsabilidade."
 eyebrow: "Ciência em linguagem acessível"
+contentType: "institutional-page"
+clinical: false
 status: "approved"
 updatedAt: "2026-06-06"
 ---

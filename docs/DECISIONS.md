@@ -57,3 +57,19 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 **Decisao:** manter privacidade, termos e politica editorial como placeholders internos sem rotas ate aprovacao juridica. Versionar as pranchas de identidade e usar ativos rasterizados derivados provisoriamente.
 
 **Motivo:** nao publicar texto juridico sem revisao e permitir que o MVP aplique a identidade enquanto os arquivos vetoriais finais nao existem.
+
+## 2026-06-06 — Fechamento do MVP tecnico separado da expansao editorial
+
+**Status:** aceita
+
+**Decisao:** considerar o MVP tecnico concluido com governanca editorial, rotas institucionais, materiais nao clinicos, drafts bloqueados, CI e deploy funcional. Busca, glossario clinico e publicacao de artigos permanecem adiados ate existir volume e revisao profissional.
+
+**Motivo:** evitar que dependencias externas de revisao atrasem a entrega tecnica e impedir a publicacao prematura de conteudo clinico.
+
+## 2026-06-06 — Metadados de tipo e natureza clinica
+
+**Status:** aceita
+
+**Decisao:** todo conteudo publicavel declara `contentType` e `clinical`. Conteudo clinico aprovado reside na collection `articles` e exige autoria, revisao, fontes, disclaimer e datas; checklists organizacionais podem ser publicados com `clinical: false`.
+
+**Motivo:** diferenciar formato editorial de risco clinico e aplicar requisitos proporcionais sem enfraquecer os gates de seguranca.

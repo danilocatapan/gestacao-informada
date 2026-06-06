@@ -4,7 +4,8 @@
 
 - [x] Definir propósito, público e princípios editoriais
 - [x] Criar documentação e instruções iniciais do repositório
-- [ ] Publicar repositório e configurar proteção da branch principal
+- [x] Publicar repositório
+- [ ] Configurar proteção da branch principal (checklist operacional manual)
 - [ ] Definir responsáveis por revisão clínica, psicológica e jurídica
 - [x] Definir stack técnica e arquitetura inicial
 - [x] Definir identidade visual
@@ -14,10 +15,17 @@
 - [x] Definir modelo de conteúdo com autoria, fontes e data de revisão
 - [x] Criar páginas dos quatro pilares iniciais
 - [ ] Publicar primeiros seis conteúdos revisados
-- [ ] Criar checklist de preparação para consulta
+- [x] Criar checklist de preparação para consulta
 - [ ] Criar glossário clínico
 - [ ] Implementar busca
 - [ ] Publicar privacidade, termos e política editorial (placeholders internos criados; aguardam revisao juridica)
+- [x] Publicar página Sobre e concluir navegação institucional do MVP
+
+### Marco B — Expansão editorial
+
+- [ ] Publicar glossário após revisão clínica
+- [ ] Implementar busca quando houver volume suficiente de conteúdo aprovado
+- [ ] Ampliar testes automatizados para fluxos interativos
 
 ## Fase 2 — Recursos de Apoio
 

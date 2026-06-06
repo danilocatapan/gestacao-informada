@@ -7,9 +7,10 @@ interface Props {
   description: string;
   eyebrow: string;
   path: string;
+  showNotice?: boolean;
 }
 
-const { title, description, eyebrow, path } = Astro.props;
+const { title, description, eyebrow, path, showNotice = true } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} path={path}>
@@ -23,7 +24,7 @@ const { title, description, eyebrow, path } = Astro.props;
   <section class="content-section">
     <div class="container article-grid">
       <article class="prose"><slot /></article>
-      <ContentNotice />
+      {showNotice && <ContentNotice />}
     </div>
   </section>
 </BaseLayout>
