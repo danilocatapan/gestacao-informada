@@ -3,7 +3,7 @@
   "id": "2463225d-037f-47a0-b294-8cc87accffa3",
   "target": "articles/trombofilias-hereditarias-e-adquiridas",
   "generatedAt": "2026-06-08T13:21:16.747Z",
-  "updatedAt": "2026-06-08T13:21:16.747Z",
+  "updatedAt": "2026-06-08T18:05:53.870Z",
   "contentHash": "a53b94d3d01b6cca1a64f9e37d79c06bd5c270f0a1116039b76b588936614caf",
   "contentStatus": "draft",
   "riskDomains": [
@@ -31,8 +31,8 @@
       "suggestedReplacement": "Pendência humana",
       "relatedSources": [],
       "resolution": {
-        "status": "pending",
-        "replacement": "",
+        "status": "accepted",
+        "replacement": "Pendência humana",
         "justification": ""
       }
     }
@@ -42,6 +42,21 @@
       "occurredAt": "2026-06-08T13:21:16.747Z",
       "action": "review_generated",
       "actor": "editorial-pipeline"
+    },
+    {
+      "occurredAt": "2026-06-08T13:30:03.511Z",
+      "action": "finding_accepted",
+      "actor": "local-maintainer",
+      "findingId": "811ed0302fc8ef32"
+    },
+    {
+      "occurredAt": "2026-06-08T18:05:53.870Z",
+      "action": "changes_applied_and_submitted",
+      "actor": "equipe-editorial"
     }
-  ]
+  ],
+  "appliedAt": "2026-06-08T18:05:53.870Z",
+  "appliedBy": "equipe-editorial",
+  "resultingStatus": "in_review",
+  "resultingContentHash": "fe5daa4ba7e1cf35d92f4960a7bd40fad87ed3284fecf6c864b3ea56653f7dec"
 }

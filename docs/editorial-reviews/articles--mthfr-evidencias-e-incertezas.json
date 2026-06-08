@@ -3,7 +3,7 @@
   "id": "4f78f38b-aab0-4464-94a1-b6adfd48f559",
   "target": "articles/mthfr-evidencias-e-incertezas",
   "generatedAt": "2026-06-08T13:21:16.774Z",
-  "updatedAt": "2026-06-08T13:21:16.774Z",
+  "updatedAt": "2026-06-08T18:05:44.176Z",
   "contentHash": "5ca1e67ddfdb05c22e4ceb70e613669ac67505d394145f71231d46a02eb83db9",
   "contentStatus": "draft",
   "riskDomains": [
@@ -31,8 +31,8 @@
       "suggestedReplacement": "Pendência humana",
       "relatedSources": [],
       "resolution": {
-        "status": "pending",
-        "replacement": "",
+        "status": "accepted",
+        "replacement": "Pendência humana",
         "justification": ""
       }
     }
@@ -42,6 +42,33 @@
       "occurredAt": "2026-06-08T13:21:16.774Z",
       "action": "review_generated",
       "actor": "editorial-pipeline"
+    },
+    {
+      "occurredAt": "2026-06-08T13:29:48.404Z",
+      "action": "finding_accepted",
+      "actor": "local-maintainer",
+      "findingId": "c78e17f2df0f7389"
+    },
+    {
+      "occurredAt": "2026-06-08T13:29:51.944Z",
+      "action": "finding_accepted",
+      "actor": "local-maintainer",
+      "findingId": "c78e17f2df0f7389"
+    },
+    {
+      "occurredAt": "2026-06-08T18:05:40.812Z",
+      "action": "changes_applied_and_submitted",
+      "actor": "equipe-editorial"
+    },
+    {
+      "occurredAt": "2026-06-08T18:05:44.176Z",
+      "action": "finding_accepted",
+      "actor": "local-maintainer",
+      "findingId": "c78e17f2df0f7389"
     }
-  ]
+  ],
+  "appliedAt": "2026-06-08T18:05:40.812Z",
+  "appliedBy": "equipe-editorial",
+  "resultingStatus": "in_review",
+  "resultingContentHash": "251568be30b62ac72e56c1c24c061602a61a4c3427439197d4347a7edaa65036"
 }

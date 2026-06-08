@@ -7,7 +7,7 @@
 - [x] Instituir reconciliação documental obrigatória entre implementação, roadmap e agentes
 - [x] Publicar repositório
 - [x] Configurar proteção da branch principal (regras aplicadas e fluxo protegido validado no PR #1)
-- [ ] Definir responsáveis por revisão clínica, psicológica e jurídica (processo de cadastro preparado; aguardando identidades, credenciais e consentimentos)
+- [ ] Definir responsáveis por revisão clínica, psicológica e jurídica (processo de cadastro preparado; nenhum revisor profissional cadastrado)
 - [x] Definir stack técnica e arquitetura inicial
 - [x] Definir identidade visual
 
@@ -19,12 +19,12 @@
 - [x] Implementar pipeline assistida e painel local de revisão com marcações
 - [x] Centralizar e classificar referências editoriais reutilizáveis
 - [x] Criar páginas dos quatro pilares iniciais
-- [ ] Publicar primeiros seis conteúdos revisados
+- [ ] Publicar primeiros seis conteúdos revisados (seis preparados e em `in_review`; zero profissionalmente aprovados e zero publicados)
 - [x] Criar checklist de preparação para consulta
 - [x] Implementar infraestrutura técnica do glossário clínico com schema, rotas e gates
-- [ ] Produzir e publicar os primeiros seis termos do glossário após revisão clínica
+- [ ] Produzir e publicar os primeiros seis termos do glossário após revisão clínica (não iniciar como entrega pública antes do marco dos artigos)
 - [x] Implementar infraestrutura técnica da busca estática
-- [ ] Publicar a busca após o marco de seis artigos e seis termos aprovados
+- [ ] Publicar a busca após o marco de seis artigos e seis termos aprovados (zero artigos e zero termos aprovados)
 - [ ] Publicar privacidade, termos e política editorial (estrutura técnica e placeholders internos prontos; aguardam revisão jurídica)
 - [x] Publicar página Sobre e concluir navegação institucional do MVP
 

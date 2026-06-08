@@ -3,7 +3,7 @@
   "id": "9ed2a17f-9614-47f6-92bd-d22b644be283",
   "target": "articles/investigacao-apos-perdas-recorrentes",
   "generatedAt": "2026-06-08T13:21:16.716Z",
-  "updatedAt": "2026-06-08T13:21:16.716Z",
+  "updatedAt": "2026-06-08T18:05:29.111Z",
   "contentHash": "bd54383a8e477681b9d78af4d0c7dba28f578ffded1323f02ffb035d43f5630b",
   "contentStatus": "draft",
   "riskDomains": [
@@ -32,8 +32,8 @@
       "suggestedReplacement": "Pendência humana",
       "relatedSources": [],
       "resolution": {
-        "status": "pending",
-        "replacement": "",
+        "status": "accepted",
+        "replacement": "Pendência humana",
         "justification": ""
       }
     }
@@ -43,6 +43,21 @@
       "occurredAt": "2026-06-08T13:21:16.716Z",
       "action": "review_generated",
       "actor": "editorial-pipeline"
+    },
+    {
+      "occurredAt": "2026-06-08T13:29:45.055Z",
+      "action": "finding_accepted",
+      "actor": "local-maintainer",
+      "findingId": "32d4f45c4f4f3975"
+    },
+    {
+      "occurredAt": "2026-06-08T18:05:29.111Z",
+      "action": "changes_applied_and_submitted",
+      "actor": "equipe-editorial"
     }
-  ]
+  ],
+  "appliedAt": "2026-06-08T18:05:29.111Z",
+  "appliedBy": "equipe-editorial",
+  "resultingStatus": "in_review",
+  "resultingContentHash": "c4ff5bc5cbad51129d2f4978e668961c77f10f2dbfb25922b11ff4fb1a8e61e8"
 }

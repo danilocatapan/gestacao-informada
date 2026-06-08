@@ -1,37 +1,43 @@
 ---
 title: "Gestação após perda: perguntas para profissionais"
-description: "Um roteiro acolhedor para organizar dúvidas e necessidades de apoio em uma gestação após perda."
-category: "Gestação após perda"
-objective: "Ajudar famílias a organizar perguntas e necessidades de apoio sem recomendar condutas individuais."
-audience: "Pessoas planejando ou vivendo uma gestação após perda."
-contentType: "article"
+description: Um roteiro acolhedor para organizar dúvidas e necessidades de apoio em uma gestação após perda.
+category: Gestação após perda
+objective: Ajudar famílias a organizar perguntas e necessidades de apoio sem recomendar condutas individuais.
+audience: Pessoas planejando ou vivendo uma gestação após perda.
+contentType: article
 clinical: true
-riskDomains: ["clinical", "psychological"]
-status: "draft"
-authoredBy: "equipe-editorial"
-lastUpdatedAt: "2026-06-08"
-medicalDisclaimer: "Este conteúdo é educativo e não substitui acompanhamento pré-concepcional, pré-natal, psicológico ou atendimento de urgência."
+riskDomains:
+  - clinical
+  - psychological
+status: in_review
+authoredBy: equipe-editorial
+lastUpdatedAt: 2026-06-08T18:05:09.125Z
+medicalDisclaimer: Este conteúdo é educativo e não substitui acompanhamento pré-concepcional, pré-natal, psicológico ou atendimento de urgência.
 aiAssistance:
-  activities: ["topic-research", "source-triage", "drafting", "safety-audit"]
-  disclosure: "Este texto foi preparado com assistência de IA para pesquisa, organização e auditoria editorial. Ele permanece em revisão e não possui aprovação clínica ou psicológica profissional."
+  activities:
+    - topic-research
+    - source-triage
+    - drafting
+    - safety-audit
+  disclosure: Este texto foi preparado com assistência de IA para pesquisa, organização e auditoria editorial. Ele permanece em revisão e não possui aprovação clínica ou psicológica profissional.
 inspirationCredits: []
 safetyReview: []
 sources:
-  - title: "Repeated Miscarriages"
-    url: "https://www.acog.org/womens-health/faqs/repeated-miscarriages"
-    publisher: "American College of Obstetricians and Gynecologists"
-    accessedAt: "2026-06-08"
-    type: "institutional"
-  - title: "Recurrent miscarriage"
-    url: "https://www.rcog.org.uk/en/patients/patient-leaflets/recurrent-and-late-miscarriage/"
-    publisher: "Royal College of Obstetricians and Gynaecologists"
-    accessedAt: "2026-06-08"
-    type: "institutional"
-  - title: "Pregnancy after loss"
-    url: "https://www.tommys.org/baby-loss-support/pregnancy-after-loss"
-    publisher: "Tommy's"
-    accessedAt: "2026-06-08"
-    type: "institutional"
+  - title: Repeated Miscarriages
+    url: https://www.acog.org/womens-health/faqs/repeated-miscarriages
+    publisher: American College of Obstetricians and Gynecologists
+    accessedAt: 2026-06-08
+    type: institutional
+  - title: Recurrent miscarriage
+    url: https://www.rcog.org.uk/en/patients/patient-leaflets/recurrent-and-late-miscarriage/
+    publisher: Royal College of Obstetricians and Gynaecologists
+    accessedAt: 2026-06-08
+    type: institutional
+  - title: Pregnancy after loss
+    url: https://www.tommys.org/baby-loss-support/pregnancy-after-loss
+    publisher: Tommy's
+    accessedAt: 2026-06-08
+    type: institutional
 ---
 
 Uma nova gestação depois de uma perda pode reunir esperança, medo, alegria, culpa e vigilância constante. Sentimentos contraditórios podem coexistir. Não existe uma maneira correta de atravessar esse período.

@@ -1,0 +1,11 @@
+{
+  "target": "articles/sindrome-antifosfolipide",
+  "event": "status_transition",
+  "actor": "equipe-editorial",
+  "role": "author",
+  "occurredAt": "2026-06-08T18:05:48.794Z",
+  "contentUpdatedAt": "2026-06-08T18:05:48.794Z",
+  "fromStatus": "draft",
+  "toStatus": "in_review",
+  "justification": "Transição registrada pelo painel local após conclusão da triagem automatizada."
+}

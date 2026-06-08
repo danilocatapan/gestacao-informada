@@ -41,14 +41,14 @@ Papéis ainda necessários:
 - [ ] revisor jurídico;
 - [ ] aprovador editorial independente.
 
-O cadastro torna o fluxo disponível, mas não aprova conteúdo nem autoriza publicação. Artigos e
-documentos permanecem em `draft` até submissão formal e registros editoriais válidos.
+O cadastro torna o fluxo disponível, mas não aprova conteúdo nem autoriza publicação. Os seis
+artigos prioritários estão em `in_review`; conteúdos ainda não submetidos permanecem em `draft`.
 
 ## Publicação dos seis artigos iniciais
 
-- [ ] gerar pareceres somente dos seis artigos com `npm run editorial:review:mvp`;
+- [x] gerar pareceres somente dos seis artigos com `npm run editorial:review:mvp`;
 - [ ] iniciar o site e o painel local;
-- [ ] resolver apontamentos automatizados e enviar cada artigo para `in_review`;
+- [x] resolver apontamentos automatizados e enviar cada artigo para `in_review`;
 - [ ] registrar pessoalmente cada revisão clínica exigida;
 - [ ] registrar pessoalmente as três revisões psicológicas exigidas;
 - [ ] registrar exceções de segurança necessárias e repetir a triagem quando a versão mudar;

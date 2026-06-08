@@ -5,7 +5,9 @@ Portal de informação responsável e acolhimento para famílias que atravessam 
 ## Estado atual
 
 O primeiro MVP editorial usa Astro, TypeScript, geração estática, CSS próprio e conteúdo Markdown versionado.
-As páginas institucionais e o checklist não clínico estão publicáveis; artigos médicos e documentos jurídicos permanecem bloqueados até revisão.
+As páginas institucionais e o checklist não clínico estão publicáveis. Os seis artigos prioritários
+estão preparados e em `in_review`, mas nenhum possui aprovação profissional ou rota pública.
+Documentos jurídicos também permanecem bloqueados até revisão.
 
 Rotas públicas do MVP técnico:
 
@@ -13,7 +15,8 @@ Rotas públicas do MVP técnico:
 - sobre o projeto;
 - materiais para organização de consultas.
 
-A infraestrutura de busca e glossário clínico está implementada, mas sua publicação permanece bloqueada até existir conteúdo aprovado e revisado em volume suficiente.
+A infraestrutura de busca e glossário clínico está implementada, mas sua publicação permanece
+bloqueada: existem zero artigos e zero termos clínicos aprovados.
 
 ## Desenvolvimento
 

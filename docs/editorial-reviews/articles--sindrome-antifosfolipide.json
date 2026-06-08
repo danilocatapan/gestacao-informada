@@ -3,7 +3,7 @@
   "id": "13652cde-10fa-4b94-9546-6aa6ba839905",
   "target": "articles/sindrome-antifosfolipide",
   "generatedAt": "2026-06-08T13:21:16.763Z",
-  "updatedAt": "2026-06-08T13:21:16.763Z",
+  "updatedAt": "2026-06-08T18:05:48.794Z",
   "contentHash": "25fbc8712141abb533170c9c32c145fa9ef1836d29c4b719d576d0e96cf6ec71",
   "contentStatus": "draft",
   "riskDomains": [
@@ -31,8 +31,8 @@
       "suggestedReplacement": "Pendência humana",
       "relatedSources": [],
       "resolution": {
-        "status": "pending",
-        "replacement": "",
+        "status": "accepted",
+        "replacement": "Pendência humana",
         "justification": ""
       }
     }
@@ -42,6 +42,21 @@
       "occurredAt": "2026-06-08T13:21:16.763Z",
       "action": "review_generated",
       "actor": "editorial-pipeline"
+    },
+    {
+      "occurredAt": "2026-06-08T13:29:57.998Z",
+      "action": "finding_accepted",
+      "actor": "local-maintainer",
+      "findingId": "b45e0f1b14621a26"
+    },
+    {
+      "occurredAt": "2026-06-08T18:05:48.794Z",
+      "action": "changes_applied_and_submitted",
+      "actor": "equipe-editorial"
     }
-  ]
+  ],
+  "appliedAt": "2026-06-08T18:05:48.794Z",
+  "appliedBy": "equipe-editorial",
+  "resultingStatus": "in_review",
+  "resultingContentHash": "344a33d1afd630353f6816c385887a7b444d5bb8b5c9a1b09465a976e5e56784"
 }

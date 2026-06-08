@@ -1,37 +1,43 @@
 ---
-title: "Investigação após perdas recorrentes"
-description: "Como conversar sobre uma investigação de perdas recorrentes sem transformar possibilidades em uma lista automática de exames."
-category: "Investigação"
-objective: "Organizar dúvidas e explicar que a investigação depende da história de cada pessoa."
-audience: "Pessoas e famílias conversando com profissionais após perdas recorrentes."
-contentType: "article"
+title: Investigação após perdas recorrentes
+description: Como conversar sobre uma investigação de perdas recorrentes sem transformar possibilidades em uma lista automática de exames.
+category: Investigação
+objective: Organizar dúvidas e explicar que a investigação depende da história de cada pessoa.
+audience: Pessoas e famílias conversando com profissionais após perdas recorrentes.
+contentType: article
 clinical: true
-riskDomains: ["clinical", "psychological"]
-status: "draft"
-authoredBy: "equipe-editorial"
-lastUpdatedAt: "2026-06-08"
-medicalDisclaimer: "Este conteúdo é educativo e não define quais exames ou tratamentos são indicados para uma pessoa. A investigação deve ser discutida com profissionais qualificados."
+riskDomains:
+  - clinical
+  - psychological
+status: in_review
+authoredBy: equipe-editorial
+lastUpdatedAt: 2026-06-08T18:05:29.111Z
+medicalDisclaimer: Este conteúdo é educativo e não define quais exames ou tratamentos são indicados para uma pessoa. A investigação deve ser discutida com profissionais qualificados.
 aiAssistance:
-  activities: ["topic-research", "source-triage", "drafting", "safety-audit"]
-  disclosure: "Este texto foi preparado com assistência de IA para pesquisa, organização e auditoria editorial. Ele permanece em revisão e não possui aprovação clínica profissional."
+  activities:
+    - topic-research
+    - source-triage
+    - drafting
+    - safety-audit
+  disclosure: Este texto foi preparado com assistência de IA para pesquisa, organização e auditoria editorial. Ele permanece em revisão e não possui aprovação clínica profissional.
 inspirationCredits: []
 safetyReview: []
 sources:
-  - title: "Guideline on the management of recurrent pregnancy loss"
-    url: "https://www.eshre.eu/Guidelines-and-Legal/Guidelines/Recurrent-pregnancy-loss"
-    publisher: "European Society of Human Reproduction and Embryology"
-    accessedAt: "2026-06-08"
-    type: "guideline"
-  - title: "Recurrent Miscarriage - Green-top Guideline No. 17"
-    url: "https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/recurrent-miscarriage-green-top-guideline-no-17/"
-    publisher: "Royal College of Obstetricians and Gynaecologists"
-    accessedAt: "2026-06-08"
-    type: "guideline"
-  - title: "Repeated Miscarriages"
-    url: "https://www.acog.org/womens-health/faqs/repeated-miscarriages"
-    publisher: "American College of Obstetricians and Gynecologists"
-    accessedAt: "2026-06-08"
-    type: "institutional"
+  - title: Guideline on the management of recurrent pregnancy loss
+    url: https://www.eshre.eu/Guidelines-and-Legal/Guidelines/Recurrent-pregnancy-loss
+    publisher: European Society of Human Reproduction and Embryology
+    accessedAt: 2026-06-08
+    type: guideline
+  - title: Recurrent Miscarriage - Green-top Guideline No. 17
+    url: https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/recurrent-miscarriage-green-top-guideline-no-17/
+    publisher: Royal College of Obstetricians and Gynaecologists
+    accessedAt: 2026-06-08
+    type: guideline
+  - title: Repeated Miscarriages
+    url: https://www.acog.org/womens-health/faqs/repeated-miscarriages
+    publisher: American College of Obstetricians and Gynecologists
+    accessedAt: 2026-06-08
+    type: institutional
 ---
 
 Depois de perdas repetidas, é comum desejar uma explicação completa e rápida. Uma investigação responsável, porém, não é uma lista universal de exames: ela começa pela história de cada pessoa, pelo tipo e momento das perdas e pelas perguntas que realmente podem mudar o cuidado.
