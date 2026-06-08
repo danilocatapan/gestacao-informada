@@ -1,89 +1,89 @@
-# Relatorio de prontidao dos artigos do MVP
+# Relatório de prontidão dos artigos do MVP
 
 Data da auditoria Codex: 2026-06-08
 
 ## Resultado
 
-Os seis artigos prioritarios foram pesquisados, redigidos e auditados com assistencia de IA. Todos permanecem em `draft` e bloqueados para publicacao porque ainda nao existem revisores profissionais cadastrados, registros de revisao por dominio nem aprovacao editorial independente.
+Os seis artigos prioritários foram pesquisados, redigidos e auditados com assistência de IA. Todos permanecem em `draft` e bloqueados para publicação porque ainda não existem revisores profissionais cadastrados, registros de revisão por domínio nem aprovação editorial independente.
 
-A auditoria Codex verifica estrutura, fontes, riscos e linguagem, mas nao concede aprovacao profissional.
+A auditoria Codex verifica estrutura, fontes, riscos e linguagem, mas não concede aprovação profissional.
 
-## Inventario
+## Inventário
 
-| Artigo | Papel no MVP | Dominios | Fontes | Inspiracao externa | Estado | Resultado |
+| Artigo | Papel no MVP | Domínios | Fontes | Inspiração externa | Estado | Resultado |
 |---|---|---|---:|---|---|---|
-| `entendendo-a-perda-gestacional` | Prioritario | clinical, psychological | 3 | Nao | draft | Bloqueado |
-| `gestacao-apos-perda` | Prioritario | clinical, psychological | 3 | Nao | draft | Bloqueado |
-| `investigacao-apos-perdas-recorrentes` | Prioritario | clinical, psychological | 3 | Nao | draft | Bloqueado |
-| `trombofilias-hereditarias-e-adquiridas` | Prioritario | clinical | 3 | Dr. Rodrigo Berger | draft | Bloqueado |
-| `sindrome-antifosfolipide` | Prioritario | clinical | 3 | Dr. Rodrigo Berger | draft | Bloqueado |
-| `mthfr-evidencias-e-incertezas` | Prioritario | clinical | 4 | Site do Dr. Rodrigo Berger | draft | Bloqueado |
-| `rascunho-principios-editoriais` | Fixture tecnico | clinical | 0 | Nao | draft | Excluido da meta |
+| `entendendo-a-perda-gestacional` | Prioritário | clinical, psychological | 3 | Não | draft | Bloqueado |
+| `gestacao-apos-perda` | Prioritário | clinical, psychological | 3 | Não | draft | Bloqueado |
+| `investigacao-apos-perdas-recorrentes` | Prioritário | clinical, psychological | 3 | Não | draft | Bloqueado |
+| `trombofilias-hereditarias-e-adquiridas` | Prioritário | clinical | 3 | Dr. Rodrigo Berger | draft | Bloqueado |
+| `sindrome-antifosfolipide` | Prioritário | clinical | 3 | Dr. Rodrigo Berger | draft | Bloqueado |
+| `mthfr-evidencias-e-incertezas` | Prioritário | clinical | 4 | Site do Dr. Rodrigo Berger | draft | Bloqueado |
+| `rascunho-principios-editoriais` | Fixture técnico | clinical | 0 | Não | draft | Excluído da meta |
 
 ## Bloqueios comuns
 
-- nenhum revisor clinico ou psicologico profissional esta cadastrado;
-- nao existem registros em `editorial-records`;
-- nao houve submissao formal para revisao;
-- nao houve revisao aprovada para cada dominio declarado;
-- nao houve aprovacao editorial independente;
-- nao houve transicao valida de `in_review` para `approved`;
-- as fontes e matrizes de afirmacoes ainda precisam de validacao profissional.
+- nenhum revisor clínico ou psicológico profissional está cadastrado;
+- não existem registros em `editorial-records`;
+- não houve submissão formal para revisão;
+- não houve revisão aprovada para cada domínio declarado;
+- não houve aprovação editorial independente;
+- não houve transição válida de `in_review` para `approved`;
+- as fontes e matrizes de afirmações ainda precisam de validação profissional.
 
-## Pacotes de revisao humana
+## Pacotes de revisão humana
 
 ### Entendendo a perda gestacional
 
-- Revisao clinica: confirmar definicoes, sinais de urgencia e adequacao ao contexto brasileiro.
-- Revisao psicologica: avaliar acolhimento, culpa e linguagem sobre luto.
-- Risco principal: sintomas podem ser interpretados como diagnostico sem contexto.
+- Revisão clínica: confirmar definições, sinais de urgência e adequação ao contexto brasileiro.
+- Revisão psicológica: avaliar acolhimento, culpa e linguagem sobre luto.
+- Risco principal: sintomas podem ser interpretados como diagnóstico sem contexto.
 
-### Gestacao apos perda
+### Gestação após perda
 
-- Revisao clinica: validar limites do planejamento pre-concepcional e do acompanhamento.
-- Revisao psicologica: revisar linguagem sobre ansiedade, culpa e rede de apoio.
-- Risco principal: perguntas organizacionais serem interpretadas como necessidade universal de intervencao.
+- Revisão clínica: validar limites do planejamento pré-concepcional e do acompanhamento.
+- Revisão psicológica: revisar linguagem sobre ansiedade, culpa e rede de apoio.
+- Risco principal: perguntas organizacionais serem interpretadas como necessidade universal de intervenção.
 
-### Investigacao apos perdas recorrentes
+### Investigação após perdas recorrentes
 
-- Revisao clinica: validar divergencias entre ESHRE, RCOG e ACOG.
-- Revisao psicologica: revisar comunicacao sobre casos sem causa identificada.
-- Risco principal: transformar areas de investigacao em lista automatica de exames.
+- Revisão clínica: validar divergências entre ESHRE, RCOG e ACOG.
+- Revisão psicológica: revisar comunicação sobre casos sem causa identificada.
+- Risco principal: transformar áreas de investigação em lista automática de exames.
 
-### Trombofilias hereditarias e adquiridas
+### Trombofilias hereditárias e adquiridas
 
-- Revisao clinica: hematologia e obstetricia devem validar classificacoes, risco e limites da investigacao.
+- Revisão clínica: hematologia e obstetrícia devem validar classificações, risco e limites da investigação.
 - Risco principal: equiparar marcadores diferentes ou induzir rastreamento amplo.
-- Inspiracao: posts publicos do Dr. Rodrigo Berger, usados apenas para identificar duvidas.
+- Inspiração: posts públicos do Dr. Rodrigo Berger, usados apenas para identificar dúvidas.
 
-### Sindrome Antifosfolipide
+### Síndrome Antifosfolípide
 
-- Revisao clinica: validar criterios, persistencia laboratorial e comunicacao de risco.
-- Risco principal: autodiagnostico com base em resultado isolado.
-- Inspiracao: post publico do Dr. Rodrigo Berger sobre SAAF e placentacao.
+- Revisão clínica: validar critérios, persistência laboratorial e comunicação de risco.
+- Risco principal: autodiagnóstico com base em resultado isolado.
+- Inspiração: post público do Dr. Rodrigo Berger sobre SAAF e placentação.
 
-### MTHFR: evidencias, incertezas e divergencias
+### MTHFR: evidências, incertezas e divergências
 
-- Revisao clinica: profissional com experiencia em genetica, hematologia ou medicina materno-fetal.
-- Risco principal: conflito entre alegacoes publicas e recomendacoes de diretrizes.
-- Inspiracao: site publico do Dr. Rodrigo Berger, usado para mapear a controversia.
+- Revisão clínica: profissional com experiência em genética, hematologia ou medicina materno-fetal.
+- Risco principal: conflito entre alegações públicas e recomendações de diretrizes.
+- Inspiração: site público do Dr. Rodrigo Berger, usado para mapear a controvérsia.
 
 ## Fontes validadas editorialmente
 
-Foram priorizadas diretrizes e materiais institucionais de ACOG, ASH, CDC, ESHRE, EULAR, Ministerio da Saude e RCOG. "Validada editorialmente" significa que a fonte e rastreavel e pertinente; nao significa que uma revisao profissional confirmou todas as interpretacoes.
+Foram priorizadas diretrizes e materiais institucionais de ACOG, ASH, CDC, ESHRE, EULAR, Ministério da Saúde e RCOG. “Validada editorialmente” significa que a fonte é rastreável e pertinente; não significa que uma revisão profissional confirmou todas as interpretações.
 
-## Termos sensiveis e riscos detectados
+## Termos sensíveis e riscos detectados
 
-- Todos os seis artigos declaram `clinical` em `riskDomains`; tres tambem declaram `psychological`.
-- Termos tematicos como perda gestacional, trombofilia, trombose, SAF/SAAF, MTHFR e exames aparecem em contexto educativo e exigem as revisoes profissionais declaradas.
-- Os textos evitam doses, protocolos, promessas de desfecho e orientacoes para iniciar, suspender ou alterar medicamentos.
-- Materiais externos que apresentam condutas ou alegacoes controversas foram registrados somente como inspiracao editorial e nao foram reproduzidos.
-- Qualquer inclusao futura de termo medicamentoso, dose, prescricao ou promessa devera receber uma excecao documentada em `safetyReview` antes de se tornar publicavel.
+- Todos os seis artigos declaram `clinical` em `riskDomains`; três também declaram `psychological`.
+- Termos temáticos como perda gestacional, trombofilia, trombose, SAF/SAAF, MTHFR e exames aparecem em contexto educativo e exigem as revisões profissionais declaradas.
+- Os textos evitam doses, protocolos, promessas de desfecho e orientações para iniciar, suspender ou alterar medicamentos.
+- Materiais externos que apresentam condutas ou alegações controversas foram registrados somente como inspiração editorial e não foram reproduzidos.
+- Qualquer inclusão futura de termo medicamentoso, dose, prescrição ou promessa deverá receber uma exceção documentada em `safetyReview` antes de se tornar publicável.
 
-## Proximos passos obrigatorios
+## Próximos passos obrigatórios
 
-1. Cadastrar revisores profissionais com credenciais verificaveis e papeis compativeis.
-2. Realizar revisao por dominio usando as matrizes de afirmacoes.
-3. Corrigir os artigos conforme as decisoes profissionais e atualizar `lastUpdatedAt`.
-4. Registrar submissao, revisoes, aprovacao editorial e transicoes em `editorial-records`.
-5. Executar a skill de auditoria editorial e todos os gates antes de qualquer publicacao.
+1. Cadastrar revisores profissionais com credenciais verificáveis e papéis compatíveis.
+2. Realizar revisão por domínio usando as matrizes de afirmações.
+3. Corrigir os artigos conforme as decisões profissionais e atualizar `lastUpdatedAt`.
+4. Registrar submissão, revisões, aprovação editorial e transições em `editorial-records`.
+5. Executar a skill de auditoria editorial e todos os gates antes de qualquer publicação.

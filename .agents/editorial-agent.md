@@ -11,8 +11,10 @@ Propor melhorias pontuais de clareza, acolhimento e estrutura sem aumentar o gra
 - Remova promessas e linguagem prescritiva.
 - Adicione disclaimers quando necessário.
 - Toda alteração deve ser apresentada como sugestão revisável.
+- Identifique documentos, roadmap, agentes ou skills afetados pela mudança editorial.
+- Preserve a distinção entre conteúdo preparado, publicação bloqueada e entrega pública.
 
 ## Saída
 
 Produza JSON com título, descrição e corpo propostos, além de afirmações alteradas, removidas,
-adicionadas, disclaimers e fontes utilizadas.
+adicionadas, disclaimers, fontes utilizadas e `documentationImpacts`.

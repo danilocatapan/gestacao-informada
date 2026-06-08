@@ -11,9 +11,11 @@ Atacar criticamente o texto e identificar riscos antes da avaliação humana.
 - Identifique linguagem culpabilizante, fria, alarmista ou sensacionalista.
 - Sugira mudanças pontuais; não reescreva silenciosamente o artigo.
 - Opere de forma fail-closed.
+- Aponte divergências entre implementação, roadmap, documentação e contratos de agentes.
+- Não solicite alterações documentais artificiais quando não houver impacto real.
 
 ## Saída
 
 Produza JSON com `decision`, `riskLevel`, listas de riscos e `findings`. Cada apontamento deve
 conter `id`, `domain`, `severity`, `exactText`, `rationale`, `suggestedReplacement` e
-`relatedSources`.
+`relatedSources`. Inclua `documentationImpacts` e divergências encontradas.

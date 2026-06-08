@@ -1,19 +1,19 @@
-# Gestacao Informada
+# Gestação Informada
 
 Portal de informação responsável e acolhimento para famílias que atravessam perdas gestacionais.
 
 ## Estado atual
 
-O primeiro MVP editorial usa Astro, TypeScript, geracao estatica, CSS proprio e conteudo Markdown versionado.
-As paginas institucionais e o checklist nao clinico estao publicaveis; artigos medicos e documentos juridicos permanecem bloqueados ate revisao.
+O primeiro MVP editorial usa Astro, TypeScript, geração estática, CSS próprio e conteúdo Markdown versionado.
+As páginas institucionais e o checklist não clínico estão publicáveis; artigos médicos e documentos jurídicos permanecem bloqueados até revisão.
 
-Rotas publicas do MVP tecnico:
+Rotas públicas do MVP técnico:
 
-- inicio, entender a perda, trombofilias, acolhimento e direitos;
+- início, entender a perda, trombofilias, acolhimento e direitos;
 - sobre o projeto;
-- materiais para organizacao de consultas.
+- materiais para organização de consultas.
 
-Busca, glossario clinico e expansao editorial ficam adiados ate existir conteudo aprovado e revisado em volume suficiente.
+A infraestrutura de busca e glossário clínico está implementada, mas sua publicação permanece bloqueada até existir conteúdo aprovado e revisado em volume suficiente.
 
 ## Desenvolvimento
 
@@ -22,14 +22,14 @@ npm install
 npm run dev
 ```
 
-Verificacao completa:
+Verificação completa:
 
 ```bash
 npm test
 npm run test:e2e
 ```
 
-O site e preparado para publicacao em `https://danilocatapan.github.io/gestacao-informada/`.
+O site é preparado para publicação em `https://danilocatapan.github.io/gestacao-informada/`.
 
 ## Documentação
 
@@ -42,6 +42,9 @@ O site e preparado para publicacao em `https://danilocatapan.github.io/gestacao-
 ## Agentes e automações
 
 As instruções para agentes estão em [AGENTS.md](AGENTS.md). A skill geral do projeto está em `.codex/skills/gestacao-informada` e a auditoria fail-closed em `.codex/skills/auditar-publicacao-editorial`.
+
+Toda entrega deve reconciliar implementação, roadmap, documentação e contratos de agentes,
+atualizando somente os artefatos realmente impactados.
 
 Pipeline e painel editorial local:
 
@@ -57,14 +60,14 @@ O painel abre somente em `127.0.0.1`, permite resolver apontamentos e enviar con
 
 O conteúdo do portal é educativo e não substitui avaliação, diagnóstico ou tratamento individualizado. Todo conteúdo clínico deve indicar fontes, autoria e data de revisão, além de passar por revisão profissional antes da publicação.
 
-## Conteudo
+## Conteúdo
 
-- `src/content/pages`: paginas institucionais.
-- `src/content/articles`: artigos medicos sujeitos ao gate editorial.
-- `src/content/legal`: documentos juridicos nao publicaveis sem aprovacao.
+- `src/content/pages`: páginas institucionais.
+- `src/content/articles`: artigos médicos sujeitos ao gate editorial.
+- `src/content/legal`: documentos jurídicos não publicáveis sem aprovação.
 - `src/content/review-notes`: notas internas sem rotas.
 - `src/content/editorial-records`: trilha auditável de revisões, aprovações e transições.
 - `src/content/contributors`: perfis referenciados de autores e revisores.
 - `src/content/references`: base central de fontes, autoridade e limitações.
 - `docs/editorial-reviews`: pareceres automatizados e decisões tomadas no painel local.
-- `tests/smoke.spec.ts`: smoke tests das rotas publicas em desktop e mobile.
+- `tests/smoke.spec.ts`: smoke tests das rotas públicas em desktop e mobile.

@@ -1,99 +1,99 @@
 # Backlog editorial
 
-Este backlog combina lacunas dos artigos atuais, duvidas frequentes e temas encontrados em materiais publicos. Materiais externos servem somente para descoberta de pauta; cada artigo futuro exigira fontes clinicas independentes e revisao profissional.
+Este backlog combina lacunas dos artigos atuais, dúvidas frequentes e temas encontrados em materiais públicos. Materiais externos servem somente para descoberta de pauta; cada artigo futuro exigirá fontes clínicas independentes e revisão profissional.
 
 ## Prioridade alta
 
 ### Sangramento no primeiro trimestre: quando buscar atendimento
 
-Descricao: explicar limites de informacao online, sinais de alerta e perguntas para a equipe, sem orientar alteracao de medicamentos.
+Descrição: explicar limites de informação online, sinais de alerta e perguntas para a equipe, sem orientar alteração de medicamentos.
 
 Justificativa: tema de alta ansiedade e alto risco de condutas indevidas.
 
-Publico-alvo: pessoas com sangramento durante a gestacao.
+Público-alvo: pessoas com sangramento durante a gestação.
 
-Fontes necessarias: diretrizes obstetricas e materiais institucionais brasileiros.
+Fontes necessárias: diretrizes obstétricas e materiais institucionais brasileiros.
 
-Origem da pauta: [post publico do Dr. Rodrigo Berger](https://www.instagram.com/dr.rodrigoberger/p/DZSGyqhlFQ2/).
+Origem da pauta: [post público do Dr. Rodrigo Berger](https://www.instagram.com/dr.rodrigoberger/p/DZSGyqhlFQ2/).
 
-Risco clinico: muito alto.
+Risco clínico: muito alto.
 
-Status sugerido: pesquisa bloqueada ate definir revisor clinico.
+Status sugerido: pesquisa bloqueada até definir revisor clínico.
 
-### Placentacao: o que o termo significa e quais sao seus limites
+### Placentação: o que o termo significa e quais são seus limites
 
-Descricao: apresentar o desenvolvimento placentario sem atribuir toda complicacao a uma unica causa.
+Descrição: apresentar o desenvolvimento placentário sem atribuir toda complicação a uma única causa.
 
-Justificativa: o termo aparece com frequencia em conteudos sobre trombofilia, SAAF e restricao de crescimento.
+Justificativa: o termo aparece com frequência em conteúdos sobre trombofilia, SAAF e restrição de crescimento.
 
-Publico-alvo: pessoas investigando complicacoes gestacionais.
+Público-alvo: pessoas investigando complicações gestacionais.
 
-Fontes necessarias: revisoes sistematicas e diretrizes de medicina materno-fetal.
+Fontes necessárias: revisões sistemáticas e diretrizes de medicina materno-fetal.
 
-Origem da pauta: [reel publico do Dr. Rodrigo Berger](https://www.instagram.com/dr.rodrigoberger/reel/DZPmXY9uqRS/).
+Origem da pauta: [reel público do Dr. Rodrigo Berger](https://www.instagram.com/dr.rodrigoberger/reel/DZPmXY9uqRS/).
 
-Risco clinico: alto.
+Risco clínico: alto.
 
 Status sugerido: pesquisa.
 
-### Como avaliar alegacoes medicas nas redes sociais
+### Como avaliar alegações médicas nas redes sociais
 
-Descricao: ensinar a diferenciar pauta, testemunho, estudo isolado, diretriz e recomendacao individual.
+Descrição: ensinar a diferenciar pauta, testemunho, estudo isolado, diretriz e recomendação individual.
 
-Justificativa: reduz risco de automedicacao e de interpretacao de conteudo promocional como consenso.
+Justificativa: reduz risco de automedicação e de interpretação de conteúdo promocional como consenso.
 
-Publico-alvo: todos os leitores.
+Público-alvo: todos os leitores.
 
-Fontes necessarias: materiais de alfabetizacao em saude e medicina baseada em evidencias.
+Fontes necessárias: materiais de alfabetização em saúde e medicina baseada em evidências.
 
-Origem da pauta: divergencias encontradas durante a curadoria do Instagram e site do Dr. Rodrigo Berger.
+Origem da pauta: divergências encontradas durante a curadoria do Instagram e site do Dr. Rodrigo Berger.
 
-Risco clinico: medio.
+Risco clínico: médio.
 
-Status sugerido: pauta prioritaria nao clinica, sujeita a revisao editorial.
+Status sugerido: pauta prioritária não clínica, sujeita a revisão editorial.
 
-## Prioridade media
+## Prioridade média
 
-### Trombofilia, parto e puerperio
+### Trombofilia, parto e puerpério
 
-Descricao: organizar perguntas sobre planejamento do parto e risco de trombose apos o nascimento, sem prescrever condutas.
+Descrição: organizar perguntas sobre planejamento do parto e risco de trombose após o nascimento, sem prescrever condutas.
 
-Origem da pauta: [site publico do Dr. Rodrigo Berger](https://drrodrigoberger.com/) e materiais da ASH.
+Origem da pauta: [site público do Dr. Rodrigo Berger](https://drrodrigoberger.com/) e materiais da ASH.
 
-Fontes necessarias: ASH, ACOG, RCOG e diretrizes brasileiras.
+Fontes necessárias: ASH, ACOG, RCOG e diretrizes brasileiras.
 
-Risco clinico: alto.
+Risco clínico: alto.
 
 Status sugerido: aguardando revisores.
 
 ### Progesterona, imunologia e perdas: onde existe incerteza
 
-Descricao: explicar por que mecanismos biologicos plausiveis nao bastam para comprovar beneficio clinico.
+Descrição: explicar por que mecanismos biológicos plausíveis não bastam para comprovar benefício clínico.
 
-Origem da pauta: [post publico do Dr. Rodrigo Berger](https://www.instagram.com/dr.rodrigoberger/p/DZBtOfbjnt2/).
+Origem da pauta: [post público do Dr. Rodrigo Berger](https://www.instagram.com/dr.rodrigoberger/p/DZBtOfbjnt2/).
 
-Fontes necessarias: revisoes sistematicas, ESHRE e RCOG.
+Fontes necessárias: revisões sistemáticas, ESHRE e RCOG.
 
-Risco clinico: muito alto.
+Risco clínico: muito alto.
 
-Status sugerido: pesquisa critica.
+Status sugerido: pesquisa crítica.
 
-### Gestacao depois dos 40: risco sem determinismo
+### Gestação depois dos 40: risco sem determinismo
 
-Descricao: discutir idade, riscos e planejamento sem classificar idade como trombofilia ou sugerir medicamentos.
+Descrição: discutir idade, riscos e planejamento sem classificar idade como trombofilia ou sugerir medicamentos.
 
-Origem da pauta: [post publico do Dr. Rodrigo Berger](https://www.instagram.com/dr.rodrigoberger/p/DY9y1-YlZWz/).
+Origem da pauta: [post público do Dr. Rodrigo Berger](https://www.instagram.com/dr.rodrigoberger/p/DY9y1-YlZWz/).
 
-Fontes necessarias: ACOG e diretrizes de medicina materno-fetal.
+Fontes necessárias: ACOG e diretrizes de medicina materno-fetal.
 
-Risco clinico: alto.
+Risco clínico: alto.
 
-Status sugerido: pesquisa critica.
+Status sugerido: pesquisa crítica.
 
 ## Prioridade futura
 
-### Glossario clinico do MVP
+### Glossário clínico do MVP
 
-Termos iniciais: perda gestacional, perda recorrente, trombose, trombofilia, SAF/SAAF, placentacao, fator V Leiden, protrombina, MTHFR e homocisteina.
+Termos iniciais: perda gestacional, perda recorrente, trombose, trombofilia, SAF/SAAF, placentação, fator V Leiden, protrombina, MTHFR e homocisteína.
 
-Status sugerido: iniciar somente apos revisao profissional das definicoes.
+Status sugerido: iniciar somente após revisão profissional das definições.

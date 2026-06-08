@@ -4,6 +4,7 @@
 
 - [x] Definir propósito, público e princípios editoriais
 - [x] Criar documentação e instruções iniciais do repositório
+- [x] Instituir reconciliação documental obrigatória entre implementação, roadmap e agentes
 - [x] Publicar repositório
 - [ ] Configurar proteção da branch principal (checklist operacional manual)
 - [ ] Definir responsáveis por revisão clínica, psicológica e jurídica
@@ -20,16 +21,19 @@
 - [x] Criar páginas dos quatro pilares iniciais
 - [ ] Publicar primeiros seis conteúdos revisados
 - [x] Criar checklist de preparação para consulta
-- [ ] Criar glossário clínico
-- [ ] Implementar busca
-- [ ] Publicar privacidade, termos e política editorial (estrutura tecnica e placeholders internos prontos; aguardam revisao juridica)
+- [x] Implementar infraestrutura técnica do glossário clínico com schema, rotas e gates
+- [ ] Produzir e publicar os primeiros seis termos do glossário após revisão clínica
+- [x] Implementar infraestrutura técnica da busca estática
+- [ ] Publicar a busca após o marco de seis artigos e seis termos aprovados
+- [ ] Publicar privacidade, termos e política editorial (estrutura técnica e placeholders internos prontos; aguardam revisão jurídica)
 - [x] Publicar página Sobre e concluir navegação institucional do MVP
 
 ### Marco B — Expansão editorial
 
 - [ ] Publicar glossário após revisão clínica
-- [ ] Implementar busca quando houver volume suficiente de conteúdo aprovado
-- [ ] Ampliar testes automatizados para fluxos interativos
+- [ ] Publicar busca quando houver volume suficiente de conteúdo aprovado
+- [x] Ampliar testes automatizados para fluxos interativos públicos
+- [ ] Cobrir o fluxo completo do painel editorial local com teste E2E isolado
 
 ## Fase 2 — Recursos de Apoio
 
@@ -51,6 +55,6 @@
 - relação institucional do portal com o Dr. Rodrigo Berger;
 - profissionais responsáveis pelas revisões;
 - modelo de sustentabilidade do projeto;
-- CMS visual e fluxo de aprovacao editorial por profissionais nao tecnicos;
+- CMS visual e fluxo de aprovação editorial por profissionais não técnicos;
 - requisitos jurídicos e de privacidade;
 - métricas de impacto.

@@ -6,15 +6,15 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 
 **Status:** aceita
 
-**Decisao:** iniciar o repositorio com documentacao, instrucoes para agentes e governanca minima, sem escolher framework ou implementar a interface.
+**Decisão:** iniciar o repositório com documentação, instruções para agentes e governança mínima, sem escolher framework ou implementar a interface.
 
 **Motivo:** preservar liberdade para validar escopo, revisores e requisitos antes de assumir custos tecnicos.
 
-## 2026-06-06 — Conteudo clinico exige revisao profissional
+## 2026-06-06 — Conteúdo clínico exige revisão profissional
 
 **Status:** aceita
 
-**Decisao:** nenhum conteudo clinico sera considerado publicavel sem fonte, autoria, data de revisao e aprovacao profissional.
+**Decisão:** nenhum conteúdo clínico será considerado publicável sem fonte, autoria, data de revisão e aprovação profissional.
 
 **Motivo:** o portal aborda temas de saude com potencial de influenciar decisoes de alto risco.
 
@@ -22,71 +22,71 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 
 **Status:** aceita
 
-**Decisao:** usar Astro na major estavel definida no `package.json`, TypeScript, geracao estatica e CSS proprio. Frameworks de componentes nao serao instalados por padrao; islands futuras exigem necessidade real e decisao registrada.
+**Decisão:** usar Astro na major estável definida no `package.json`, TypeScript, geração estática e CSS próprio. Frameworks de componentes não serao instalados por padrão; islands futuras exigem necessidade real e decisão registrada.
 
 **Motivo:** o MVP e editorial e prioriza desempenho, SEO, acessibilidade e minimo JavaScript.
 
-## 2026-06-06 — Conteudo versionado e collections separadas
+## 2026-06-06 — Conteúdo versionado e collections separadas
 
 **Status:** aceita
 
-**Decisao:** usar Markdown versionado como CMS do MVP, separado em collections para paginas institucionais, artigos medicos, documentos legais, notas de revisao e contribuidores. Autoria e revisao usam referencias tipadas.
+**Decisão:** usar Markdown versionado como CMS do MVP, separado em collections para páginas institucionais, artigos médicos, documentos legais, notas de revisão e contribuidores. Autoria e revisão usam referências tipadas.
 
-**Motivo:** manter rastreabilidade e bloquear publicacao incompleta. Um CMS visual fica adiado ate existir fluxo editorial com revisores; Decap, Sanity, Storyblok, Contentful e Strapi permanecem alternativas futuras.
+**Motivo:** manter rastreabilidade e bloquear publicação incompleta. Um CMS visual fica adiado até existir fluxo editorial com revisores; Decap, Sanity, Storyblok, Contentful e Strapi permanecem alternativas futuras.
 
-## 2026-06-06 — Gate editorial de termos sensiveis
+## 2026-06-06 — Gate editorial de termos sensíveis
 
 **Status:** aceita
 
-**Decisao:** conteudo publicavel com termos sensiveis deve possuir excecao tipada em `safetyReview`. O pre-commit executa a verificacao local e o CI e o gate obrigatorio para merge e deploy.
+**Decisão:** conteúdo publicável com termos sensíveis deve possuir exceção tipada em `safetyReview`. O pre-commit executa a verificação local e o CI e o gate obrigatório para merge e deploy.
 
-**Motivo:** termos podem ser necessarios em contexto educativo, mas exigem justificativa e revisao documentadas.
+**Motivo:** termos podem ser necessários em contexto educativo, mas exigem justificativa e revisão documentadas.
 
 ## 2026-06-06 — URLs e hospedagem temporaria
 
 **Status:** aceita
 
-**Decisao:** publicar temporariamente no GitHub Pages com base `/gestacao-informada`, trailing slash obrigatoria e helpers centralizados para URLs relativas e canonicas.
+**Decisão:** publicar temporariamente no GitHub Pages com base `/gestacao-informada`, trailing slash obrigatória e helpers centralizados para URLs relativas e canônicas.
 
 **Motivo:** impedir links quebrados sob subdiretorio e manter SEO consistente durante o MVP.
 
-## 2026-06-06 — Paginas legais e identidade provisoria
+## 2026-06-06 — Páginas legais e identidade provisória
 
 **Status:** aceita
 
-**Decisao:** manter privacidade, termos e politica editorial como placeholders internos sem rotas ate aprovacao juridica. Versionar as pranchas de identidade e usar ativos rasterizados derivados provisoriamente.
+**Decisão:** manter privacidade, termos e política editorial como placeholders internos sem rotas até aprovação jurídica. Versionar as pranchas de identidade e usar ativos rasterizados derivados provisoriamente.
 
-**Motivo:** nao publicar texto juridico sem revisao e permitir que o MVP aplique a identidade enquanto os arquivos vetoriais finais nao existem.
+**Motivo:** não publicar texto jurídico sem revisão e permitir que o MVP aplique a identidade enquanto os arquivos vetoriais finais não existem.
 
-## 2026-06-06 — Fechamento do MVP tecnico separado da expansao editorial
-
-**Status:** aceita
-
-**Decisao:** considerar o MVP tecnico concluido com governanca editorial, rotas institucionais, materiais nao clinicos, drafts bloqueados, CI e deploy funcional. Busca, glossario clinico e publicacao de artigos permanecem adiados ate existir volume e revisao profissional.
-
-**Motivo:** evitar que dependencias externas de revisao atrasem a entrega tecnica e impedir a publicacao prematura de conteudo clinico.
-
-## 2026-06-06 — Metadados de tipo e natureza clinica
+## 2026-06-06 — Fechamento do MVP técnico separado da expansao editorial
 
 **Status:** aceita
 
-**Decisao:** todo conteudo publicavel declara `contentType` e `clinical`. Conteudo clinico aprovado reside na collection `articles` e exige autoria, revisao, fontes, disclaimer e datas; checklists organizacionais podem ser publicados com `clinical: false`.
+**Decisão:** considerar o MVP técnico concluído com governança editorial, rotas institucionais, materiais não clínicos, drafts bloqueados, CI e deploy funcional. Busca, glossário clínico e publicação de artigos permanecem adiados até existir volume e revisão profissional.
 
-**Motivo:** diferenciar formato editorial de risco clinico e aplicar requisitos proporcionais sem enfraquecer os gates de seguranca.
+**Motivo:** evitar que dependências externas de revisão atrasem a entrega técnica e impedir a publicação prematura de conteúdo clínico.
 
-## 2026-06-07 — Governanca editorial por dominio e trilha auditavel
-
-**Status:** aceita
-
-**Decisao:** classificar conteudos pelos dominios `clinical`, `psychological` e `legal`; exigir revisoes humanas compativeis, aprovacao editorial independente e registros versionados antes de publicar conteudo governado. O agente Codex atua somente como auditor fail-closed e nunca concede aprovacao ou altera status.
-
-**Motivo:** impedir publicacao baseada em campos isolados, revisoes obsoletas ou automacao sem autoridade profissional, preservando rastreabilidade e separacao de responsabilidades.
-
-## 2026-06-08 — Fluxo tecnico e URLs das paginas legais
+## 2026-06-06 — Metadados de tipo e natureza clínica
 
 **Status:** aceita
 
-**Decisao:** usar `in_review` como estado canonico equivalente a uma pendencia em revisao, manter documentos legais sem slug ou rota enquanto nao aprovados e reservar as URLs publicas `/privacidade/`, `/termos/` e `/politica-editorial/`. A publicacao exige metadados de revisao juridica coerentes com a trilha em `editorial-records`.
+**Decisão:** todo conteúdo publicável declara `contentType` e `clinical`. Conteúdo clínico aprovado reside na collection `articles` e exige autoria, revisão, fontes, disclaimer e datas; checklists organizacionais podem ser publicados com `clinical: false`.
+
+**Motivo:** diferenciar formato editorial de risco clínico e aplicar requisitos proporcionais sem enfraquecer os gates de segurança.
+
+## 2026-06-07 — Governanca editorial por domínio e trilha auditável
+
+**Status:** aceita
+
+**Decisão:** classificar conteúdos pelos domínios `clinical`, `psychological` e `legal`; exigir revisões humanas compatíveis, aprovação editorial independente e registros versionados antes de publicar conteúdo governado. O agente Codex atua somente como auditor fail-closed e nunca concede aprovação ou altera status.
+
+**Motivo:** impedir publicação baseada em campos isolados, revisões obsoletas ou automação sem autoridade profissional, preservando rastreabilidade e separacao de responsabilidades.
+
+## 2026-06-08 — Fluxo técnico e URLs das páginas legais
+
+**Status:** aceita
+
+**Decisão:** usar `in_review` como estado canônico equivalente a uma pendência em revisão, manter documentos legais sem slug ou rota enquanto não aprovados e reservar as URLs públicas `/privacidade/`, `/termos/` e `/politica-editorial/`. A publicação exige metadados de revisão jurídica coerentes com a trilha em `editorial-records`.
 
 **Motivo:** evitar estados editoriais duplicados, bloquear exposicao prematura e manter URLs institucionais curtas sem enfraquecer os gates auditaveis.
 
@@ -94,25 +94,25 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 
 **Status:** aceita
 
-**Decisao:** manter Georgia nos titulos como escolha editorial deliberada e Poppins nos demais textos. Reconstrucoes SVG derivadas dos PNGs provisórios permanecem apenas como candidatos documentados e nao substituem ativos publicos sem aprovacao formal.
+**Decisão:** manter Georgia nos títulos como escolha editorial deliberada e Poppins nos demais textos. Reconstruções SVG derivadas dos PNGs provisórios permanecem apenas como candidatos documentados e não substituem ativos públicos sem aprovação formal.
 
 **Motivo:** preservar a hierarquia editorial acolhedora do MVP e impedir que ativos reconstruidos sem os arquivos-fonte sejam apresentados como identidade aprovada.
 
-## 2026-06-08 — Assistencia por IA e creditos de inspiracao editorial
+## 2026-06-08 — Assistencia por IA e creditos de inspiração editorial
 
 **Status:** aceita
 
-**Decisao:** registrar a assistencia do Codex em pesquisa de pauta, triagem de fontes, redacao e auditoria de seguranca por metadados tipados e aviso publico. A assistencia por IA e uma etapa obrigatoria de preparacao dos artigos do MVP, mas nunca concede aprovacao clinica, psicologica, juridica ou editorial e nao substitui revisao profissional humana. Materiais publicos externos podem receber credito como inspiracao editorial, em campo separado das fontes clinicas, sem implicar parceria, revisao ou endosso.
+**Decisão:** registrar a assistência do Codex em pesquisa de pauta, triagem de fontes, redação e auditoria de segurança por metadados tipados e aviso público. A assistência por IA é uma etapa obrigatória de preparação dos artigos do MVP, mas nunca concede aprovação clínica, psicológica, jurídica ou editorial e não substitui revisão profissional humana. Materiais públicos externos podem receber crédito como inspiração editorial, em campo separado das fontes clínicas, sem implicar parceria, revisão ou endosso.
 
-**Motivo:** tornar transparente o uso de automacao sem enfraquecer a governanca fail-closed, preservar a distincao entre descoberta de pautas e evidencia clinica e evitar apropriacao indevida de conteudo de terceiros.
+**Motivo:** tornar transparente o uso de automação sem enfraquecer a governança fail-closed, preservar a distinção entre descoberta de pautas e evidência clínica e evitar apropriação indevida de conteúdo de terceiros.
 
 ## 2026-06-08 — Guias juridicos acolhedores em rota dedicada
 
 **Status:** aceita
 
-**Decisao:** tratar guias juridico-informativos como conteudo legal governado, com autoria, fontes oficiais, disclaimer, revisao juridica humana e trilha editorial antes da publicacao. A linguagem acolhedora e requisito obrigatorio tambem para conteudo juridico, sem reduzir a precisao, criar garantias ou substituir orientacao individual. O guia sobre direitos ocupa a rota dedicada `/direitos/` somente quando aprovado; enquanto estiver bloqueado, a rota preserva a apresentacao institucional.
+**Decisão:** tratar guias jurídico-informativos como conteúdo legal governado, com autoria, fontes oficiais, disclaimer, revisão jurídica humana e trilha editorial antes da publicação. A linguagem acolhedora e requisito obrigatório também para conteúdo jurídico, sem reduzir a precisao, criar garantias ou substituir orientação individual. O guia sobre direitos ocupa a rota dedicada `/direitos/` somente quando aprovado; enquanto estiver bloqueado, a rota preserva a apresentacao institucional.
 
-**Motivo:** oferecer informacao util em um momento de vulnerabilidade sem expor familias a aconselhamento juridico impreciso ou publicar conteudo ainda nao revisado.
+**Motivo:** oferecer informação útil em um momento de vulnerabilidade sem expor famílias a aconselhamento jurídico impreciso ou publicar conteúdo ainda não revisado.
 
 ## 2026-06-08 — Glossário clínico e busca condicionados a conteúdo aprovado
 
@@ -144,3 +144,17 @@ domínio, limitações e data de verificação. Fontes inline devem possuir regi
 
 **Motivo:** reduzir duplicação, tornar limitações visíveis e impedir que fontes fracas sejam usadas
 como sustentação principal de conteúdo governado.
+
+## 2026-06-08 — Reconciliação documental obrigatória
+
+**Status:** aceita
+
+**Decisão:** antes de concluir qualquer tarefa, comparar a implementação real com o roadmap,
+documentos afetados, decisões, agentes e skills locais. Atualizar somente os artefatos realmente
+impactados, diferenciar infraestrutura implementada, conteúdo preparado, publicação bloqueada e
+entrega pública, e manter toda documentação em português do Brasil com ortografia e acentuação
+corretas.
+
+**Motivo:** impedir divergências entre código e documentação, evitar que trabalho tecnicamente
+concluído permaneça marcado como pendente e preservar a confiabilidade dos contratos usados por
+agentes, contribuidores e revisores.
