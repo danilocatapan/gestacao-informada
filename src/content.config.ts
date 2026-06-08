@@ -7,6 +7,7 @@ const contentType = z.enum(['article', 'institutional-page', 'legal-document', '
 const sourceType = z.enum(['guideline', 'review', 'law', 'institutional', 'other']);
 const riskDomain = z.enum(['clinical', 'psychological', 'legal']);
 const editorialRole = z.enum(['author', 'clinical_reviewer', 'psychological_reviewer', 'legal_reviewer', 'editorial_approver']);
+const publicSlug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 
 const source = z.object({
   title: z.string().min(1),
@@ -81,10 +82,26 @@ const legal = defineCollection({
       riskDomains: z.array(riskDomain),
       status,
       updatedAt: z.coerce.date(),
+      reviewer: reference('contributors').nullable(),
+      reviewedAt: z.coerce.date().nullable(),
+      legalBasis: z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]).optional(),
+      slug: publicSlug.optional(),
     })
     .superRefine((document, ctx) => {
       if (!document.riskDomains.includes('legal')) {
         ctx.addIssue({ code: 'custom', message: 'Documento jurídico deve declarar o domínio legal.', path: ['riskDomains'] });
+      }
+      if (document.status !== 'approved' && document.slug) {
+        ctx.addIssue({ code: 'custom', message: 'Documento jurídico não aprovado não pode declarar slug público.', path: ['slug'] });
+      }
+      if (document.status === 'approved' && !document.slug) {
+        ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige slug público.', path: ['slug'] });
+      }
+      if (document.status === 'approved' && !document.reviewer) {
+        ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige revisor jurídico.', path: ['reviewer'] });
+      }
+      if (document.status === 'approved' && !document.reviewedAt) {
+        ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige data de revisão jurídica.', path: ['reviewedAt'] });
       }
     }),
 });

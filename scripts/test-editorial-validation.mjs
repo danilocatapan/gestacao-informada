@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { validateEditorialState } from './editorial-validation.mjs';
+import { validateEditorialState, validateLegalInventory } from './editorial-validation.mjs';
 
 const updatedAt = '2026-06-07T12:00:00.000Z';
 const baseContent = {
@@ -20,6 +20,7 @@ const contributors = [
   { id: 'autor', editorialRoles: ['author'], credentials: 'Autor identificado' },
   { id: 'submissor', editorialRoles: ['author'], credentials: 'Autor identificado' },
   { id: 'clinico', editorialRoles: ['clinical_reviewer'], credentials: 'Credencial profissional verificada' },
+  { id: 'juridico', editorialRoles: ['legal_reviewer'], credentials: 'Credencial profissional verificada' },
   { id: 'editor', editorialRoles: ['editorial_approver'], credentials: 'Aprovador editorial identificado' },
 ];
 const record = (overrides) => ({
@@ -54,6 +55,50 @@ expectFailure('rejeição posterior', failuresFor(baseContent, [...validRecords,
 expectFailure('transição inválida', failuresFor(baseContent, [...validRecords, record({ event: 'status_transition', actor: 'submissor', role: 'author', fromStatus: 'draft', toStatus: 'approved' })]), /transição editorial inválida/);
 expectFailure('jurídico sem revisão', failuresFor({ ...baseContent, data: { ...baseContent.data, riskDomains: ['clinical', 'legal'] } }), /revisão legal/);
 expectFailure('alvo inexistente', failuresFor(baseContent, [...validRecords, record({ target: 'articles/inexistente', event: 'submitted_for_review', actor: 'submissor', role: 'author' })]), /conteúdo inexistente/);
+
+const legalContent = {
+  id: 'legal/privacidade',
+  collection: 'legal',
+  body: 'Documento jurídico aprovado.',
+  data: {
+    status: 'approved',
+    clinical: false,
+    riskDomains: ['legal'],
+    updatedAt,
+    reviewer: 'juridico',
+    reviewedAt: '2026-06-07T13:00:00.000Z',
+    slug: 'privacidade',
+  },
+};
+const legalRecord = (overrides) => record({ target: 'legal/privacidade', ...overrides });
+const validLegalRecords = [
+  legalRecord({ event: 'submitted_for_review', actor: 'submissor', role: 'author' }),
+  legalRecord({ event: 'domain_review', actor: 'juridico', role: 'legal_reviewer', domain: 'legal', decision: 'approved' }),
+  legalRecord({ event: 'editorial_approval', decision: 'approved', occurredAt: '2026-06-07T14:00:00.000Z' }),
+  legalRecord({ event: 'status_transition', actor: 'submissor', role: 'author', fromStatus: 'in_review', toStatus: 'approved', occurredAt: '2026-06-07T15:00:00.000Z' }),
+];
+assert.deepEqual(failuresFor(legalContent, validLegalRecords), [], 'documento jurídico válido deve passar');
+expectFailure('legal sem reviewer', failuresFor({ ...legalContent, data: { ...legalContent.data, reviewer: null } }, validLegalRecords), /exige reviewer/);
+expectFailure('legal sem reviewedAt', failuresFor({ ...legalContent, data: { ...legalContent.data, reviewedAt: null } }, validLegalRecords), /exige reviewedAt/);
+expectFailure('legal draft com slug', failuresFor({ ...legalContent, data: { ...legalContent.data, status: 'draft' } }, []), /não aprovado não pode declarar slug/);
+expectFailure('legal revisor incompatível', failuresFor({ ...legalContent, data: { ...legalContent.data, reviewer: 'clinico' } }, validLegalRecords), /legal_reviewer|corresponder/);
+expectFailure('legal data divergente', failuresFor({ ...legalContent, data: { ...legalContent.data, reviewedAt: '2026-06-07T13:30:00.000Z' } }, validLegalRecords), /corresponder à revisão legal/);
+expectFailure('legalBasis vazio', failuresFor({ ...legalContent, data: { ...legalContent.data, legalBasis: [] } }, validLegalRecords), /legalBasis/);
+
+const legalDraft = (id) => ({ id: `legal/${id}`, collection: 'legal', body: 'Placeholder.', data: { status: 'draft', reviewer: null, reviewedAt: null } });
+const legalInventory = [legalDraft('privacidade'), legalDraft('termos-de-uso'), legalDraft('politica-editorial')];
+assert.deepEqual(validateLegalInventory(legalInventory), [], 'inventário jurídico obrigatório deve passar');
+expectFailure('documento jurídico obrigatório ausente', validateLegalInventory(legalInventory.slice(1)), /privacidade.*ausente/);
+expectFailure('slug jurídico público incorreto', validateLegalInventory([
+  { ...legalContent, data: { ...legalContent.data, slug: 'privacidade-interna' } },
+  ...legalInventory.slice(1),
+]), /slug público "privacidade"/);
+expectFailure('slug jurídico duplicado', validateLegalInventory([
+  legalContent,
+  { ...legalContent, id: 'legal/termos-de-uso' },
+  legalDraft('politica-editorial'),
+]), /compartilhar slug/);
+
 assert.deepEqual(validateEditorialState({
   contents: [{ id: 'pages/baixo-risco', collection: 'pages', body: 'Apresentação institucional.', data: { status: 'approved', clinical: false, riskDomains: [], updatedAt } }],
   contributors: [],

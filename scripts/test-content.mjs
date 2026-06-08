@@ -1,7 +1,7 @@
-import { loadEditorialState, validateEditorialState } from './editorial-validation.mjs';
+import { loadEditorialState, validateEditorialState, validateLegalInventory } from './editorial-validation.mjs';
 
 const state = await loadEditorialState();
-const failures = validateEditorialState(state);
+const failures = [...validateEditorialState(state), ...validateLegalInventory(state.contents)];
 
 if (failures.length) {
   console.error(`Validação editorial falhou:\n- ${failures.join('\n- ')}`);

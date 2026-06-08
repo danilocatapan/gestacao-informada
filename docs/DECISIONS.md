@@ -81,3 +81,11 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 **Decisao:** classificar conteudos pelos dominios `clinical`, `psychological` e `legal`; exigir revisoes humanas compativeis, aprovacao editorial independente e registros versionados antes de publicar conteudo governado. O agente Codex atua somente como auditor fail-closed e nunca concede aprovacao ou altera status.
 
 **Motivo:** impedir publicacao baseada em campos isolados, revisoes obsoletas ou automacao sem autoridade profissional, preservando rastreabilidade e separacao de responsabilidades.
+
+## 2026-06-08 — Fluxo tecnico e URLs das paginas legais
+
+**Status:** aceita
+
+**Decisao:** usar `in_review` como estado canonico equivalente a uma pendencia em revisao, manter documentos legais sem slug ou rota enquanto nao aprovados e reservar as URLs publicas `/privacidade/`, `/termos/` e `/politica-editorial/`. A publicacao exige metadados de revisao juridica coerentes com a trilha em `editorial-records`.
+
+**Motivo:** evitar estados editoriais duplicados, bloquear exposicao prematura e manter URLs institucionais curtas sem enfraquecer os gates auditaveis.

@@ -1,11 +1,19 @@
 import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
+import { parse as parseYaml } from 'yaml';
 
 const dist = path.join(process.cwd(), 'dist');
 const content = path.join(process.cwd(), 'src', 'content');
 const base = 'gestacao-informada';
 const expectedPages = ['', 'entender-a-perda', 'trombofilias-e-investigacao', 'acolhimento-e-luto', 'direitos', 'materiais', 'sobre'];
+const legalPublicSlugs = new Map([
+  ['privacidade', 'privacidade'],
+  ['termos-de-uso', 'termos'],
+  ['politica-editorial', 'politica-editorial'],
+]);
 const failures = [];
+const approvedLegalRoutes = [];
+const blockedLegalRoutes = [];
 const exists = async (file) => { try { await access(file); return true; } catch { return false; } };
 
 for (const page of expectedPages) {
@@ -25,27 +33,58 @@ async function markdownFiles(directory) {
     .filter((file) => /\.(md|mdx)$/i.test(file));
 }
 
+function frontmatter(source) {
+  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  return match ? parseYaml(match[1]) ?? {} : {};
+}
+
 for (const collection of ['pages', 'articles', 'legal']) {
   for (const file of await markdownFiles(path.join(content, collection))) {
-    const source = await readFile(file, 'utf8');
-    const status = source.match(/^status:\s*["']?([^"'\r\n]+)/m)?.[1]?.trim();
+    const data = frontmatter(await readFile(file, 'utf8'));
+    const status = data.status;
     if (!['draft', 'in_review', 'approved', 'archived'].includes(status)) failures.push(`Status editorial inválido em ${file}`);
-    if (/^status:\s*["']?approved/m.test(source)) continue;
     const id = path.basename(file).replace(/\.(md|mdx)$/i, '');
+
+    if (collection === 'legal' && status === 'approved') {
+      const expectedSlug = legalPublicSlugs.get(id);
+      if (data.slug !== expectedSlug) failures.push(`Slug público incorreto para legal/${id}.`);
+      if (data.slug) approvedLegalRoutes.push(data.slug);
+      continue;
+    }
+    if (status === 'approved') continue;
+
     const routes = collection === 'articles'
       ? [path.join('artigos', id)]
       : collection === 'legal'
-        ? [id, path.join('legal', id)]
+        ? [legalPublicSlugs.get(id), id, path.join('legal', id), data.slug].filter(Boolean)
         : [id];
     for (const route of routes) {
+      if (collection === 'legal') blockedLegalRoutes.push(route);
       if (await exists(path.join(dist, route))) failures.push(`Conteúdo não publicável presente em dist/${route}`);
     }
   }
 }
+
+for (const route of approvedLegalRoutes) {
+  const file = path.join(dist, route, 'index.html');
+  if (!(await exists(file))) { failures.push(`Rota jurídica aprovada ausente: /${route}/`); continue; }
+  const html = await readFile(file, 'utf8');
+  const canonical = `https://danilocatapan.github.io/${base}/${route}/`;
+  if (!html.includes(`rel="canonical" href="${canonical}"`)) failures.push(`Canonical incorreto em /${route}/`);
+}
+
 const robots = await readFile(path.join(dist, 'robots.txt'), 'utf8');
 if (!robots.includes(`https://danilocatapan.github.io/${base}/sitemap-index.xml`)) failures.push('robots.txt não aponta para sitemap-index.xml canônico.');
 if (!(await exists(path.join(dist, 'sitemap-index.xml')))) failures.push('sitemap-index.xml ausente.');
-if (!(await readdir(dist)).some((file) => /^sitemap-\d+\.xml$/.test(file))) failures.push('Arquivo numerado de sitemap ausente.');
+const sitemapFiles = (await readdir(dist)).filter((file) => /^sitemap-\d+\.xml$/.test(file));
+if (sitemapFiles.length === 0) failures.push('Arquivo numerado de sitemap ausente.');
+const sitemap = (await Promise.all(sitemapFiles.map((file) => readFile(path.join(dist, file), 'utf8')))).join('\n');
+for (const route of approvedLegalRoutes) {
+  if (!sitemap.includes(`/${base}/${route}/`)) failures.push(`Rota jurídica aprovada ausente do sitemap: /${route}/`);
+}
+for (const route of blockedLegalRoutes) {
+  if (sitemap.includes(`/${base}/${route}/`)) failures.push(`Rota jurídica não aprovada presente no sitemap: /${route}/`);
+}
 
 if (failures.length) {
   console.error(`Validação do build falhou:\n- ${failures.join('\n- ')}`);

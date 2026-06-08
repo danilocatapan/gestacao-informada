@@ -4,6 +4,11 @@ import { parse as parseYaml } from 'yaml';
 
 export const statuses = ['draft', 'in_review', 'approved', 'archived'];
 export const domains = ['clinical', 'psychological', 'legal'];
+export const requiredLegalDocuments = new Map([
+  ['legal/privacidade', 'privacidade'],
+  ['legal/termos-de-uso', 'termos'],
+  ['legal/politica-editorial', 'politica-editorial'],
+]);
 const roleForDomain = {
   clinical: 'clinical_reviewer',
   psychological: 'psychological_reviewer',
@@ -39,6 +44,29 @@ function parseMarkdown(source) {
 const sameTime = (left, right) => new Date(left).getTime() === new Date(right).getTime();
 const atOrAfter = (left, right) => new Date(left).getTime() >= new Date(right).getTime();
 const recordActors = (records) => records.map((record) => record.actor);
+const hasOwn = (object, property) => Object.prototype.hasOwnProperty.call(object, property);
+
+export function validateLegalInventory(contents) {
+  const failures = [];
+  const legalDocuments = contents.filter((content) => content.collection === 'legal');
+  const legalMap = new Map(legalDocuments.map((document) => [document.id, document]));
+
+  for (const [id, publicSlug] of requiredLegalDocuments) {
+    const document = legalMap.get(id);
+    if (!document) {
+      failures.push(`${id}: documento jurídico obrigatório ausente.`);
+    } else if (document.data.status === 'approved' && document.data.slug !== publicSlug) {
+      failures.push(`${id}: documento aprovado deve usar o slug público "${publicSlug}".`);
+    }
+  }
+
+  const approvedSlugs = legalDocuments
+    .filter((document) => document.data.status === 'approved' && document.data.slug)
+    .map((document) => document.data.slug);
+  if (new Set(approvedSlugs).size !== approvedSlugs.length) failures.push('legal: documentos aprovados não podem compartilhar slug público.');
+
+  return failures;
+}
 
 export function validateEditorialState({ contents, contributors, records }) {
   const failures = [];
@@ -90,7 +118,23 @@ export function validateEditorialState({ contents, contributors, records }) {
     }
     if (data.clinical === true && content.collection !== 'articles') failures.push(`${label}: conteúdo clínico deve residir em articles.`);
     if (data.clinical === true && !riskDomains.includes('clinical')) failures.push(`${label}: conteúdo clínico deve declarar o domínio clinical.`);
-    if (content.collection === 'legal' && !riskDomains.includes('legal')) failures.push(`${label}: documento jurídico deve declarar o domínio legal.`);
+    if (content.collection === 'legal') {
+      if (!riskDomains.includes('legal')) failures.push(`${label}: documento jurídico deve declarar o domínio legal.`);
+      if (!hasOwn(data, 'reviewer')) failures.push(`${label}: documento jurídico exige o campo reviewer, mesmo quando nulo.`);
+      if (!hasOwn(data, 'reviewedAt')) failures.push(`${label}: documento jurídico exige o campo reviewedAt, mesmo quando nulo.`);
+      if (data.reviewedAt && !data.reviewer) failures.push(`${label}: reviewedAt exige reviewer identificado.`);
+      if (data.status !== 'approved' && data.slug) failures.push(`${label}: documento jurídico não aprovado não pode declarar slug público.`);
+      if (data.status === 'approved') {
+        if (!data.slug) failures.push(`${label}: documento jurídico aprovado exige slug público.`);
+        if (!data.reviewer) failures.push(`${label}: documento jurídico aprovado exige reviewer.`);
+        if (!data.reviewedAt) failures.push(`${label}: documento jurídico aprovado exige reviewedAt.`);
+      }
+      if (data.legalBasis !== undefined
+        && !(typeof data.legalBasis === 'string' && data.legalBasis.trim())
+        && !(Array.isArray(data.legalBasis) && data.legalBasis.length > 0 && data.legalBasis.every((item) => typeof item === 'string' && item.trim()))) {
+        failures.push(`${label}: legalBasis deve ser texto ou lista não vazia quando informado.`);
+      }
+    }
 
     if (data.status !== 'approved') continue;
 
@@ -140,6 +184,20 @@ export function validateEditorialState({ contents, contributors, records }) {
         failures.push(`${label}: revisão ${domain} aprovada e atualizada é obrigatória.`);
       } else {
         requiredRecords.push(latest);
+      }
+    }
+
+    if (content.collection === 'legal' && data.reviewer && data.reviewedAt) {
+      const reviewer = contributorMap.get(data.reviewer);
+      if (!reviewer || !reviewer.editorialRoles?.includes('legal_reviewer')) {
+        failures.push(`${label}: reviewer deve referenciar participante autorizado como legal_reviewer.`);
+      }
+      const latestLegalReview = contentRecords
+        .filter((record) => record.event === 'domain_review' && record.domain === 'legal')
+        .sort((left, right) => new Date(left.occurredAt) - new Date(right.occurredAt))
+        .at(-1);
+      if (latestLegalReview && (latestLegalReview.actor !== data.reviewer || !sameTime(latestLegalReview.occurredAt, data.reviewedAt))) {
+        failures.push(`${label}: reviewer e reviewedAt devem corresponder à revisão legal aprovada mais recente.`);
       }
     }
 

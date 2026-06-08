@@ -1,0 +1,38 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const approvedDocuments = await getCollection('legal', ({ data }) => data.status === 'approved');
+  return approvedDocuments.map((document) => ({
+    params: { slug: document.data.slug },
+    props: { document },
+  }));
+}
+
+const { document } = Astro.props;
+const { Content } = await render(document);
+const reviewer = document.data.reviewer ? await getEntry(document.data.reviewer) : undefined;
+const documentPath = `${document.data.slug}/`;
+---
+
+<BaseLayout title={document.data.title} description={document.data.description} path={documentPath}>
+  <section class="page-hero">
+    <div class="container narrow">
+      <span class="eyebrow">Documento institucional</span>
+      <h1>{document.data.title}</h1>
+      <p class="lead">{document.data.description}</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="container article-grid">
+      <article class="prose"><Content /></article>
+      <aside class="article-meta">
+        <h2>Sobre este documento</h2>
+        {reviewer && <p><strong>Revisão jurídica:</strong> {reviewer.data.name}<br />{reviewer.data.credentials}</p>}
+        {document.data.reviewedAt && <p><strong>Revisado em:</strong> {document.data.reviewedAt.toLocaleDateString('pt-BR')}</p>}
+        <p><strong>Atualizado em:</strong> {document.data.updatedAt.toLocaleDateString('pt-BR')}</p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

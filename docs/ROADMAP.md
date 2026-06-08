@@ -20,7 +20,7 @@
 - [x] Criar checklist de preparação para consulta
 - [ ] Criar glossário clínico
 - [ ] Implementar busca
-- [ ] Publicar privacidade, termos e política editorial (placeholders internos criados; aguardam revisao juridica)
+- [ ] Publicar privacidade, termos e política editorial (estrutura tecnica e placeholders internos prontos; aguardam revisao juridica)
 - [x] Publicar página Sobre e concluir navegação institucional do MVP
 
 ### Marco B — Expansão editorial
