@@ -14,12 +14,10 @@ Regras aplicadas à branch `main` em 8 de junho de 2026:
 - [x] bloquear exclusão da branch;
 - [x] manter zero aprovações humanas obrigatórias enquanto houver apenas um mantenedor.
 
-Validação operacional pendente:
+Validação operacional:
 
-1. Abrir um pull request de teste.
-2. Confirmar que o merge fica bloqueado enquanto `validate` não concluir.
-3. Confirmar que um push direto para `main` é recusado.
-4. Registrar a data da verificação no pull request.
+- [x] Pull request aberto, validado pelo check `validate` e mesclado em 8 de junho de 2026: [PR #1](https://github.com/danilocatapan/gestacao-informada/pull/1).
+- [ ] Confirmar em teste separado que um push direto para `main` é recusado.
 
 ## Cadastro de participantes editoriais
 
