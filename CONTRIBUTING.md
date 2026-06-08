@@ -35,9 +35,11 @@ npm run test:content
 npm run build
 npm run test:build
 npm run test:e2e
+npm run test:e2e:editorial
 ```
 
 O hook de pre-commit executa `test:content`. O CI continua sendo o gate obrigatório para merge e deploy.
+O comando `test:e2e:editorial` executa isoladamente o fluxo do painel local com fixtures temporárias.
 
 Ao concluir, informe quais documentos e contratos de agentes foram revisados, quais foram alterados,
 quais divergências foram corrigidas e quais atualizações foram consideradas desnecessárias.
