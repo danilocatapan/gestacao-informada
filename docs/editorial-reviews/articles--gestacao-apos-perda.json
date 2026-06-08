@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "bf672759-9ff3-4e7d-bf8c-84d8eafaba5d",
-  "target": "articles/entendendo-a-perda-gestacional",
-  "generatedAt": "2026-06-08T13:21:16.676Z",
-  "updatedAt": "2026-06-08T13:21:16.676Z",
-  "contentHash": "0da3339340e29c8725bad84de31c91fa09f5d258ea6063753eef4c1814376b25",
+  "id": "92e373a5-7c37-457c-9df3-6c0af6f83447",
+  "target": "articles/gestacao-apos-perda",
+  "generatedAt": "2026-06-08T13:21:16.692Z",
+  "updatedAt": "2026-06-08T13:21:16.692Z",
+  "contentHash": "58047fccd29715fa5cf7680d7a831c4b0d1a4dd5a63d518bd87edb3b0ed5393f",
   "contentStatus": "draft",
   "riskDomains": [
     "clinical",
@@ -22,12 +22,12 @@
   },
   "findings": [
     {
-      "id": "7953e48d27e2c49f",
+      "id": "415108b365086bae",
       "domain": "editorial",
       "severity": "medium",
       "exactText": "Pendência humana",
       "occurrence": 1,
-      "line": 39,
+      "line": 45,
       "rationale": "O texto declara uma pendência humana que precisa ser confirmada antes da publicação.",
       "suggestedReplacement": "Pendência humana",
       "relatedSources": [],
@@ -40,7 +40,7 @@
   ],
   "history": [
     {
-      "occurredAt": "2026-06-08T13:21:16.676Z",
+      "occurredAt": "2026-06-08T13:21:16.692Z",
       "action": "review_generated",
       "actor": "editorial-pipeline"
     }

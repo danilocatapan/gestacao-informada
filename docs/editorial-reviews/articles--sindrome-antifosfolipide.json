@@ -1,14 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "bf672759-9ff3-4e7d-bf8c-84d8eafaba5d",
-  "target": "articles/entendendo-a-perda-gestacional",
-  "generatedAt": "2026-06-08T13:21:16.676Z",
-  "updatedAt": "2026-06-08T13:21:16.676Z",
-  "contentHash": "0da3339340e29c8725bad84de31c91fa09f5d258ea6063753eef4c1814376b25",
+  "id": "13652cde-10fa-4b94-9546-6aa6ba839905",
+  "target": "articles/sindrome-antifosfolipide",
+  "generatedAt": "2026-06-08T13:21:16.763Z",
+  "updatedAt": "2026-06-08T13:21:16.763Z",
+  "contentHash": "25fbc8712141abb533170c9c32c145fa9ef1836d29c4b719d576d0e96cf6ec71",
   "contentStatus": "draft",
   "riskDomains": [
-    "clinical",
-    "psychological"
+    "clinical"
   ],
   "decision": "needs_changes",
   "publicationAllowed": false,
@@ -22,12 +21,12 @@
   },
   "findings": [
     {
-      "id": "7953e48d27e2c49f",
+      "id": "b45e0f1b14621a26",
       "domain": "editorial",
       "severity": "medium",
       "exactText": "Pendência humana",
       "occurrence": 1,
-      "line": 39,
+      "line": 38,
       "rationale": "O texto declara uma pendência humana que precisa ser confirmada antes da publicação.",
       "suggestedReplacement": "Pendência humana",
       "relatedSources": [],
@@ -40,7 +39,7 @@
   ],
   "history": [
     {
-      "occurredAt": "2026-06-08T13:21:16.676Z",
+      "occurredAt": "2026-06-08T13:21:16.763Z",
       "action": "review_generated",
       "actor": "editorial-pipeline"
     }

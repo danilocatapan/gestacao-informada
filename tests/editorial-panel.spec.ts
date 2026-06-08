@@ -61,7 +61,7 @@ test('fluxo completo resolve apontamentos e envia somente para in_review', async
   page.on('pageerror', (error) => errors.push(error.message));
 
   await page.goto(origin);
-  await expect(page.getByText('Somente em 127.0.0.1. Nenhuma ação publica conteúdo.')).toBeVisible();
+  await expect(page.getByText('Somente em 127.0.0.1. Nenhuma ação faz commit, push ou deploy.')).toBeVisible();
   await page.getByRole('button', { name: /articles\/fluxo-completo/ }).click();
 
   await expect(page.locator('.article mark')).toHaveCount(2);
@@ -81,6 +81,9 @@ test('fluxo completo resolve apontamentos e envia somente para in_review', async
   await expect(apply).toBeEnabled();
   await apply.click();
   await expect(page.locator('#status')).toHaveText('Aplicado. Novo status: in_review');
+  await page.getByRole('button', { name: 'Decisões humanas' }).click();
+  await expect(page.getByRole('heading', { name: 'Decisões humanas auditáveis' })).toBeVisible();
+  await expect(page.getByText('Cada responsável deve registrar pessoalmente sua decisão.')).toBeVisible();
 
   const content = await readContent(root, 'articles/fluxo-completo');
   expect(content.data.status).toBe('in_review');
@@ -134,6 +137,8 @@ test.describe('mobile', () => {
     await page.goto(origin);
     await page.getByRole('button', { name: /articles\/rejeicao-bloqueante/ }).click();
     await expect(page.getByRole('heading', { name: 'Conteúdo rejeicao-bloqueante' })).toBeVisible();
+    await page.getByRole('button', { name: 'Decisões humanas' }).click();
+    await expect(page.getByRole('heading', { name: 'Cadastrar participante' })).toBeVisible();
     await expect(page.locator('#status')).toHaveAttribute('aria-live', 'polite');
     expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBeFalsy();
     expect(errors).toEqual([]);

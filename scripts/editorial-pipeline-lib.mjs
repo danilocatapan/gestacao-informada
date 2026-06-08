@@ -222,11 +222,12 @@ export async function saveReviewResolution(root, target, findingId, resolution, 
   return review;
 }
 
-async function writeEditorialRecord(root, record) {
+export async function writeEditorialRecord(root, record) {
   const directory = path.join(root, 'src', 'content', 'editorial-records');
   await mkdir(directory, { recursive: true });
-  const name = `${record.occurredAt.replaceAll(':', '-').replace(/\.\d{3}Z$/, 'Z')}--${record.target.replace('/', '--')}--${record.event}.json`;
-  await writeFile(path.join(directory, name), `${JSON.stringify(record, null, 2)}\n`, 'utf8');
+  const timestamp = record.occurredAt.replaceAll(':', '-').replace(/\.\d{3}Z$/, 'Z');
+  const name = `${timestamp}--${record.target.replace('/', '--')}--${record.event}--${randomUUID()}.json`;
+  await writeFile(path.join(directory, name), `${JSON.stringify(record, null, 2)}\n`, { encoding: 'utf8', flag: 'wx' });
 }
 
 export async function applyReview(root, target, actor = 'equipe-editorial') {

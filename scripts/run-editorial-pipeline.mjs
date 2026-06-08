@@ -2,6 +2,14 @@ import process from 'node:process';
 import { generateReview, listContentTargets, markDraft } from './editorial-pipeline-lib.mjs';
 
 const root = process.cwd();
+const mvpArticles = [
+  'articles/entendendo-a-perda-gestacional',
+  'articles/gestacao-apos-perda',
+  'articles/investigacao-apos-perdas-recorrentes',
+  'articles/trombofilias-hereditarias-e-adquiridas',
+  'articles/sindrome-antifosfolipide',
+  'articles/mthfr-evidencias-e-incertezas',
+];
 const [command = 'review', target, ...rest] = process.argv.slice(2);
 const option = (name, fallback) => {
   const index = rest.indexOf(`--${name}`);
@@ -14,6 +22,11 @@ if (command === 'review') {
   console.log(`${review.target}: ${review.decision} (${review.findings.length} apontamento(s)).`);
 } else if (command === 'review-all') {
   for (const item of await listContentTargets(root)) {
+    const review = await generateReview(root, item);
+    console.log(`${review.target}: ${review.decision} (${review.findings.length} apontamento(s)).`);
+  }
+} else if (command === 'review-mvp') {
+  for (const item of mvpArticles) {
     const review = await generateReview(root, item);
     console.log(`${review.target}: ${review.decision} (${review.findings.length} apontamento(s)).`);
   }

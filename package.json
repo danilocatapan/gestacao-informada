@@ -14,6 +14,7 @@
     "test:e2e": "playwright test",
     "test:e2e:editorial": "playwright test --config=playwright.editorial.config.ts",
     "editorial:review": "node scripts/run-editorial-pipeline.mjs review",
+    "editorial:review:mvp": "node scripts/run-editorial-pipeline.mjs review-mvp",
     "editorial:review:all": "node scripts/run-editorial-pipeline.mjs review-all",
     "editorial:mark-draft": "node scripts/run-editorial-pipeline.mjs mark-draft",
     "editorial:panel": "node scripts/editorial-review-server.mjs",

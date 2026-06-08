@@ -1,14 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "bf672759-9ff3-4e7d-bf8c-84d8eafaba5d",
-  "target": "articles/entendendo-a-perda-gestacional",
-  "generatedAt": "2026-06-08T13:21:16.676Z",
-  "updatedAt": "2026-06-08T13:21:16.676Z",
-  "contentHash": "0da3339340e29c8725bad84de31c91fa09f5d258ea6063753eef4c1814376b25",
+  "id": "4f78f38b-aab0-4464-94a1-b6adfd48f559",
+  "target": "articles/mthfr-evidencias-e-incertezas",
+  "generatedAt": "2026-06-08T13:21:16.774Z",
+  "updatedAt": "2026-06-08T13:21:16.774Z",
+  "contentHash": "5ca1e67ddfdb05c22e4ceb70e613669ac67505d394145f71231d46a02eb83db9",
   "contentStatus": "draft",
   "riskDomains": [
-    "clinical",
-    "psychological"
+    "clinical"
   ],
   "decision": "needs_changes",
   "publicationAllowed": false,
@@ -22,12 +21,12 @@
   },
   "findings": [
     {
-      "id": "7953e48d27e2c49f",
+      "id": "c78e17f2df0f7389",
       "domain": "editorial",
       "severity": "medium",
       "exactText": "Pendência humana",
       "occurrence": 1,
-      "line": 39,
+      "line": 34,
       "rationale": "O texto declara uma pendência humana que precisa ser confirmada antes da publicação.",
       "suggestedReplacement": "Pendência humana",
       "relatedSources": [],
@@ -40,7 +39,7 @@
   ],
   "history": [
     {
-      "occurredAt": "2026-06-08T13:21:16.676Z",
+      "occurredAt": "2026-06-08T13:21:16.774Z",
       "action": "review_generated",
       "actor": "editorial-pipeline"
     }

@@ -43,3 +43,19 @@ Papéis ainda necessários:
 
 O cadastro torna o fluxo disponível, mas não aprova conteúdo nem autoriza publicação. Artigos e
 documentos permanecem em `draft` até submissão formal e registros editoriais válidos.
+
+## Publicação dos seis artigos iniciais
+
+- [ ] gerar pareceres somente dos seis artigos com `npm run editorial:review:mvp`;
+- [ ] iniciar o site e o painel local;
+- [ ] resolver apontamentos automatizados e enviar cada artigo para `in_review`;
+- [ ] registrar pessoalmente cada revisão clínica exigida;
+- [ ] registrar pessoalmente as três revisões psicológicas exigidas;
+- [ ] registrar exceções de segurança necessárias e repetir a triagem quando a versão mudar;
+- [ ] registrar aprovação editorial independente e transição local para `approved`;
+- [ ] executar auditoria editorial, `npm test`, `npm run test:e2e:editorial` e `npm run test:e2e`;
+- [ ] abrir PR, aguardar o check `validate` e mesclar em `main`;
+- [ ] confirmar as seis rotas no GitHub Pages antes de concluir o item correspondente no roadmap.
+
+O painel não realiza commit, push ou deploy. A promoção local para `approved` cria rotas somente no
+próximo build e continua sujeita aos gates do CI.

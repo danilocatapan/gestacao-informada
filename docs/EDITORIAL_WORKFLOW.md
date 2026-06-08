@@ -103,6 +103,7 @@ profissional humana.
 
 ```text
 npm run editorial:review -- articles/identificador
+npm run editorial:review:mvp
 npm run editorial:review:all
 npm run editorial:mark-draft -- articles/identificador --reason "Motivo auditável"
 npm run editorial:panel
@@ -110,5 +111,11 @@ npm run editorial:panel
 
 Os pareceres ficam em `docs/editorial-reviews`. O painel escuta somente em `127.0.0.1`, destaca
 trechos no contexto do artigo, permite aceitar ou rejeitar sugestões e recusa aplicar decisões quando
-o hash do conteúdo mudou. Sua ação final pode enviar conteúdo para `in_review`, mas nunca promove
-conteúdo para `approved`, cria commit, executa push ou publica o site.
+o hash do conteúdo mudou. A triagem automatizada pode enviar conteúdo para `in_review`, mas nunca
+promove conteúdo para `approved`.
+
+Em uma área separada, cada participante humano cadastrado pode registrar pessoalmente sua decisão.
+O painel exige confirmação nominal, papel compatível, justificativa auditável, versão atual e
+independência entre autor, revisores e aprovador editorial. A transição local para `approved` somente
+é aplicada depois de todas as revisões exigidas, aprovação editorial e validação integral dos gates.
+Nenhuma ação do painel cria commit, executa push ou publica o site.

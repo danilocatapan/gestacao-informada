@@ -50,11 +50,15 @@ Pipeline e painel editorial local:
 
 ```bash
 npm run editorial:review -- articles/entendendo-a-perda-gestacional
+npm run editorial:review:mvp
 npm run editorial:panel
 ```
 
-O painel abre somente em `127.0.0.1`, permite resolver apontamentos e enviar conteúdo para
-`in_review`. Ele nunca aprova profissionalmente, publica, cria commit ou executa push.
+O painel abre somente em `127.0.0.1` e separa a triagem automatizada das decisões humanas.
+Automações podem resolver apontamentos e enviar conteúdo para `in_review`. Revisores humanos
+identificados podem registrar pessoalmente revisões profissionais, exceções de segurança e
+aprovação editorial. A transição local para `approved` somente ocorre quando todos os gates passam.
+Nenhuma ação do painel cria commit, executa push ou faz deploy.
 
 ## Princípio essencial
 

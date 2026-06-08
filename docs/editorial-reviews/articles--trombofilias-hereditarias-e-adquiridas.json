@@ -1,14 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "bf672759-9ff3-4e7d-bf8c-84d8eafaba5d",
-  "target": "articles/entendendo-a-perda-gestacional",
-  "generatedAt": "2026-06-08T13:21:16.676Z",
-  "updatedAt": "2026-06-08T13:21:16.676Z",
-  "contentHash": "0da3339340e29c8725bad84de31c91fa09f5d258ea6063753eef4c1814376b25",
+  "id": "2463225d-037f-47a0-b294-8cc87accffa3",
+  "target": "articles/trombofilias-hereditarias-e-adquiridas",
+  "generatedAt": "2026-06-08T13:21:16.747Z",
+  "updatedAt": "2026-06-08T13:21:16.747Z",
+  "contentHash": "a53b94d3d01b6cca1a64f9e37d79c06bd5c270f0a1116039b76b588936614caf",
   "contentStatus": "draft",
   "riskDomains": [
-    "clinical",
-    "psychological"
+    "clinical"
   ],
   "decision": "needs_changes",
   "publicationAllowed": false,
@@ -22,7 +21,7 @@
   },
   "findings": [
     {
-      "id": "7953e48d27e2c49f",
+      "id": "811ed0302fc8ef32",
       "domain": "editorial",
       "severity": "medium",
       "exactText": "Pendência humana",
@@ -40,7 +39,7 @@
   ],
   "history": [
     {
-      "occurredAt": "2026-06-08T13:21:16.676Z",
+      "occurredAt": "2026-06-08T13:21:16.747Z",
       "action": "review_generated",
       "actor": "editorial-pipeline"
     }

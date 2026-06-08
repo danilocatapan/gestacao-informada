@@ -7,6 +7,10 @@ Esta pasta guarda screenshots gerados durante a validação Playwright de interf
 - `painel-editorial-fluxo-desktop.png`: fluxo E2E isolado após resolução e envio para `in_review`.
 - `painel-editorial-fluxo-mobile.png`: validação E2E isolada de acessibilidade básica e responsividade.
 
+As evidências do painel também cobrem a separação visível entre triagem automatizada e decisões
+humanas. Screenshots dos seis artigos públicos somente devem ser adicionados depois das aprovações
+humanas reais e da geração das respectivas rotas.
+
 Antes de concluir mudanças visuais:
 
 - validar todas as rotas alteradas em desktop e mobile;
