@@ -71,6 +71,7 @@ const articles = defineCollection({
       safetyReview: z.array(safetyReview).default([]),
       aiAssistance,
       inspirationCredits: z.array(inspirationCredit).default([]),
+      glossaryTerms: z.array(reference('glossary')).default([]),
     })
     .superRefine((article, ctx) => {
       if (article.clinical && !article.riskDomains.includes('clinical')) {
@@ -82,6 +83,46 @@ const articles = defineCollection({
       }
       if (article.sources.length === 0) {
         ctx.addIssue({ code: 'custom', message: 'Artigo aprovado exige ao menos uma fonte.', path: ['sources'] });
+      }
+    }),
+});
+
+const glossary = defineCollection({
+  loader: glob({ base: './src/content/glossary', pattern: '**/*.{md,mdx}' }),
+  schema: z
+    .object({
+      term: z.string().min(1),
+      slug: publicSlug,
+      shortDefinition: z.string().min(1),
+      fullDefinition: z.string().min(1),
+      relatedTerms: z.array(reference('glossary')).default([]),
+      sources: z.array(source).default([]),
+      reviewer: reference('contributors').nullable(),
+      reviewedAt: z.coerce.date().nullable(),
+      status,
+      contentType: z.literal('glossary-entry'),
+      clinical: z.literal(true),
+      riskDomains: z.array(riskDomain),
+      authoredBy: reference('contributors').optional(),
+      lastUpdatedAt: z.coerce.date(),
+      safetyReview: z.array(safetyReview).default([]),
+    })
+    .superRefine((entry, ctx) => {
+      if (!entry.riskDomains.includes('clinical')) {
+        ctx.addIssue({ code: 'custom', message: 'Termo clínico deve declarar o domínio clinical.', path: ['riskDomains'] });
+      }
+      if (entry.status !== 'approved') return;
+      if (!entry.authoredBy) {
+        ctx.addIssue({ code: 'custom', message: 'Termo aprovado exige autoria.', path: ['authoredBy'] });
+      }
+      if (entry.sources.length === 0) {
+        ctx.addIssue({ code: 'custom', message: 'Termo aprovado exige ao menos uma fonte.', path: ['sources'] });
+      }
+      if (!entry.reviewer) {
+        ctx.addIssue({ code: 'custom', message: 'Termo aprovado exige revisor clínico.', path: ['reviewer'] });
+      }
+      if (!entry.reviewedAt) {
+        ctx.addIssue({ code: 'custom', message: 'Termo aprovado exige data de revisão clínica.', path: ['reviewedAt'] });
       }
     }),
 });
@@ -162,7 +203,7 @@ const contributors = defineCollection({
 const editorialRecords = defineCollection({
   loader: glob({ base: './src/content/editorial-records', pattern: '**/*.{json,yaml,yml}' }),
   schema: z.object({
-    target: z.string().regex(/^(articles|pages|legal)\/[^/]+$/),
+    target: z.string().regex(/^(articles|pages|legal|glossary)\/[^/]+$/),
     event: z.enum(['submitted_for_review', 'domain_review', 'editorial_approval', 'status_transition']),
     actor: reference('contributors'),
     role: editorialRole,
@@ -176,4 +217,4 @@ const editorialRecords = defineCollection({
   }),
 });
 
-export const collections = { pages, articles, legal, reviewNotes, contributors, editorialRecords };
+export const collections = { pages, articles, glossary, legal, reviewNotes, contributors, editorialRecords };

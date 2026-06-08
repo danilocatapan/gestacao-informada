@@ -1,0 +1,92 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { canPublishGlossary } from '../../lib/publication';
+import { withBaseUrl, withCanonicalUrl } from '../../lib/urls';
+
+export async function getStaticPaths() {
+  const approvedArticles = await getCollection('articles', ({ data }) => data.status === 'approved');
+  const approvedTerms = await getCollection('glossary', ({ data }) => data.status === 'approved');
+  if (!canPublishGlossary(approvedArticles.length, approvedTerms.length)) return [];
+
+  return [
+    { params: { slug: undefined }, props: { terms: approvedTerms } },
+    ...approvedTerms.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } })),
+  ];
+}
+
+const { entry, terms } = Astro.props;
+const glossaryPath = 'glossario/';
+const entryPath = entry ? `${glossaryPath}${entry.data.slug}/` : glossaryPath;
+const author = entry?.data.authoredBy ? await getEntry(entry.data.authoredBy) : undefined;
+const reviewer = entry?.data.reviewer ? await getEntry(entry.data.reviewer) : undefined;
+const relatedTerms = entry
+  ? (await Promise.all(entry.data.relatedTerms.map((reference) => getEntry(reference))))
+    .filter((related) => related?.data.status === 'approved')
+  : [];
+const structuredData = entry ? [{
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTerm',
+  name: entry.data.term,
+  description: entry.data.shortDefinition,
+  url: withCanonicalUrl(entryPath),
+}] : [];
+---
+
+<BaseLayout
+  title={entry ? entry.data.term : 'Glossário clínico'}
+  description={entry ? entry.data.shortDefinition : 'Definições clínicas revisadas para ajudar a compreender termos usados nos conteúdos do portal.'}
+  path={entryPath}
+  additionalStructuredData={structuredData}
+>
+  <section class="page-hero">
+    <div class="container narrow">
+      <span class="eyebrow">Glossário clínico</span>
+      <h1>{entry ? entry.data.term : 'Glossário clínico'}</h1>
+      <p class="lead">{entry ? entry.data.shortDefinition : 'Definições revisadas para apoiar a compreensão, sem substituir avaliação profissional.'}</p>
+    </div>
+  </section>
+  <section class="content-section">
+    {entry ? (
+      <div class="container article-grid" data-glossary-entry>
+        <article class="prose">
+          <p class="glossary-definition">{entry.data.fullDefinition}</p>
+          {relatedTerms.length > 0 && (
+            <section aria-labelledby="termos-relacionados">
+              <h2 id="termos-relacionados">Termos relacionados</h2>
+              <ul>
+                {relatedTerms.map((related) => related && (
+                  <li><a href={withBaseUrl(`glossario/${related.data.slug}/`)}>{related.data.term}</a></li>
+                ))}
+              </ul>
+            </section>
+          )}
+          <p><a href={withBaseUrl(glossaryPath)}>Voltar ao glossário</a></p>
+        </article>
+        <aside class="article-meta">
+          <h2>Sobre este termo</h2>
+          {author && <p><strong>Autoria:</strong> {author.data.name}<br />{author.data.credentials}</p>}
+          {reviewer && <p><strong>Revisão clínica:</strong> {reviewer.data.name}<br />{reviewer.data.credentials}</p>}
+          {entry.data.reviewedAt && <p><strong>Revisado em:</strong> {entry.data.reviewedAt.toLocaleDateString('pt-BR')}</p>}
+          <p><strong>Última atualização:</strong> {entry.data.lastUpdatedAt.toLocaleDateString('pt-BR')}</p>
+          <p>Conteúdo educativo. Não substitui avaliação, diagnóstico ou tratamento individualizado.</p>
+          <h3>Fontes</h3>
+          <ul>{entry.data.sources.map((source) => <li><a href={source.url}>{source.title}</a> — {source.publisher}</li>)}</ul>
+        </aside>
+      </div>
+    ) : (
+      <div class="container narrow" data-glossary-index>
+        <ol class="glossary-list">
+          {terms
+            .sort((left, right) => left.data.term.localeCompare(right.data.term, 'pt-BR'))
+            .map((term) => (
+              <li>
+                <h2><a href={withBaseUrl(`glossario/${term.data.slug}/`)}>{term.data.term}</a></h2>
+                <p>{term.data.shortDefinition}</p>
+              </li>
+            ))}
+        </ol>
+      </div>
+    )}
+  </section>
+</BaseLayout>

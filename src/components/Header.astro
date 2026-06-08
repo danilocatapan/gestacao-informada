@@ -1,5 +1,7 @@
 ---
 import { site } from '../lib/site';
+import { getCollection } from 'astro:content';
+import { canPublishGlossary } from '../lib/publication';
 import { withBaseUrl } from '../lib/urls';
 
 interface Props {
@@ -7,6 +9,10 @@ interface Props {
 }
 
 const { path = '' } = Astro.props;
+const approvedArticles = await getCollection('articles', ({ data }) => data.status === 'approved');
+const approvedTerms = await getCollection('glossary', ({ data }) => data.status === 'approved');
+const glossaryPublished = canPublishGlossary(approvedArticles.length, approvedTerms.length);
+const isCurrent = (linkPath: string) => path === linkPath || (linkPath === 'glossario/' && path.startsWith(linkPath));
 const links = [
   ['Entender a perda', 'entender-a-perda/'],
   ['Trombofilias', 'trombofilias-e-investigacao/'],
@@ -14,6 +20,7 @@ const links = [
   ['Direitos', 'direitos/'],
   ['Materiais', 'materiais/'],
   ['Sobre', 'sobre/'],
+  ...(glossaryPublished ? [['Glossário', 'glossario/'], ['Busca', 'busca/']] : []),
 ];
 ---
 
@@ -30,7 +37,7 @@ const links = [
     <nav id="primary-navigation" aria-label="Navegação principal">
       <ul>
         {links.map(([label, linkPath]) => (
-          <li><a href={withBaseUrl(linkPath)} aria-current={path === linkPath ? 'page' : undefined}>{label}</a></li>
+          <li><a href={withBaseUrl(linkPath)} aria-current={isCurrent(linkPath) ? 'page' : undefined}>{label}</a></li>
         ))}
       </ul>
     </nav>

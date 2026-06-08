@@ -6,6 +6,8 @@ const dist = path.join(process.cwd(), 'dist');
 const content = path.join(process.cwd(), 'src', 'content');
 const base = 'gestacao-informada';
 const expectedPages = ['', 'entender-a-perda', 'trombofilias-e-investigacao', 'acolhimento-e-luto', 'direitos', 'materiais', 'sobre'];
+const minimumApprovedArticles = 6;
+const minimumApprovedGlossaryTerms = 6;
 const legalPublicSlugs = new Map([
   ['privacidade', 'privacidade'],
   ['termos-de-uso', 'termos'],
@@ -16,6 +18,10 @@ const approvedLegalRoutes = [];
 const blockedLegalRoutes = [];
 const approvedArticleRoutes = [];
 const blockedArticleRoutes = [];
+const approvedGlossaryRoutes = [];
+const blockedGlossaryRoutes = [];
+const blockedSearchTexts = [];
+const approvedSearchUrls = [];
 let legalGuideStatus;
 const exists = async (file) => { try { await access(file); return true; } catch { return false; } };
 
@@ -41,12 +47,19 @@ function frontmatter(source) {
   return match ? parseYaml(match[1]) ?? {} : {};
 }
 
-for (const collection of ['pages', 'articles', 'legal']) {
+for (const collection of ['pages', 'articles', 'glossary', 'legal']) {
   for (const file of await markdownFiles(path.join(content, collection))) {
     const data = frontmatter(await readFile(file, 'utf8'));
     const status = data.status;
     if (!['draft', 'in_review', 'approved', 'archived'].includes(status)) failures.push(`Status editorial inválido em ${file}`);
     const id = path.basename(file).replace(/\.(md|mdx)$/i, '');
+    if (status !== 'approved') blockedSearchTexts.push(data.title, data.term, data.description, data.shortDefinition);
+    if (status === 'approved') {
+      if (collection === 'pages') approvedSearchUrls.push(`/${base}/${id}/`);
+      if (collection === 'articles') approvedSearchUrls.push(`/${base}/artigos/${id}/`);
+      if (collection === 'glossary') approvedSearchUrls.push(`/${base}/glossario/${data.slug}/`);
+      if (collection === 'legal') approvedSearchUrls.push(`/${base}/${data.contentType === 'legal-guide' ? 'direitos' : data.slug}/`);
+    }
 
     if (collection === 'legal' && data.contentType === 'legal-guide') {
       legalGuideStatus = status;
@@ -59,19 +72,51 @@ for (const collection of ['pages', 'articles', 'legal']) {
       continue;
     }
     if (collection === 'articles' && status === 'approved') approvedArticleRoutes.push(path.join('artigos', id));
+    if (collection === 'glossary' && status === 'approved') approvedGlossaryRoutes.push(path.join('glossario', data.slug));
     if (status === 'approved') continue;
 
     const routes = collection === 'articles'
       ? [path.join('artigos', id)]
-      : collection === 'legal'
-        ? [legalPublicSlugs.get(id), id, path.join('legal', id), data.slug].filter(Boolean)
-        : [id];
+      : collection === 'glossary'
+        ? [path.join('glossario', data.slug)]
+        : collection === 'legal'
+          ? [legalPublicSlugs.get(id), id, path.join('legal', id), data.slug].filter(Boolean)
+          : [id];
     for (const route of routes) {
       if (collection === 'legal') blockedLegalRoutes.push(route);
       if (collection === 'articles') blockedArticleRoutes.push(route);
+      if (collection === 'glossary') blockedGlossaryRoutes.push(route);
       if (await exists(path.join(dist, route))) failures.push(`Conteúdo não publicável presente em dist/${route}`);
     }
   }
+}
+
+const glossaryPublished = approvedArticleRoutes.length >= minimumApprovedArticles
+  && approvedGlossaryRoutes.length >= minimumApprovedGlossaryTerms;
+const glossaryIndex = path.join(dist, 'glossario', 'index.html');
+const searchPage = path.join(dist, 'busca', 'index.html');
+const searchIndex = path.join(dist, 'busca', 'indice.json');
+for (const file of [glossaryIndex, searchPage, searchIndex]) {
+  if (glossaryPublished && !(await exists(file))) failures.push(`Marco publicado sem arquivo esperado: ${path.relative(dist, file)}`);
+  if (!glossaryPublished && await exists(file)) failures.push(`Marco bloqueado vazou em dist/${path.relative(dist, file)}`);
+}
+for (const route of approvedGlossaryRoutes) {
+  const file = path.join(dist, route, 'index.html');
+  if (glossaryPublished && !(await exists(file))) failures.push(`Termo aprovado ausente: /${route.replaceAll('\\', '/')}/`);
+  if (!glossaryPublished && await exists(file)) failures.push(`Termo publicado antes do marco: /${route.replaceAll('\\', '/')}/`);
+}
+if (glossaryPublished) {
+  const index = JSON.parse(await readFile(searchIndex, 'utf8'));
+  const urls = index.map((item) => item.url);
+  if (new Set(urls).size !== urls.length) failures.push('Índice de busca contém URLs duplicadas.');
+  for (const url of new Set(approvedSearchUrls)) {
+    if (!urls.includes(url)) failures.push(`Conteúdo aprovado ausente do índice de busca: ${url}`);
+  }
+  const serialized = JSON.stringify(index);
+  for (const text of blockedSearchTexts.filter(Boolean)) {
+    if (serialized.includes(text)) failures.push(`Conteúdo bloqueado vazou no índice de busca: ${text}`);
+  }
+  if (serialized.includes('review-notes') || serialized.includes('editorial-records')) failures.push('Conteúdo interno vazou no índice de busca.');
 }
 
 for (const route of approvedLegalRoutes) {
@@ -99,6 +144,10 @@ if (!(await exists(path.join(dist, 'sitemap-index.xml')))) failures.push('sitema
 const sitemapFiles = (await readdir(dist)).filter((file) => /^sitemap-\d+\.xml$/.test(file));
 if (sitemapFiles.length === 0) failures.push('Arquivo numerado de sitemap ausente.');
 const sitemap = (await Promise.all(sitemapFiles.map((file) => readFile(path.join(dist, file), 'utf8')))).join('\n');
+for (const route of ['glossario', 'busca']) {
+  if (glossaryPublished && !sitemap.includes(`/${base}/${route}/`)) failures.push(`Rota publicada ausente do sitemap: /${route}/`);
+  if (!glossaryPublished && sitemap.includes(`/${base}/${route}/`)) failures.push(`Rota bloqueada presente no sitemap: /${route}/`);
+}
 for (const route of approvedLegalRoutes) {
   if (!sitemap.includes(`/${base}/${route}/`)) failures.push(`Rota jurídica aprovada ausente do sitemap: /${route}/`);
 }
@@ -112,6 +161,15 @@ for (const route of approvedArticleRoutes) {
 for (const route of blockedArticleRoutes) {
   const publicRoute = route.replaceAll('\\', '/');
   if (sitemap.includes(`/${base}/${publicRoute}/`)) failures.push(`Artigo não aprovado presente no sitemap: /${publicRoute}/`);
+}
+for (const route of approvedGlossaryRoutes) {
+  const publicRoute = route.replaceAll('\\', '/');
+  if (glossaryPublished && !sitemap.includes(`/${base}/${publicRoute}/`)) failures.push(`Termo aprovado ausente do sitemap: /${publicRoute}/`);
+  if (!glossaryPublished && sitemap.includes(`/${base}/${publicRoute}/`)) failures.push(`Termo publicado antes do marco presente no sitemap: /${publicRoute}/`);
+}
+for (const route of blockedGlossaryRoutes) {
+  const publicRoute = route.replaceAll('\\', '/');
+  if (sitemap.includes(`/${base}/${publicRoute}/`)) failures.push(`Termo não aprovado presente no sitemap: /${publicRoute}/`);
 }
 
 if (failures.length) {

@@ -72,6 +72,27 @@ export function validateLegalInventory(contents) {
   return failures;
 }
 
+export function validateGlossaryInventory(contents) {
+  const failures = [];
+  const glossaryEntries = contents.filter((content) => content.collection === 'glossary');
+  const glossaryMap = new Map(glossaryEntries.map((entry) => [entry.id, entry]));
+  const slugs = glossaryEntries.map((entry) => entry.data.slug);
+
+  if (new Set(slugs).size !== slugs.length) failures.push('glossary: termos não podem compartilhar slug público.');
+
+  for (const entry of glossaryEntries) {
+    for (const relatedTerm of entry.data.relatedTerms ?? []) {
+      const target = glossaryMap.get(`glossary/${relatedTerm}`);
+      if (!target) failures.push(`${entry.id}: relatedTerms referencia termo inexistente: ${relatedTerm}.`);
+      if (entry.data.status === 'approved' && target?.data.status !== 'approved') {
+        failures.push(`${entry.id}: termo aprovado só pode relacionar termos approved.`);
+      }
+    }
+  }
+
+  return failures;
+}
+
 export function validateEditorialState({ contents, contributors, records }) {
   const failures = [];
   const contributorMap = new Map(contributors.map((contributor) => [contributor.id, contributor]));
@@ -120,7 +141,7 @@ export function validateEditorialState({ contents, contributors, records }) {
     for (const domain of riskDomains) {
       if (!domains.includes(domain)) failures.push(`${label}: domínio de risco inválido: ${domain}.`);
     }
-    if (data.clinical === true && content.collection !== 'articles') failures.push(`${label}: conteúdo clínico deve residir em articles.`);
+    if (data.clinical === true && !['articles', 'glossary'].includes(content.collection)) failures.push(`${label}: conteúdo clínico deve residir em articles ou glossary.`);
     if (data.clinical === true && !riskDomains.includes('clinical')) failures.push(`${label}: conteúdo clínico deve declarar o domínio clinical.`);
     if (content.collection === 'legal') {
       if (!riskDomains.includes('legal')) failures.push(`${label}: documento jurídico deve declarar o domínio legal.`);
@@ -147,17 +168,33 @@ export function validateEditorialState({ contents, contributors, records }) {
         failures.push(`${label}: legalBasis deve ser texto ou lista não vazia quando informado.`);
       }
     }
+    if (content.collection === 'glossary') {
+      if (!riskDomains.includes('clinical')) failures.push(`${label}: termo clínico deve declarar o domínio clinical.`);
+      if (!hasOwn(data, 'reviewer')) failures.push(`${label}: termo clínico exige o campo reviewer, mesmo quando nulo.`);
+      if (!hasOwn(data, 'reviewedAt')) failures.push(`${label}: termo clínico exige o campo reviewedAt, mesmo quando nulo.`);
+      if (data.reviewedAt && !data.reviewer) failures.push(`${label}: reviewedAt exige reviewer identificado.`);
+      if (data.status === 'approved') {
+        if (!data.slug) failures.push(`${label}: termo aprovado exige slug público.`);
+        if (!data.authoredBy) failures.push(`${label}: termo aprovado exige autoria.`);
+        if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: termo aprovado exige ao menos uma fonte.`);
+        if (!data.reviewer) failures.push(`${label}: termo aprovado exige reviewer.`);
+        if (!data.reviewedAt) failures.push(`${label}: termo aprovado exige reviewedAt.`);
+      }
+    }
 
     if (data.status !== 'approved') continue;
 
     const exceptions = (data.safetyReview ?? []).map((review) => String(review.term).toLocaleLowerCase('pt-BR'));
+    const publishableText = content.collection === 'glossary'
+      ? [content.body, data.term, data.shortDefinition, data.fullDefinition].filter(Boolean).join('\n')
+      : content.body;
     for (const term of sensitiveTerms) {
-      if (termRegex(term).test(content.body) && !exceptions.includes(term.toLocaleLowerCase('pt-BR'))) {
+      if (termRegex(term).test(publishableText) && !exceptions.includes(term.toLocaleLowerCase('pt-BR'))) {
         failures.push(`${label}: termo sensível "${term}" exige safetyReview.`);
       }
     }
 
-    const governed = content.collection === 'articles' || content.collection === 'legal' || riskDomains.length > 0;
+    const governed = ['articles', 'glossary', 'legal'].includes(content.collection) || riskDomains.length > 0;
     if (!governed) continue;
 
     const updatedAt = data.lastUpdatedAt ?? data.updatedAt;
@@ -169,6 +206,16 @@ export function validateEditorialState({ contents, contributors, records }) {
       if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: artigo aprovado exige ao menos uma fonte.`);
       if (!data.medicalDisclaimer || !String(data.medicalDisclaimer).trim()) failures.push(`${label}: artigo aprovado exige medicalDisclaimer.`);
       if (!data.aiAssistance?.activities?.length || !data.aiAssistance?.disclosure) failures.push(`${label}: artigo aprovado exige transparência sobre assistência por IA.`);
+      for (const term of data.glossaryTerms ?? []) {
+        const target = contentMap.get(`glossary/${term}`);
+        if (!target || target.data.status !== 'approved') failures.push(`${label}: artigo aprovado só pode referenciar termos de glossário approved.`);
+      }
+    }
+    if (content.collection === 'glossary') {
+      if (!data.authoredBy) failures.push(`${label}: termo aprovado exige autoria.`);
+      const author = contributorMap.get(data.authoredBy);
+      if (data.authoredBy && (!author || !author.editorialRoles?.includes('author'))) failures.push(`${label}: autoria deve referenciar participante autorizado como author.`);
+      if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: termo aprovado exige ao menos uma fonte.`);
     }
 
     const submission = contentRecords.find((record) => record.event === 'submitted_for_review' && atOrAfter(record.occurredAt, updatedAt));
@@ -214,6 +261,19 @@ export function validateEditorialState({ contents, contributors, records }) {
         failures.push(`${label}: reviewer e reviewedAt devem corresponder à revisão legal aprovada mais recente.`);
       }
     }
+    if (content.collection === 'glossary' && data.reviewer && data.reviewedAt) {
+      const reviewer = contributorMap.get(data.reviewer);
+      if (!reviewer || !reviewer.editorialRoles?.includes('clinical_reviewer')) {
+        failures.push(`${label}: reviewer deve referenciar participante autorizado como clinical_reviewer.`);
+      }
+      const latestClinicalReview = contentRecords
+        .filter((record) => record.event === 'domain_review' && record.domain === 'clinical')
+        .sort((left, right) => new Date(left.occurredAt) - new Date(right.occurredAt))
+        .at(-1);
+      if (latestClinicalReview && (latestClinicalReview.actor !== data.reviewer || !sameTime(latestClinicalReview.occurredAt, data.reviewedAt))) {
+        failures.push(`${label}: reviewer e reviewedAt devem corresponder à revisão clinical aprovada mais recente.`);
+      }
+    }
 
     const decisionRecords = [editorialApproval, ...riskDomains.map((domain) => contentRecords
       .filter((record) => record.event === 'domain_review' && record.domain === domain)
@@ -233,7 +293,7 @@ export function validateEditorialState({ contents, contributors, records }) {
 export async function loadEditorialState(root = process.cwd()) {
   const contentRoot = path.join(root, 'src', 'content');
   const contents = [];
-  for (const collection of ['pages', 'articles', 'legal']) {
+  for (const collection of ['pages', 'articles', 'glossary', 'legal']) {
     for (const file of await filesIn(path.join(contentRoot, collection), ['.md', '.mdx'])) {
       const { data, body } = parseMarkdown(await readFile(file, 'utf8'));
       contents.push({

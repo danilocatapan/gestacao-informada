@@ -5,11 +5,12 @@
 - Todo conteúdo publicável deve declarar `status`, `contentType`, `clinical` e `riskDomains`.
 - Os estados permitidos são `draft`, `in_review`, `approved` e `archived`.
 - Os domínios de risco permitidos são `clinical`, `psychological` e `legal`.
-- Conteúdo clínico deve residir em `articles` e declarar `clinical` em `riskDomains`.
+- Conteúdo clínico deve residir em `articles` ou `glossary` e declarar `clinical` em `riskDomains`.
+- Termos do glossário seguem o gate clínico completo, exigem revisor e data coerentes com a revisão clínica mais recente e só podem relacionar termos aprovados.
 - Documento jurídico deve declarar `legal` em `riskDomains`.
 - Guia jurídico deve declarar autoria, fontes oficiais e disclaimer, manter linguagem acolhedora e receber revisão jurídica antes de ocupar sua rota dedicada.
 - Páginas institucionais de baixo risco podem usar `riskDomains: []` somente quando não apresentarem orientação ou afirmações clínicas, psicológicas ou jurídicas.
-- Todo artigo aprovado exige autoria identificada, fontes rastreáveis, data de atualização, aprovações dos domínios declarados e aprovação editorial final.
+- Todo artigo ou termo clínico aprovado exige autoria identificada, fontes rastreáveis, data de atualização, aprovações dos domínios declarados e aprovação editorial final.
 - Autor, revisores profissionais e aprovador editorial devem ser participantes distintos.
 - Alterar o conteúdo invalida registros cuja `contentUpdatedAt` não corresponda à versão atual.
 - Ausência, inconsistência, rejeição vigente ou ambiguidade bloqueia a publicação.

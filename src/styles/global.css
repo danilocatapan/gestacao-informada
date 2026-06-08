@@ -22,6 +22,7 @@ body {
   line-height: 1.65;
 }
 button { font: inherit; }
+input { font: inherit; }
 a { color: var(--teal); }
 img { max-width: 100%; }
 .container { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
@@ -115,6 +116,18 @@ h2 { margin-top: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); }
 .article-meta h2 { font-size: 1.2rem; }
 .article-meta h3 { font-size: 1rem; }
 .article-meta ul { padding-left: 18px; }
+.glossary-list, .search-results { display: grid; gap: 18px; padding: 0; list-style: none; }
+.glossary-list li, .search-results li { padding: 22px; border: 1px solid var(--border); border-radius: 18px; background: var(--white); }
+.glossary-list h2 { margin-bottom: 8px; font-size: 1.45rem; }
+.glossary-list p, .search-results p { margin-bottom: 0; }
+.glossary-definition { white-space: pre-line; }
+.search-form { display: grid; gap: 10px; margin-bottom: 28px; }
+.search-form label { font-weight: 600; color: var(--teal-dark); }
+.search-controls { display: flex; gap: 12px; }
+.search-controls input { flex: 1; min-width: 0; min-height: 48px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--white); color: var(--charcoal); }
+.search-status { min-height: 1.65em; }
+.search-results a { display: inline-block; margin-top: 6px; font-size: 1.2rem; font-weight: 600; }
+.search-result-type { display: block; color: var(--sage-text); font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 .site-footer { padding: 56px 0 22px; border-top: 1px solid var(--border); background: #f4f0ea; font-size: .85rem; }
 .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 42px; }
 .footer-grid p { margin: 8px 0; }
@@ -164,6 +177,7 @@ h2 { margin-top: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); }
   .hero { padding-top: 64px; }
   .section { padding: 62px 0; }
   .actions { align-items: stretch; flex-direction: column; }
+  .search-controls { align-items: stretch; flex-direction: column; }
   .actions .button { width: 100%; }
   .footer-grid { gap: 24px; }
   .site-footer { padding-top: 36px; }

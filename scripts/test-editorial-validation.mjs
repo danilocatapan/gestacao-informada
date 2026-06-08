@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { validateEditorialState, validateLegalInventory } from './editorial-validation.mjs';
+import { validateEditorialState, validateGlossaryInventory, validateLegalInventory } from './editorial-validation.mjs';
 
 const updatedAt = '2026-06-07T12:00:00.000Z';
 const baseContent = {
@@ -64,6 +64,62 @@ expectFailure('rejeição posterior', failuresFor(baseContent, [...validRecords,
 expectFailure('transição inválida', failuresFor(baseContent, [...validRecords, record({ event: 'status_transition', actor: 'submissor', role: 'author', fromStatus: 'draft', toStatus: 'approved' })]), /transição editorial inválida/);
 expectFailure('jurídico sem revisão', failuresFor({ ...baseContent, data: { ...baseContent.data, riskDomains: ['clinical', 'legal'] } }), /revisão legal/);
 expectFailure('alvo inexistente', failuresFor(baseContent, [...validRecords, record({ target: 'articles/inexistente', event: 'submitted_for_review', actor: 'submissor', role: 'author' })]), /conteúdo inexistente/);
+
+expectFailure('artigo com termo não aprovado', validateEditorialState({
+  contents: [
+    { ...baseContent, data: { ...baseContent.data, glossaryTerms: ['rascunho'] } },
+    { id: 'glossary/rascunho', collection: 'glossary', body: '', data: { status: 'draft', clinical: true, riskDomains: ['clinical'], reviewer: null, reviewedAt: null, relatedTerms: [] } },
+  ],
+  contributors,
+  records: validRecords,
+}), /só pode referenciar termos de glossário approved/);
+
+const glossaryContent = {
+  id: 'glossary/perda-gestacional',
+  collection: 'glossary',
+  body: '',
+  data: {
+    contentType: 'glossary-entry',
+    term: 'Perda gestacional',
+    slug: 'perda-gestacional',
+    shortDefinition: 'Definição clínica curta.',
+    fullDefinition: 'Definição clínica completa e educativa.',
+    relatedTerms: [],
+    status: 'approved',
+    clinical: true,
+    riskDomains: ['clinical'],
+    authoredBy: 'autor',
+    sources: [{ title: 'Fonte clínica' }],
+    reviewer: 'clinico',
+    reviewedAt: '2026-06-07T13:00:00.000Z',
+    lastUpdatedAt: updatedAt,
+    safetyReview: [],
+  },
+};
+const glossaryRecord = (overrides) => record({ target: 'glossary/perda-gestacional', ...overrides });
+const validGlossaryRecords = [
+  glossaryRecord({ event: 'submitted_for_review', actor: 'submissor', role: 'author' }),
+  glossaryRecord({ event: 'domain_review', actor: 'clinico', role: 'clinical_reviewer', domain: 'clinical', decision: 'approved' }),
+  glossaryRecord({ event: 'editorial_approval', decision: 'approved', occurredAt: '2026-06-07T14:00:00.000Z' }),
+  glossaryRecord({ event: 'status_transition', actor: 'submissor', role: 'author', fromStatus: 'in_review', toStatus: 'approved', occurredAt: '2026-06-07T15:00:00.000Z' }),
+];
+assert.deepEqual(failuresFor(glossaryContent, validGlossaryRecords), [], 'termo clínico válido deve passar');
+expectFailure('glossário sem fonte', failuresFor({ ...glossaryContent, data: { ...glossaryContent.data, sources: [] } }, validGlossaryRecords), /termo aprovado exige ao menos uma fonte/);
+expectFailure('glossário sem autoria', failuresFor({ ...glossaryContent, data: { ...glossaryContent.data, authoredBy: undefined } }, validGlossaryRecords), /termo aprovado exige autoria/);
+expectFailure('glossário sem reviewer', failuresFor({ ...glossaryContent, data: { ...glossaryContent.data, reviewer: null } }, validGlossaryRecords), /termo aprovado exige reviewer/);
+expectFailure('glossário revisão divergente', failuresFor({ ...glossaryContent, data: { ...glossaryContent.data, reviewedAt: '2026-06-07T13:30:00.000Z' } }, validGlossaryRecords), /corresponder à revisão clinical/);
+expectFailure('glossário termo sensível na definição', failuresFor({ ...glossaryContent, data: { ...glossaryContent.data, fullDefinition: 'Definição educativa que menciona enoxaparina.' } }, validGlossaryRecords), /termo sensível "enoxaparina"/);
+expectFailure('glossário slug duplicado', validateGlossaryInventory([
+  glossaryContent,
+  { ...glossaryContent, id: 'glossary/outro-termo', data: { ...glossaryContent.data, term: 'Outro termo' } },
+]), /compartilhar slug/);
+expectFailure('glossário termo relacionado inexistente', validateGlossaryInventory([
+  { ...glossaryContent, data: { ...glossaryContent.data, relatedTerms: ['inexistente'] } },
+]), /referencia termo inexistente/);
+expectFailure('glossário termo relacionado não aprovado', validateGlossaryInventory([
+  { ...glossaryContent, data: { ...glossaryContent.data, relatedTerms: ['rascunho'] } },
+  { ...glossaryContent, id: 'glossary/rascunho', data: { ...glossaryContent.data, slug: 'rascunho', status: 'draft' } },
+]), /só pode relacionar termos approved/);
 
 const legalContent = {
   id: 'legal/privacidade',

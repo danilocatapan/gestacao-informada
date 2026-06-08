@@ -33,7 +33,7 @@ Use a skill local `.codex/skills/gestacao-informada/SKILL.md` em tarefas de prod
 
 - Nao adicionar framework de componentes por padrao. Islands React ou Preact exigem necessidade real e decisao registrada.
 - Usar `withBaseUrl()` para paths relativos e `withCanonicalUrl()` para URLs absolutas. Nao concatenar o base path manualmente.
-- Conteudo medico deve residir na collection `articles`, nunca hardcoded em componentes ou paginas.
+- Artigos medicos devem residir na collection `articles`; termos clinicos devem residir em `glossary`. Conteudo clinico nunca deve ser hardcoded em componentes ou paginas.
 - Artigos medicos somente podem gerar rota publica com `status: approved` e todos os requisitos editoriais preenchidos.
 - Seguir `docs/EDITORIAL_WORKFLOW.md`; conteudo sensivel deve declarar `riskDomains` e possuir trilha valida em `editorial-records`.
 - Codex e automacoes podem auditar e bloquear, mas nunca conceder aprovacao profissional ou promover conteudo para `approved`.

@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { canPublishGlossary } from '../../lib/publication';
+import { withBaseUrl } from '../../lib/urls';
+
+export async function getStaticPaths() {
+  const approvedArticles = await getCollection('articles', ({ data }) => data.status === 'approved');
+  const approvedTerms = await getCollection('glossary', ({ data }) => data.status === 'approved');
+  return canPublishGlossary(approvedArticles.length, approvedTerms.length)
+    ? [{ params: { path: undefined } }]
+    : [];
+}
+
+const searchIndexUrl = withBaseUrl('busca/indice.json');
+---
+
+<BaseLayout title="Busca" description="Busque páginas, artigos, termos do glossário e conteúdos jurídicos aprovados." path="busca/">
+  <section class="page-hero">
+    <div class="container narrow">
+      <span class="eyebrow">Conteúdo aprovado</span>
+      <h1>Busca</h1>
+      <p class="lead">Encontre informações publicadas e revisadas no Gestação Informada.</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="container narrow search-page" data-search-index={searchIndexUrl}>
+      <form class="search-form" role="search">
+        <label for="busca">O que você procura?</label>
+        <div class="search-controls">
+          <input id="busca" name="q" type="search" autocomplete="off" />
+          <button class="button" type="submit">Buscar</button>
+        </div>
+      </form>
+      <p class="search-status" aria-live="polite">Digite um termo para começar.</p>
+      <ol class="search-results"></ol>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  interface SearchItem {
+    title: string;
+    summary: string;
+    url: string;
+    type: string;
+    text: string;
+  }
+
+  const root = document.querySelector<HTMLElement>('[data-search-index]');
+  const form = root?.querySelector<HTMLFormElement>('form');
+  const input = root?.querySelector<HTMLInputElement>('input[type="search"]');
+  const status = root?.querySelector<HTMLElement>('.search-status');
+  const results = root?.querySelector<HTMLOListElement>('.search-results');
+  const normalize = (value: string) => value.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLocaleLowerCase('pt-BR').trim();
+  let items: SearchItem[] = [];
+
+  const renderResults = (query: string) => {
+    if (!status || !results) return;
+    results.replaceChildren();
+    const normalizedQuery = normalize(query);
+    if (!normalizedQuery) {
+      status.textContent = 'Digite um termo para começar.';
+      return;
+    }
+
+    const matches = items
+      .map((item) => {
+        const title = normalize(item.title);
+        const searchable = normalize(`${item.title} ${item.summary} ${item.text}`);
+        return { item, score: title === normalizedQuery ? 0 : title.includes(normalizedQuery) ? 1 : searchable.includes(normalizedQuery) ? 2 : 3 };
+      })
+      .filter(({ score }) => score < 3)
+      .sort((left, right) => left.score - right.score || left.item.title.localeCompare(right.item.title, 'pt-BR'));
+
+    status.textContent = matches.length === 0
+      ? 'Nenhum resultado encontrado.'
+      : `${matches.length} ${matches.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}.`;
+    for (const { item } of matches) {
+      const listItem = document.createElement('li');
+      const link = document.createElement('a');
+      const summary = document.createElement('p');
+      const type = document.createElement('span');
+      link.href = item.url;
+      link.textContent = item.title;
+      summary.textContent = item.summary;
+      type.textContent = item.type;
+      type.className = 'search-result-type';
+      listItem.append(type, link, summary);
+      results.append(listItem);
+    }
+  };
+
+  if (root && form && input) {
+    const response = await fetch(root.dataset.searchIndex ?? '');
+    items = response.ok ? await response.json() : [];
+    const query = new URLSearchParams(window.location.search).get('q') ?? '';
+    input.value = query;
+    renderResults(query);
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const value = input.value.trim();
+      const url = new URL(window.location.href);
+      value ? url.searchParams.set('q', value) : url.searchParams.delete('q');
+      window.history.replaceState({}, '', url);
+      renderResults(value);
+    });
+  }
+</script>

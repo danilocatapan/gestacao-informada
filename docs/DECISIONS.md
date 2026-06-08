@@ -113,3 +113,11 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 **Decisao:** tratar guias juridico-informativos como conteudo legal governado, com autoria, fontes oficiais, disclaimer, revisao juridica humana e trilha editorial antes da publicacao. A linguagem acolhedora e requisito obrigatorio tambem para conteudo juridico, sem reduzir a precisao, criar garantias ou substituir orientacao individual. O guia sobre direitos ocupa a rota dedicada `/direitos/` somente quando aprovado; enquanto estiver bloqueado, a rota preserva a apresentacao institucional.
 
 **Motivo:** oferecer informacao util em um momento de vulnerabilidade sem expor familias a aconselhamento juridico impreciso ou publicar conteudo ainda nao revisado.
+
+## 2026-06-08 — Glossário clínico e busca condicionados a conteúdo aprovado
+
+**Status:** aceita
+
+**Decisão:** permitir conteúdo clínico nas collections `articles` e `glossary`, ambas sujeitas ao gate editorial completo e à trilha auditável. Publicar glossário e busca estática somente quando existirem ao menos seis artigos e seis termos de glossário aprovados. A busca indexa exclusivamente conteúdo público `approved`.
+
+**Motivo:** ampliar a compreensão sem criar uma via paralela de publicação clínica nem expor rascunhos, registros internos ou conteúdo ainda sem revisão profissional.

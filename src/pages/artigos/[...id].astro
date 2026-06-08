@@ -1,7 +1,8 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { withCanonicalUrl } from '../../lib/urls';
+import { canPublishGlossary } from '../../lib/publication';
+import { withBaseUrl, withCanonicalUrl } from '../../lib/urls';
 
 export async function getStaticPaths() {
   const approvedArticles = await getCollection('articles', ({ data }) => data.status === 'approved');
@@ -11,6 +12,12 @@ export async function getStaticPaths() {
 const { article } = Astro.props;
 const { Content } = await render(article);
 const author = article.data.authoredBy ? await getEntry(article.data.authoredBy) : undefined;
+const approvedArticles = await getCollection('articles', ({ data }) => data.status === 'approved');
+const approvedGlossary = await getCollection('glossary', ({ data }) => data.status === 'approved');
+const glossaryTerms = canPublishGlossary(approvedArticles.length, approvedGlossary.length)
+  ? (await Promise.all(article.data.glossaryTerms.map((reference) => getEntry(reference))))
+    .filter((entry) => entry?.data.status === 'approved')
+  : [];
 const target = `articles/${article.id}`;
 const records = await getCollection('editorialRecords', ({ data }) => data.target === target);
 const domainApprovals = records
@@ -52,6 +59,12 @@ const structuredData = [
         ))}
         <p><strong>Última atualização:</strong> {article.data.lastUpdatedAt.toLocaleDateString('pt-BR')}</p>
         <p>{article.data.medicalDisclaimer}</p>
+        {glossaryTerms.length > 0 && (
+          <>
+            <h3>Termos relacionados</h3>
+            <ul data-article-glossary-links>{glossaryTerms.map((entry) => entry && <li><a href={withBaseUrl(`glossario/${entry.data.slug}/`)}>{entry.data.term}</a></li>)}</ul>
+          </>
+        )}
         <h3>Assistência por IA</h3>
         <p data-ai-disclosure>{article.data.aiAssistance.disclosure}</p>
         <h3>Fontes</h3>
