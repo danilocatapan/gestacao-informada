@@ -6,7 +6,7 @@
 - [x] Criar documentação e instruções iniciais do repositório
 - [x] Instituir reconciliação documental obrigatória entre implementação, roadmap e agentes
 - [x] Publicar repositório
-- [x] Configurar proteção da branch principal (regras aplicadas; validação por pull request de teste pendente)
+- [x] Configurar proteção da branch principal (regras aplicadas e fluxo protegido validado no PR #1)
 - [ ] Definir responsáveis por revisão clínica, psicológica e jurídica (processo de cadastro preparado; aguardando identidades, credenciais e consentimentos)
 - [x] Definir stack técnica e arquitetura inicial
 - [x] Definir identidade visual
