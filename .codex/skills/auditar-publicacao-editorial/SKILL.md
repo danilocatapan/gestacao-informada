@@ -1,40 +1,27 @@
 ---
 name: auditar-publicacao-editorial
-description: Auditar compliance editorial antes da publicação no Gestação Informada. Use ao avaliar conteúdo para publicação, revisar mudanças de status, verificar registros de aprovação ou investigar falhas dos gates editoriais.
+description: Auditar compliance editorial v2 antes da publicação no Gestação Informada.
 ---
 
 # Auditar Publicação Editorial
 
-## Princípio
-
-Operar sempre de forma fail-closed. Nunca conceder aprovação clínica, psicológica, jurídica ou editorial; nunca promover conteúdo para `approved`; nunca interpretar ausência de evidência como aprovação.
-
 ## Fluxo
 
 1. Ler `AGENTS.md` e `docs/EDITORIAL_WORKFLOW.md`.
-2. Identificar o conteúdo, estado, versão e domínios de risco declarados.
-3. Validar autoria, fontes, datas e metadados obrigatórios.
-4. Cruzar `src/content/editorial-records` com participantes e papéis em `src/content/contributors`.
-5. Confirmar revisões atuais para cada domínio, aprovação editorial independente e transição válida.
-6. Comparar implementação, estado editorial, `docs/ROADMAP.md`, documentos afetados e contratos de agentes.
-7. Relatar divergências documentais como bloqueios ou pendências, sem corrigi-las durante a auditoria.
-8. Executar `npm run test:content`; executar `npm test` antes de considerar a auditoria completa.
-9. Informar somente um resultado:
-   - `bloqueado`: listar cada ausência, inconsistência, rejeição, risco ou divergência documental.
-   - `apto para avaliação humana`: gates técnicos íntegros, sem afirmar que o conteúdo está profissionalmente aprovado.
+2. Confirmar versão, fontes, autoria, riscos, disclaimers e política de síntese original.
+3. Orquestrar pesquisa, contraponto, edição e auditoria de segurança.
+4. Registrar parecer v2 atual em `docs/editorial-reviews`.
+5. Classificar o resultado como:
+   - `blocked`: existe bloqueio objetivo sem override;
+   - `owner_review_required`: existe escalada subjetiva ou sensível;
+   - `approved_for_publication`: gates íntegros e sem escaladas pendentes.
+6. Executar `npm run test:content` e `npm test` antes da publicação.
 
 ## Bloqueios Obrigatórios
 
-- status diferente de `approved` para publicação;
-- metadado, fonte, autoria ou data obrigatória ausente;
-- domínio sensível sem revisão correspondente;
-- revisor incompatível, inexistente ou sem credencial registrada;
-- autor, revisor ou aprovador editorial acumulando papéis no mesmo conteúdo;
-- aprovação anterior à última atualização;
-- rejeição mais recente em qualquer domínio;
-- transição direta de `draft` para `approved`;
-- registro ausente, ambíguo ou inconsistente;
-- roadmap, documentação ou contrato de agente contradizendo o estado editorial real;
-- falha em qualquer teste editorial ou de build.
+- prescrição individual, dose ou promessa de resultado;
+- fonte ausente, fraca como sustentação principal ou não rastreável;
+- reprodução ou adaptação extensa sem licença;
+- parecer obsoleto, metadado obrigatório ausente ou teste falhando.
 
-Não corrigir automaticamente conteúdo, registros, decisões, status ou divergências documentais durante uma auditoria.
+O Codex pode promover conteúdo tecnicamente aprovado. Somente o mantenedor pode aceitar escaladas.

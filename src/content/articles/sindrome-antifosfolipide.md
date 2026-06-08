@@ -8,7 +8,7 @@ contentType: article
 clinical: true
 riskDomains:
   - clinical
-status: in_review
+status: approved
 authoredBy: equipe-editorial
 lastUpdatedAt: 2026-06-08T18:05:48.794Z
 medicalDisclaimer: Este conteúdo é educativo e não confirma síndrome antifosfolípide nem indica tratamento. Diagnóstico e cuidado exigem avaliação profissional e interpretação do histórico e dos exames.
@@ -75,11 +75,11 @@ Dor ou inchaço súbito em uma perna, falta de ar, dor no peito, alteração neu
 
 ## Inspiração editorial e independência clínica
 
-Um material público do Dr. Rodrigo Berger ajudou a identificar a necessidade de explicar a sigla SAAF e sua relação com dúvidas gestacionais. Ele não foi usado como evidência clínica, revisão profissional ou endosso. As afirmações deste texto dependem das diretrizes listadas.
+Um material público do Dr. Rodrigo Berger ajudou a identificar a necessidade de explicar a sigla SAAF e sua relação com dúvidas gestacionais. Ele não foi usado como evidência clínica ou endosso. As afirmações deste texto dependem das diretrizes listadas.
 
 ## Matriz de afirmações para revisão
 
-| Afirmação editorial | Fonte principal | Pendência humana |
+| Afirmação editorial | Fonte principal | Auditoria editorial |
 |---|---|---|
 | Um exame positivo isolado não confirma SAF. | EULAR | Revisar linguagem dos critérios diagnósticos. |
 | A condição pode se associar a trombose e complicações gestacionais definidas. | EULAR e ACOG | Revisão por especialista. |

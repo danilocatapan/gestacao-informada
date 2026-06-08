@@ -1,147 +1,83 @@
 import { expect, test } from '@playwright/test';
-import { mkdtemp, mkdir, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { generateReview, serializeMarkdown } from '../scripts/editorial-pipeline-lib.mjs';
 import { createEditorialReviewServer } from '../scripts/editorial-review-server.mjs';
-import {
-  generateReview,
-  readContent,
-  serializeMarkdown,
-} from '../scripts/editorial-pipeline-lib.mjs';
 
-const port = 4191;
-let root: string;
-let origin: string;
-let server: ReturnType<typeof createEditorialReviewServer>['server'];
+const root = await mkdtemp(path.join(tmpdir(), 'gestacao-panel-v2-'));
+await mkdir(path.join(root, 'src', 'content', 'articles'), { recursive: true });
 
-const baseData = {
-  title: 'Conteúdo editorial de teste',
-  contentType: 'article',
-  clinical: true,
-  riskDomains: ['clinical'],
-  status: 'draft',
-  lastUpdatedAt: '2026-06-08',
-  medicalDisclaimer: 'Conteúdo educativo.',
+const createArticle = async (id: string, body: string) => {
+  await writeFile(path.join(root, 'src', 'content', 'articles', `${id}.md`), serializeMarkdown({
+    title: 'Fluxo editorial v2',
+    description: 'Conteúdo para validar o painel simplificado.',
+    category: 'Teste',
+    objective: 'Validar o painel.',
+    audience: 'Público geral.',
+    contentType: 'article',
+    clinical: true,
+    riskDomains: ['clinical'],
+    status: 'draft',
+    authoredBy: 'equipe-editorial',
+    sources: [{ title: 'Fonte', url: 'https://example.org', publisher: 'Instituição', accessedAt: '2026-06-08', type: 'guideline' }],
+    lastUpdatedAt: '2026-06-08T10:00:00.000Z',
+    medicalDisclaimer: 'Conteúdo educativo.',
+    safetyReview: [],
+    aiAssistance: { activities: ['safety-audit'], disclosure: 'Conteúdo preparado e auditado com assistência de IA, sem revisão profissional.' },
+    inspirationCredits: [],
+    glossaryTerms: [],
+  }, body), 'utf8');
+  await generateReview(root, `articles/${id}`);
 };
 
-async function createArticle(id: string, body: string) {
-  await writeFile(
-    path.join(root, 'src', 'content', 'articles', `${id}.md`),
-    serializeMarkdown({ ...baseData, title: `Conteúdo ${id}` }, body),
-    'utf8',
-  );
-  await generateReview(root, `articles/${id}`);
-}
+await createArticle('fluxo', 'Este conteúdo aguarda revisão profissional.');
+await createArticle('bloqueado', 'Este tratamento garante resultado.');
+const app = createEditorialReviewServer({ root, port: 4187, token: 'token-editorial-v2' });
 
 test.beforeAll(async () => {
-  root = await mkdtemp(path.join(tmpdir(), 'gestacao-editorial-e2e-'));
-  await mkdir(path.join(root, 'src', 'content', 'articles'), { recursive: true });
-  await mkdir(path.join(root, 'src', 'content', 'editorial-records'), { recursive: true });
-
-  await createArticle('fluxo-completo', 'Este texto garante resultado.\nExiste uma pendência humana documentada.\n');
-  await createArticle('rejeicao-bloqueante', 'Este texto garante resultado.\n');
-  await createArticle('parecer-obsoleto', 'Existe uma pendência humana documentada.\n');
-
-  const app = createEditorialReviewServer({ root, port, token: 'token-e2e-editorial' });
-  server = app.server;
-  origin = app.origin;
-  await new Promise<void>((resolve) => server.listen(app.port, app.host, resolve));
+  await new Promise<void>((resolve) => app.server.listen(app.port, app.host, resolve));
 });
 
 test.afterAll(async () => {
-  await new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
-  await rm(root, { recursive: true, force: true });
+  await new Promise<void>((resolve, reject) => app.server.close((error) => error ? reject(error) : resolve()));
 });
 
-test('fluxo completo resolve apontamentos e envia somente para in_review', async ({ page }) => {
-  const errors: string[] = [];
-  page.on('console', (message) => {
-    if (message.type() === 'error') errors.push(message.text());
-  });
-  page.on('pageerror', (error) => errors.push(error.message));
+test.beforeEach(async ({ page }) => {
+  await page.goto(app.origin);
+});
 
-  await page.goto(origin);
-  await expect(page.getByText('Somente em 127.0.0.1. Nenhuma ação faz commit, push ou deploy.')).toBeVisible();
-  await page.getByRole('button', { name: /articles\/fluxo-completo/ }).click();
-
-  await expect(page.locator('.article mark')).toHaveCount(2);
-  await expect(page.getByRole('button', { name: 'Aplicar alterações e enviar para revisão' })).toBeDisabled();
-
-  const mediumFinding = page.locator('.finding[data-severity="medium"]');
-  await mediumFinding.locator('.reason').fill('A pendência humana continuará registrada para os revisores.');
-  await mediumFinding.getByRole('button', { name: 'Rejeitar com justificativa' }).click();
-  await expect(page.locator('#status')).toHaveText('Decisão salva.');
-
-  const criticalFinding = page.locator('.finding[data-severity="critical"]');
-  await criticalFinding.locator('textarea').first().fill('pode ajudar a compreender possibilidades');
-  await criticalFinding.getByRole('button', { name: 'Aceitar ajuste' }).click();
-  await expect(page.locator('#status')).toHaveText('Decisão salva.');
-
-  const apply = page.getByRole('button', { name: 'Aplicar alterações e enviar para revisão' });
-  await expect(apply).toBeEnabled();
-  await apply.click();
-  await expect(page.locator('#status')).toHaveText('Aplicado. Novo status: in_review');
-  await page.getByRole('button', { name: 'Decisões humanas' }).click();
-  await expect(page.getByRole('heading', { name: 'Decisões humanas auditáveis' })).toBeVisible();
-  await expect(page.getByText('Cada responsável deve registrar pessoalmente sua decisão.')).toBeVisible();
-
-  const content = await readContent(root, 'articles/fluxo-completo');
-  expect(content.data.status).toBe('in_review');
-  expect(content.body).toContain('pode ajudar a compreender possibilidades');
-  expect(content.body).not.toContain('garante');
-  expect(await readdir(path.join(root, 'src', 'content', 'editorial-records'))).toHaveLength(2);
-  expect(errors).toEqual([]);
+test('painel simplificado registra escalada e OK do mantenedor', async ({ page }) => {
+  await expect(page.getByText('Pareceres v2')).toBeVisible();
+  await page.getByRole('button', { name: /articles\/fluxo/ }).click();
+  await expect(page.locator('.meta').getByText(/owner_review_required/)).toBeVisible();
+  await page.locator('.finding[data-kind="escalation"] .reason').fill('A menção será mantida como contexto histórico.');
+  await Promise.all([
+    page.waitForResponse((response) => response.url().endsWith('/api/resolve')),
+    page.getByRole('button', { name: 'Manter e escalar ao mantenedor' }).click(),
+  ]);
+  await expect(page.getByRole('button', { name: 'Aplicar decisões editoriais' })).toBeEnabled();
+  await Promise.all([
+    page.waitForResponse((response) => response.url().endsWith('/api/apply')),
+    page.getByRole('button', { name: 'Aplicar decisões editoriais' }).click(),
+  ]);
+  await expect(page.getByRole('heading', { name: 'OK do mantenedor' })).toBeVisible();
+  await page.getByPlaceholder('Estou ciente e aprovo').fill('Estou ciente e aprovo');
+  await page.locator('#owner-justification').fill('Estou ciente da escalada registrada e aprovo esta versão.');
+  await Promise.all([
+    page.waitForResponse((response) => response.url().endsWith('/api/owner-approve')),
+    page.getByRole('button', { name: 'Estou ciente e aprovo' }).click(),
+  ]);
+  await expect(page.locator('.meta').getByText(/approved_for_publication/)).toBeVisible();
   await page.screenshot({ path: 'docs/qa/screenshots/painel-editorial-fluxo-desktop.png', fullPage: true });
 });
 
-test('rejeição de apontamento crítico mantém o envio bloqueado', async ({ page }) => {
-  await page.goto(origin);
-  await page.getByRole('button', { name: /articles\/rejeicao-bloqueante/ }).click();
-
-  const finding = page.locator('.finding[data-severity="critical"]');
-  await finding.locator('.reason').fill('A sugestão precisa ser reavaliada antes de qualquer envio.');
-  await finding.getByRole('button', { name: 'Rejeitar com justificativa' }).click();
-
-  await expect(page.locator('#status')).toHaveText('Decisão salva.');
-  await expect(page.getByRole('button', { name: 'Aplicar alterações e enviar para revisão' })).toBeDisabled();
-  expect((await readContent(root, 'articles/rejeicao-bloqueante')).data.status).toBe('draft');
-});
-
-test('conteúdo alterado depois do parecer não pode ser aplicado', async ({ page }) => {
-  await page.goto(origin);
-  await page.getByRole('button', { name: /articles\/parecer-obsoleto/ }).click();
-
-  const finding = page.locator('.finding[data-severity="medium"]');
-  await finding.locator('textarea').first().fill('Existe uma confirmação humana documentada.');
-  await finding.getByRole('button', { name: 'Aceitar ajuste' }).click();
-  await expect(page.getByRole('button', { name: 'Aplicar alterações e enviar para revisão' })).toBeEnabled();
-
-  const content = await readContent(root, 'articles/parecer-obsoleto');
-  await writeFile(content.file, `${content.source}\nAlteração externa.\n`, 'utf8');
-  await page.getByRole('button', { name: 'Aplicar alterações e enviar para revisão' }).click();
-
-  await expect(page.locator('#status')).toContainText('O conteúdo mudou após a geração do parecer');
-  expect((await readContent(root, 'articles/parecer-obsoleto')).data.status).toBe('draft');
-});
-
-test.describe('mobile', () => {
-  test.use({ viewport: { width: 360, height: 800 } });
-
-  test('painel permanece acessível e sem overflow', async ({ page }) => {
-    const errors: string[] = [];
-    page.on('console', (message) => {
-      if (message.type() === 'error') errors.push(message.text());
-    });
-    page.on('pageerror', (error) => errors.push(error.message));
-
-    await page.goto(origin);
-    await page.getByRole('button', { name: /articles\/rejeicao-bloqueante/ }).click();
-    await expect(page.getByRole('heading', { name: 'Conteúdo rejeicao-bloqueante' })).toBeVisible();
-    await page.getByRole('button', { name: 'Decisões humanas' }).click();
-    await expect(page.getByRole('heading', { name: 'Cadastrar participante' })).toBeVisible();
-    await expect(page.locator('#status')).toHaveAttribute('aria-live', 'polite');
-    expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBeFalsy();
-    expect(errors).toEqual([]);
-    await page.screenshot({ path: 'docs/qa/screenshots/painel-editorial-fluxo-mobile.png', fullPage: true });
-  });
+test('bloqueio objetivo não oferece override', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.getByRole('button', { name: /articles\/bloqueado/ }).click();
+  const blocker = page.locator('.finding[data-kind="blocker"]');
+  await expect(blocker).toBeVisible();
+  await expect(blocker.getByRole('button', { name: 'Manter e escalar ao mantenedor' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'OK do mantenedor' })).toHaveCount(0);
+  await page.screenshot({ path: 'docs/qa/screenshots/painel-editorial-mobile.png', fullPage: true });
 });

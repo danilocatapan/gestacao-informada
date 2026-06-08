@@ -1,62 +1,56 @@
 {
-  "schemaVersion": 1,
-  "id": "2463225d-037f-47a0-b294-8cc87accffa3",
+  "schemaVersion": 2,
+  "id": "58aa9ee0-0c65-4641-a30c-5bcc0580aee3",
   "target": "articles/trombofilias-hereditarias-e-adquiridas",
-  "generatedAt": "2026-06-08T13:21:16.747Z",
-  "updatedAt": "2026-06-08T18:05:53.870Z",
-  "contentHash": "a53b94d3d01b6cca1a64f9e37d79c06bd5c270f0a1116039b76b588936614caf",
-  "contentStatus": "draft",
+  "generatedAt": "2026-06-08T18:45:29.923Z",
+  "updatedAt": "2026-06-08T18:46:19.243Z",
+  "contentHash": "6876d654a07290e6e1e1240af78abc5dff243a21975e3d0fb49be9b2f53b999e",
+  "contentStatus": "in_review",
   "riskDomains": [
     "clinical"
   ],
-  "decision": "needs_changes",
-  "publicationAllowed": false,
-  "summary": "1 apontamento(s) exigem decisão.",
-  "agents": {
-    "research": "pending_assisted_execution",
-    "challenge": "needs_changes",
-    "editorial": "suggestions_available",
-    "aiApproval": "needs_changes",
-    "publication": "blocked_until_human_gates"
+  "decision": "approved_for_publication",
+  "publicationAllowed": true,
+  "sourceCoverage": {
+    "sourceCount": 3,
+    "synthesisPolicy": "original_traceable_synthesis",
+    "verified": true
   },
-  "findings": [
-    {
-      "id": "811ed0302fc8ef32",
-      "domain": "editorial",
-      "severity": "medium",
-      "exactText": "Pendência humana",
-      "occurrence": 1,
-      "line": 39,
-      "rationale": "O texto declara uma pendência humana que precisa ser confirmada antes da publicação.",
-      "suggestedReplacement": "Pendência humana",
-      "relatedSources": [],
-      "resolution": {
-        "status": "accepted",
-        "replacement": "Pendência humana",
-        "justification": ""
-      }
+  "specialists": {
+    "research": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "challenge": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "editorial": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "safetyAudit": {
+      "status": "approved_for_publication",
+      "findingIds": []
     }
-  ],
+  },
+  "blockers": [],
+  "escalations": [],
+  "ownerApproval": null,
+  "findings": [],
   "history": [
     {
-      "occurredAt": "2026-06-08T13:21:16.747Z",
-      "action": "review_generated",
-      "actor": "editorial-pipeline"
+      "occurredAt": "2026-06-08T18:45:29.923Z",
+      "action": "review_v2_generated",
+      "actor": "codex-editorial-orchestrator"
     },
     {
-      "occurredAt": "2026-06-08T13:30:03.511Z",
-      "action": "finding_accepted",
-      "actor": "local-maintainer",
-      "findingId": "811ed0302fc8ef32"
-    },
-    {
-      "occurredAt": "2026-06-08T18:05:53.870Z",
-      "action": "changes_applied_and_submitted",
-      "actor": "equipe-editorial"
+      "occurredAt": "2026-06-08T18:46:19.243Z",
+      "action": "review_applied",
+      "actor": "codex-editorial-orchestrator",
+      "resultingStatus": "approved"
     }
   ],
-  "appliedAt": "2026-06-08T18:05:53.870Z",
-  "appliedBy": "equipe-editorial",
-  "resultingStatus": "in_review",
-  "resultingContentHash": "fe5daa4ba7e1cf35d92f4960a7bd40fad87ed3284fecf6c864b3ea56653f7dec"
+  "resultingContentHash": "6876d654a07290e6e1e1240af78abc5dff243a21975e3d0fb49be9b2f53b999e",
+  "resultingStatus": "approved"
 }

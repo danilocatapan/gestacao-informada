@@ -2,6 +2,22 @@
 
 Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetura.
 
+## 2026-06-08 — Fluxo editorial v2 simplificado
+
+**Status:** aceita; substitui as decisões anteriores que exigiam revisão profissional, participantes distintos, registros em `editorial-records` e aprovação multidomínio.
+
+**Decisão:** o Codex orquestra agentes especialistas e registra um parecer editorial v2. Bloqueios objetivos não aceitam override; decisões subjetivas ou sensíveis exigem um único OK do mantenedor vinculado ao hash. Conteúdo limpo pode ser promovido tecnicamente para `approved`. O painel permanece local e a publicação ocorre por PR, CI e GitHub Pages.
+
+**Motivo:** manter fontes, segurança, rastreabilidade e transparência sem depender de revisores profissionais indisponíveis nem sustentar cadastros e cerimônias que impediam a publicação.
+
+## 2026-06-08 — Síntese original rastreável e transparência
+
+**Status:** aceita.
+
+**Decisão:** artigos devem ser sínteses originais baseadas em fontes rastreáveis. Referenciar uma obra não autoriza reprodução ou adaptação extensa. Todo conteúdo governado publicado declara assistência de IA, ausência de revisão profissional e limites educativos.
+
+**Motivo:** reduzir risco autoral, clínico e reputacional sem ocultar a governança real do portal.
+
 ## 2026-06-06 — Repositorio inicial sem stack definida
 
 **Status:** aceita

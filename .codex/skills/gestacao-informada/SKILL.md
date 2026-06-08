@@ -25,7 +25,8 @@ description: Orientar planejamento, conteúdo, arquitetura e desenvolvimento do 
 - Explicitar divergências entre diretrizes e práticas clínicas.
 - Não transformar relatos pessoais em evidência.
 - Não criar recomendações individualizadas, prescrições ou calculadoras de dose.
-- Marcar conteúdo pendente de revisão profissional como rascunho não publicável.
+- Exigir síntese original rastreável, fontes fortes e parecer editorial v2 atual.
+- Encaminhar somente decisões subjetivas ou sensíveis ao mantenedor; bloqueios objetivos exigem correção.
 
 ## Produto e engenharia
 

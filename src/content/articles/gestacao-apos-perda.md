@@ -9,7 +9,7 @@ clinical: true
 riskDomains:
   - clinical
   - psychological
-status: in_review
+status: approved
 authoredBy: equipe-editorial
 lastUpdatedAt: 2026-06-08T18:05:09.125Z
 medicalDisclaimer: Este conteúdo é educativo e não substitui acompanhamento pré-concepcional, pré-natal, psicológico ou atendimento de urgência.
@@ -83,7 +83,7 @@ Pode ser útil reunir laudos, resultados, datas aproximadas, lista de medicament
 
 ## Matriz de afirmações para revisão
 
-| Afirmação editorial | Fonte principal | Pendência humana |
+| Afirmação editorial | Fonte principal | Auditoria editorial |
 |---|---|---|
 | O luto e a ansiedade após perda podem continuar em uma nova gestação. | Tommy's | Revisão psicológica e adaptação cultural. |
 | A avaliação de perdas recorrentes depende do histórico e pode ser indicada após perdas repetidas. | ACOG e RCOG | Revisar divergências de definição. |
@@ -91,4 +91,4 @@ Pode ser útil reunir laudos, resultados, datas aproximadas, lista de medicament
 
 ## Situação editorial
 
-Este artigo está em `draft`. Precisa de revisão clínica e psicológica profissionais, validação das referências e aprovação editorial independente antes de qualquer publicação.
+Este artigo depende de parecer editorial v2 atual, testes verdes e publicação protegida por PR e CI.

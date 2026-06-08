@@ -1,74 +1,56 @@
 {
-  "schemaVersion": 1,
-  "id": "4f78f38b-aab0-4464-94a1-b6adfd48f559",
+  "schemaVersion": 2,
+  "id": "c14a2c52-179f-4204-bc58-8d3d94a3c399",
   "target": "articles/mthfr-evidencias-e-incertezas",
-  "generatedAt": "2026-06-08T13:21:16.774Z",
-  "updatedAt": "2026-06-08T18:05:44.176Z",
-  "contentHash": "5ca1e67ddfdb05c22e4ceb70e613669ac67505d394145f71231d46a02eb83db9",
-  "contentStatus": "draft",
+  "generatedAt": "2026-06-08T18:45:29.941Z",
+  "updatedAt": "2026-06-08T18:46:18.108Z",
+  "contentHash": "e1540e53968ec9d07ea0c3452ce00a41dbef5587860129d355d30d533b0b8b57",
+  "contentStatus": "in_review",
   "riskDomains": [
     "clinical"
   ],
-  "decision": "needs_changes",
-  "publicationAllowed": false,
-  "summary": "1 apontamento(s) exigem decisão.",
-  "agents": {
-    "research": "pending_assisted_execution",
-    "challenge": "needs_changes",
-    "editorial": "suggestions_available",
-    "aiApproval": "needs_changes",
-    "publication": "blocked_until_human_gates"
+  "decision": "approved_for_publication",
+  "publicationAllowed": true,
+  "sourceCoverage": {
+    "sourceCount": 4,
+    "synthesisPolicy": "original_traceable_synthesis",
+    "verified": true
   },
-  "findings": [
-    {
-      "id": "c78e17f2df0f7389",
-      "domain": "editorial",
-      "severity": "medium",
-      "exactText": "Pendência humana",
-      "occurrence": 1,
-      "line": 34,
-      "rationale": "O texto declara uma pendência humana que precisa ser confirmada antes da publicação.",
-      "suggestedReplacement": "Pendência humana",
-      "relatedSources": [],
-      "resolution": {
-        "status": "accepted",
-        "replacement": "Pendência humana",
-        "justification": ""
-      }
+  "specialists": {
+    "research": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "challenge": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "editorial": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "safetyAudit": {
+      "status": "approved_for_publication",
+      "findingIds": []
     }
-  ],
+  },
+  "blockers": [],
+  "escalations": [],
+  "ownerApproval": null,
+  "findings": [],
   "history": [
     {
-      "occurredAt": "2026-06-08T13:21:16.774Z",
-      "action": "review_generated",
-      "actor": "editorial-pipeline"
+      "occurredAt": "2026-06-08T18:45:29.941Z",
+      "action": "review_v2_generated",
+      "actor": "codex-editorial-orchestrator"
     },
     {
-      "occurredAt": "2026-06-08T13:29:48.404Z",
-      "action": "finding_accepted",
-      "actor": "local-maintainer",
-      "findingId": "c78e17f2df0f7389"
-    },
-    {
-      "occurredAt": "2026-06-08T13:29:51.944Z",
-      "action": "finding_accepted",
-      "actor": "local-maintainer",
-      "findingId": "c78e17f2df0f7389"
-    },
-    {
-      "occurredAt": "2026-06-08T18:05:40.812Z",
-      "action": "changes_applied_and_submitted",
-      "actor": "equipe-editorial"
-    },
-    {
-      "occurredAt": "2026-06-08T18:05:44.176Z",
-      "action": "finding_accepted",
-      "actor": "local-maintainer",
-      "findingId": "c78e17f2df0f7389"
+      "occurredAt": "2026-06-08T18:46:18.108Z",
+      "action": "review_applied",
+      "actor": "codex-editorial-orchestrator",
+      "resultingStatus": "approved"
     }
   ],
-  "appliedAt": "2026-06-08T18:05:40.812Z",
-  "appliedBy": "equipe-editorial",
-  "resultingStatus": "in_review",
-  "resultingContentHash": "251568be30b62ac72e56c1c24c061602a61a4c3427439197d4347a7edaa65036"
+  "resultingContentHash": "e1540e53968ec9d07ea0c3452ce00a41dbef5587860129d355d30d533b0b8b57",
+  "resultingStatus": "approved"
 }

@@ -152,12 +152,13 @@ for (const articleRoute of approvedArticleRoutes) {
         });
         page.on('pageerror', (error) => errors.push(error.message));
 
-        const response = await page.goto(articleRoute);
+        const response = await page.goto(`/gestacao-informada/${articleRoute}`);
         expect(response?.ok()).toBeTruthy();
         await expect(page.locator('main h1')).toBeVisible();
         await expect(page.locator('.article-meta')).toContainText('Fontes');
         await expect(page.locator('.article-meta')).toContainText('Assistência por IA');
         await expect(page.locator('[data-ai-disclosure]')).toBeVisible();
+        await expect(page.locator('[data-review-transparency]')).toContainText('revisão profissional');
         await expect(page.locator('.article-meta')).toContainText('não substitui');
 
         const hasOverflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
@@ -192,9 +193,9 @@ if (glossaryPublished) {
         expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBeFalsy();
 
         for (const route of approvedGlossaryRoutes) {
-          await page.goto(route);
+          await page.goto(`/gestacao-informada/${route}`);
           await expect(page.locator('[data-glossary-entry]')).toBeVisible();
-          await expect(page.locator('.article-meta')).toContainText('Revisão clínica');
+          await expect(page.locator('[data-review-transparency]')).toContainText('sem revisão profissional');
           await expect(page.locator('.article-meta')).toContainText('Fontes');
         }
         expect(errors).toEqual([]);

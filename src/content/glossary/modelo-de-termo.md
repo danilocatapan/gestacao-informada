@@ -2,11 +2,9 @@
 term: "Modelo interno de termo"
 slug: "modelo-interno-de-termo"
 shortDefinition: "Modelo não publicável para preparar futuras entradas do glossário."
-fullDefinition: "Substitua este texto por uma definição clínica completa antes de iniciar a revisão profissional."
+fullDefinition: "Substitua este texto por uma definição clínica completa antes de iniciar a auditoria editorial."
 relatedTerms: []
 sources: []
-reviewer: null
-reviewedAt: null
 status: "draft"
 contentType: "glossary-entry"
 clinical: true

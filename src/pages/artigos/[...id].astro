@@ -18,18 +18,6 @@ const glossaryTerms = canPublishGlossary(approvedArticles.length, approvedGlossa
   ? (await Promise.all(article.data.glossaryTerms.map((reference) => getEntry(reference))))
     .filter((entry) => entry?.data.status === 'approved')
   : [];
-const target = `articles/${article.id}`;
-const records = await getCollection('editorialRecords', ({ data }) => data.target === target);
-const domainApprovals = records
-  .filter(({ data }) => data.event === 'domain_review' && data.decision === 'approved')
-  .sort((left, right) => right.data.occurredAt.getTime() - left.data.occurredAt.getTime());
-const latestApprovals = domainApprovals.filter((record, index, all) =>
-  all.findIndex((candidate) => candidate.data.domain === record.data.domain) === index);
-const reviewers = await Promise.all(latestApprovals.map(async ({ data }) => ({
-  domain: data.domain,
-  occurredAt: data.occurredAt,
-  contributor: await getEntry(data.actor),
-})));
 const articlePath = `artigos/${article.id}/`;
 const structuredData = [
   {
@@ -40,9 +28,6 @@ const structuredData = [
     url: withCanonicalUrl(articlePath),
     dateModified: article.data.lastUpdatedAt.toISOString(),
     author: author ? { '@type': 'Organization', name: author.data.name } : undefined,
-    reviewedBy: reviewers
-      .filter(({ contributor }) => contributor)
-      .map(({ contributor }) => ({ '@type': 'Person', name: contributor?.data.name })),
   },
 ];
 ---
@@ -53,12 +38,10 @@ const structuredData = [
       <article class="prose"><Content /></article>
       <aside class="article-meta">
         <h2>Sobre este conteúdo</h2>
-        {author && <p><strong>Autoria:</strong> {author.data.name}<br />{author.data.credentials}</p>}
-        {reviewers.map(({ domain, occurredAt, contributor }) => contributor && (
-          <p><strong>Revisão {domain}:</strong> {contributor.data.name}<br />{contributor.data.credentials}<br />{occurredAt.toLocaleDateString('pt-BR')}</p>
-        ))}
+        {author && <p><strong>Autoria:</strong> {author.data.name}</p>}
         <p><strong>Última atualização:</strong> {article.data.lastUpdatedAt.toLocaleDateString('pt-BR')}</p>
         <p>{article.data.medicalDisclaimer}</p>
+        <p data-review-transparency><strong>Transparência editorial:</strong> conteúdo preparado e auditado com assistência de IA. Não recebeu revisão profissional e não substitui atendimento individual.</p>
         {glossaryTerms.length > 0 && (
           <>
             <h3>Termos relacionados</h3>

@@ -1,5 +1,5 @@
 import process from 'node:process';
-import { generateReview, listContentTargets, markDraft } from './editorial-pipeline-lib.mjs';
+import { applyReview, generateReview, listContentTargets, markDraft } from './editorial-pipeline-lib.mjs';
 
 const root = process.cwd();
 const mvpArticles = [
@@ -34,6 +34,10 @@ if (command === 'review') {
   if (!target) throw new Error('Informe o alvo.');
   const result = await markDraft(root, target, option('reason', ''), option('actor', 'equipe-editorial'));
   console.log(`${result.target}: ${result.status}.`);
+} else if (command === 'apply') {
+  if (!target) throw new Error('Informe o alvo.');
+  const result = await applyReview(root, target);
+  console.log(`${result.target}: ${result.status} (${result.decision}).`);
 } else {
   throw new Error(`Comando desconhecido: ${command}`);
 }

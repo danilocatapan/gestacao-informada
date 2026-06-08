@@ -17,7 +17,7 @@ Informações sobre perda gestacional podem estar fragmentadas, usar linguagem d
 
 ## Como trabalhamos
 
-- conteúdos clínicos somente serão publicados com autoria, fontes, datas e revisão profissional visíveis;
+- conteúdos clínicos somente serão publicados com autoria, fontes, datas e transparência sobre a auditoria assistida por IA;
 - divergências entre evidências, diretrizes e práticas profissionais serão apresentadas com transparência;
 - relatos pessoais nunca serão tratados como prova de eficácia;
 - o portal não oferece diagnóstico, prescrição ou recomendação individualizada.

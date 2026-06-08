@@ -9,7 +9,7 @@ clinical: true
 riskDomains:
   - clinical
   - psychological
-status: in_review
+status: approved
 authoredBy: equipe-editorial
 lastUpdatedAt: 2026-06-08T18:05:29.111Z
 medicalDisclaimer: Este conteúdo é educativo e não define quais exames ou tratamentos são indicados para uma pessoa. A investigação deve ser discutida com profissionais qualificados.
@@ -85,7 +85,7 @@ Diretrizes destacam que o prognóstico depende de diversos fatores e que muitas 
 
 ## Matriz de afirmações para revisão
 
-| Afirmação editorial | Fonte principal | Pendência humana |
+| Afirmação editorial | Fonte principal | Auditoria editorial |
 |---|---|---|
 | Diretrizes divergem entre duas e três perdas para definir recorrência. | ESHRE, ACOG e RCOG | Confirmar apresentação equilibrada. |
 | A investigação deve ser orientada pelo histórico, não por uma lista universal. | ESHRE e RCOG | Revisão clínica. |

@@ -1,7 +1,11 @@
-# Pareceres editoriais automatizados
+# Pareceres editoriais v2
 
-Arquivos JSON gerados por `npm run editorial:review` ficam neste diretório. Eles registram o hash do
-conteúdo analisado, apontamentos, resoluções e histórico do painel local.
+Cada JSON registra o hash da versão auditada, cobertura das fontes, resultados dos agentes especialistas, bloqueios, escaladas, decisão final e eventual OK do mantenedor.
 
-Pareceres são artefatos de triagem. Eles não representam aprovação clínica, psicológica, jurídica
-ou editorial e não autorizam publicação.
+Decisões possíveis:
+
+- `blocked`;
+- `owner_review_required`;
+- `approved_for_publication`.
+
+Pareceres não representam revisão profissional. Alterações no conteúdo invalidam o parecer e qualquer OK anterior.

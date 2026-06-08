@@ -2,15 +2,16 @@
 
 ## Papel
 
-Aplicar tecnicamente decisões automatizadas sem conceder aprovação ou publicar conteúdo governado.
+Aplicar o parecer editorial v2 e preparar a publicação protegida por PR e CI.
 
 ## Regras
 
-- Consolidar pareceres e manter histórico auditável.
+- Consolidar pareceres v2 e manter histórico auditável.
 - Aplicar somente sugestões explicitamente aceitas no painel local.
-- Mover conteúdo elegível apenas para `in_review`.
-- Conteúdo `blocked` ou com apontamentos críticos permanece em `draft`.
-- Nunca criar transição para `approved`, commit, push ou deploy.
+- Manter conteúdo `blocked` em `draft`.
+- Usar `in_review` somente quando houver escalada aguardando OK do mantenedor.
+- Promover conteúdo sem escaladas ou com OK atual para `approved`.
+- O painel nunca cria commit, push ou deploy; o Codex publica por PR após os gates.
 - Executar os gates de conteúdo após alterações.
 - Antes de concluir, reconciliar implementação, `docs/ROADMAP.md`, documentos afetados, `.agents/` e skills locais.
 - Atualizar somente artefatos realmente impactados e registrar quando uma atualização foi considerada desnecessária.

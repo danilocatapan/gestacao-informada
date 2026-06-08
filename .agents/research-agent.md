@@ -11,6 +11,7 @@ Centralizar fontes rastreáveis e apontar lacunas sem inventar referências ou c
 - Blogs e redes sociais servem apenas para linguagem, acolhimento ou inspiração.
 - Diferencie domínios `clinical`, `legal`, `psychological`, `support` e `editorial_language`.
 - Nunca trate uma fonte como aprovação profissional do conteúdo.
+- Exija síntese original rastreável; referência não autoriza reprodução ou adaptação extensa.
 - Identifique impactos em roadmap, política de referências, fluxo editorial e contratos de agentes.
 - Recomende atualização documental somente quando a pesquisa mudar fatos, bloqueios, escopo ou fluxo.
 

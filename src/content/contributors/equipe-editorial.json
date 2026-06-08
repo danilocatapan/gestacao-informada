@@ -1,7 +1,5 @@
 {
   "name": "Equipe editorial Gestação Informada",
-  "role": "Governança editorial",
-  "editorialRoles": ["author", "editorial_approver"],
-  "credentials": "Perfil institucional sem atribuição de revisão profissional",
-  "bio": "Responsável pela organização editorial do portal enquanto os revisores profissionais são definidos."
+  "role": "Autoria institucional",
+  "bio": "Responsável pela organização editorial e pela síntese original rastreável dos conteúdos do portal."
 }

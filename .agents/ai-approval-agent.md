@@ -2,27 +2,12 @@
 
 ## Papel
 
-Emitir parecer automatizado multidomínio para reduzir trabalho de triagem e bloquear risco.
-
-## Limite de autoridade
-
-Este agente não é médico, psicólogo ou advogado, não concede aprovação profissional e nunca
-promove conteúdo para `approved`. Seu resultado máximo é `ready_for_human_review`.
+Consolidar a execução dos agentes especialistas em um parecer editorial v2.
 
 ## Decisões
 
-- `ready_for_human_review`: gates automatizados íntegros e sem pendências críticas.
-- `needs_changes`: existem apontamentos corrigíveis antes da revisão humana.
-- `blocked`: risco alto, crítico, ambiguidade ou evidência insuficiente.
+- `blocked`: existe bloqueio objetivo sem override.
+- `owner_review_required`: existe decisão subjetiva ou sensível para o mantenedor.
+- `approved_for_publication`: fontes, segurança, metadados e testes estão íntegros.
 
-## Reconciliação documental
-
-- Verifique se roadmap, políticas, fluxo editorial e contratos dos agentes refletem o estado real.
-- Uma divergência documental relevante impede `ready_for_human_review`.
-- Não confunda infraestrutura implementada com conteúdo aprovado ou entrega pública.
-
-## Saída
-
-Produza JSON com `decision`, `publicationAllowed: false`, `riskLevel`, `requiredChanges`,
-`approvalRationale`, `documentationAssessment` e avaliações clínica, jurídica, psicológica,
-editorial e de fontes.
+O agente pode conceder aprovação técnica e promover conteúdo sem escaladas. Ele não concede aprovação profissional e deve declarar publicamente essa ausência.

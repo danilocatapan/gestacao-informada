@@ -1,121 +1,44 @@
-# Fluxo Editorial Seguro e Auditável
+# Fluxo Editorial Simplificado
 
-## Regras
+## Princípios
 
-- Todo conteúdo publicável deve declarar `status`, `contentType`, `clinical` e `riskDomains`.
-- Os estados permitidos são `draft`, `in_review`, `approved` e `archived`.
-- Os domínios de risco permitidos são `clinical`, `psychological` e `legal`.
-- Conteúdo clínico deve residir em `articles` ou `glossary` e declarar `clinical` em `riskDomains`.
-- Termos do glossário seguem o gate clínico completo, exigem revisor e data coerentes com a revisão clínica mais recente e só podem relacionar termos aprovados.
-- Documento jurídico deve declarar `legal` em `riskDomains`.
-- Guia jurídico deve declarar autoria, fontes oficiais e disclaimer, manter linguagem acolhedora e receber revisão jurídica antes de ocupar sua rota dedicada.
-- Páginas institucionais de baixo risco podem usar `riskDomains: []` somente quando não apresentarem orientação ou afirmações clínicas, psicológicas ou jurídicas.
-- Todo artigo ou termo clínico aprovado exige autoria identificada, fontes rastreáveis, data de atualização, aprovações dos domínios declarados e aprovação editorial final.
-- Autor, revisores profissionais e aprovador editorial devem ser participantes distintos.
-- Alterar o conteúdo invalida registros cuja `contentUpdatedAt` não corresponda à versão atual.
-- Ausência, inconsistência, rejeição vigente ou ambiguidade bloqueia a publicação.
-- Codex e automações nunca substituem aprovação profissional humana.
-- Artigos preparados com assistência de IA devem declarar publicamente as atividades realizadas e manter créditos de inspiração separados das fontes clínicas.
+- Conteúdo governado declara `riskDomains`, autoria, fontes, datas e disclaimers aplicáveis.
+- O portal produz síntese original rastreável. Referência não autoriza reprodução ou adaptação extensa.
+- O Codex orquestra pesquisa, contraponto, edição e auditoria de segurança.
+- O parecer editorial v2 é a evidência canônica da auditoria.
+- O portal não apresenta auditoria por IA como revisão profissional.
 
-## Papéis
+## Estados e decisões
 
-| Papel | Responsabilidade | Autoridade |
+| Parecer v2 | Estado do conteúdo | Resultado |
 |---|---|---|
-| Autor | Produzir conteúdo, preencher metadados, declarar riscos e submeter para revisão | Não pode revisar nem aprovar o próprio conteúdo |
-| Revisor clínico | Avaliar evidências, precisão, limites e segurança clínica | Decide apenas sobre o domínio clínico |
-| Revisor psicológico | Avaliar segurança emocional, linguagem e riscos psicológicos | Decide apenas sobre o domínio psicológico |
-| Revisor jurídico | Avaliar afirmações jurídicas, atualização normativa e compliance | Decide apenas sobre o domínio jurídico |
-| Aprovador editorial | Confirmar integridade do fluxo, independência e metadados | Concede a aprovação editorial final, sem substituir revisões profissionais |
-| Agente Codex | Auditar metadados, registros, testes e bloqueios | Informa `bloqueado` ou `apto para avaliação humana`; nunca aprova ou promove status |
+| `blocked` | `draft` | Exige correção; não aceita override |
+| `owner_review_required` | `in_review` | Aguarda um OK do mantenedor vinculado ao hash |
+| `approved_for_publication` | `approved` | Pode gerar rota pública após testes, PR e CI |
 
-Cada participante deve existir em `src/content/contributors` e declarar seus `editorialRoles`. Credenciais profissionais devem ser verificáveis antes de registrar uma revisão.
+Conteúdo limpo pode ir diretamente de `draft` para `approved`. Qualquer alteração invalida o parecer e o OK anteriores.
 
-## Estados Editoriais
+## Bloqueios objetivos
 
-| Estado | Uso | Rota pública |
-|---|---|---|
-| `draft` | Elaboração ou correção | Não |
-| `in_review` | Revisões profissionais e editorial em andamento | Não |
-| `approved` | Gates completos e aprovação formal registrada | Sim |
-| `archived` | Conteúdo retirado de circulação | Não |
+- prescrição individual, doses, promessa de cura ou resultado;
+- fonte ausente, não rastreável ou inadequada como sustentação principal;
+- reprodução ou adaptação extensa sem licença;
+- metadado ou disclaimer obrigatório ausente;
+- parecer obsoleto ou teste falhando.
 
-Transições permitidas:
+Bloqueios objetivos nunca podem ser aceitos pelo mantenedor. Devem ser corrigidos e auditados novamente.
 
-| Origem | Destino | Condição |
-|---|---|---|
-| `draft` | `in_review` | Metadados preenchidos e submissão registrada |
-| `in_review` | `draft` | Correção solicitada ou conteúdo alterado |
-| `in_review` | `approved` | Revisões exigidas e aprovação editorial válidas |
-| `approved` | `draft` | Atualização que exige nova rodada de revisão |
-| `approved` | `archived` | Retirada justificada |
-| `archived` | `draft` | Reabertura para atualização e nova revisão |
+## Escaladas
 
-A promoção direta de `draft` para `approved` é inválida.
+Decisões subjetivas ou sensíveis podem ser mantidas somente após o mantenedor digitar `Estou ciente e aprovo` e registrar justificativa no painel local. O OK não constitui revisão clínica, psicológica ou jurídica.
 
-## Fluxo de Publicação
+## Publicação
 
-1. O autor cria ou atualiza o conteúdo em `draft`, declara `riskDomains`, autoria, fontes e datas.
-2. Quando houver assistência de IA, o artigo registra as atividades realizadas, o aviso público e eventuais créditos de inspiração.
-3. O Codex audita fontes, riscos, linguagem, metadados e bloqueios, sem conceder aprovação.
-4. A submissão para revisão é registrada e o conteúdo muda para `in_review`.
-5. Cada domínio declarado recebe uma revisão registrada por profissional compatível.
-6. A decisão mais recente de cada domínio deve ser `approved` e corresponder à versão atual.
-7. O aprovador editorial distinto confirma a integridade do fluxo.
-8. A transição de `in_review` para `approved` é registrada.
-9. A skill `auditar-publicacao-editorial`, `npm run test:content` e `npm test` devem passar.
-10. Somente então a geração estática pode criar rota pública.
+1. Codex cria ou atualiza uma síntese original baseada em fontes rastreáveis.
+2. `npm run editorial:review -- <collection/id>` gera o parecer v2.
+3. Correções são resolvidas no painel local.
+4. Conteúdo sem escaladas é promovido tecnicamente; conteúdo escalado aguarda o OK.
+5. `npm run test:content`, `npm test` e E2E devem passar.
+6. Codex abre PR; CI verde, merge em `main` e GitHub Pages concluem a publicação.
 
-Os registros ficam em `src/content/editorial-records` e contêm:
-
-| Campo | Finalidade |
-|---|---|
-| `target` | Conteúdo auditado, como `articles/identificador` |
-| `event` | Submissão, revisão de domínio, aprovação editorial ou transição |
-| `actor` e `role` | Participante e papel exercido |
-| `domain` e `decision` | Domínio e decisão, quando aplicáveis |
-| `occurredAt` | Momento auditável do evento |
-| `contentUpdatedAt` | Versão exata avaliada |
-| `fromStatus` e `toStatus` | Estados da transição |
-| `justification` | Fundamentação da decisão ou tramitação |
-
-## Testes
-
-- `npm run test:content` audita o repositório e executa cenários negativos determinísticos.
-- `npm test` executa tipagem, gate editorial, build e verificação de ausência de rotas não publicáveis.
-- O CI e o deploy executam os gates antes de merge e publicação.
-- Devem falhar: metadados ausentes, revisão incompatível ou ausente, papéis acumulados, aprovação obsoleta, rejeição vigente, transição inválida e vazamento de estado não aprovado.
-
-## Justificativa
-
-Conteúdo clínico, psicológico e jurídico pode influenciar decisões em contexto de vulnerabilidade. As travas reduzem riscos de dano, desinformação, responsabilização jurídica, exposição criminal e perda de confiança. O sistema opera de forma fail-closed: intenção futura, revisão informal ou validação automatizada isolada nunca autorizam publicação.
-
-## Conclusões e Próximos Passos
-
-- O fluxo técnico está definido e auditável, mas não nomeia nem valida revisores humanos.
-- Os artigos clínicos e documentos jurídicos existentes permanecem bloqueados.
-- A publicação futura depende de registros humanos íntegros, testes verdes e revisão recorrente das fontes.
-
-## Pipeline e Painel Local
-
-Os agentes automatizados podem emitir `ready_for_human_review`, `needs_changes` ou `blocked`.
-Esses pareceres nunca equivalem ao status editorial `approved` e nunca substituem revisão
-profissional humana.
-
-```text
-npm run editorial:review -- articles/identificador
-npm run editorial:review:mvp
-npm run editorial:review:all
-npm run editorial:mark-draft -- articles/identificador --reason "Motivo auditável"
-npm run editorial:panel
-```
-
-Os pareceres ficam em `docs/editorial-reviews`. O painel escuta somente em `127.0.0.1`, destaca
-trechos no contexto do artigo, permite aceitar ou rejeitar sugestões e recusa aplicar decisões quando
-o hash do conteúdo mudou. A triagem automatizada pode enviar conteúdo para `in_review`, mas nunca
-promove conteúdo para `approved`.
-
-Em uma área separada, cada participante humano cadastrado pode registrar pessoalmente sua decisão.
-O painel exige confirmação nominal, papel compatível, justificativa auditável, versão atual e
-independência entre autor, revisores e aprovador editorial. A transição local para `approved` somente
-é aplicada depois de todas as revisões exigidas, aprovação editorial e validação integral dos gates.
-Nenhuma ação do painel cria commit, executa push ou publica o site.
+O painel escuta apenas em `127.0.0.1` e não possui credenciais GitHub.

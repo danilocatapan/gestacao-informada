@@ -9,7 +9,7 @@ clinical: true
 riskDomains:
   - clinical
   - psychological
-status: in_review
+status: approved
 authoredBy: equipe-editorial
 lastUpdatedAt: 2026-06-08T13:29:32.981Z
 medicalDisclaimer: Este conteúdo é educativo, não confirma diagnóstico e não substitui avaliação profissional. Sangramento intenso, dor forte, desmaio, febre ou piora importante exigem atendimento de saúde.
@@ -77,7 +77,7 @@ Um cuidado respeitoso inclui escuta, privacidade, informações compreensíveis 
 
 ## Matriz de afirmações para revisão
 
-| Afirmação editorial | Fonte principal | Pendência humana |
+| Afirmação editorial | Fonte principal | Auditoria editorial |
 |---|---|---|
 | Sintomas isolados podem não confirmar perda e a avaliação pode exigir exames seriados. | ACOG Practice Bulletin No. 200 | Confirmar adequação ao contexto brasileiro. |
 | Muitas perdas precoces estão associadas a alterações cromossômicas ao acaso. | ACOG Early Pregnancy Loss | Revisar linguagem de causalidade e acolhimento. |
@@ -85,4 +85,4 @@ Um cuidado respeitoso inclui escuta, privacidade, informações compreensíveis 
 
 ## Situação editorial
 
-Este artigo está em `draft`. Precisa de revisão clínica e psicológica profissionais, checagem final das fontes e aprovação editorial independente antes de qualquer publicação.
+Este artigo depende de parecer editorial v2 atual, testes verdes e publicação protegida por PR e CI.

@@ -13,4 +13,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Validação editorial concluída em ${state.contents.length} conteúdos e ${state.records.length} registros.`);
+console.log(`Validação editorial v2 concluída em ${state.contents.length} conteúdos e ${state.reviews.length} pareceres.`);

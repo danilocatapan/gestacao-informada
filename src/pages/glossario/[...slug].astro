@@ -19,7 +19,6 @@ const { entry, terms } = Astro.props;
 const glossaryPath = 'glossario/';
 const entryPath = entry ? `${glossaryPath}${entry.data.slug}/` : glossaryPath;
 const author = entry?.data.authoredBy ? await getEntry(entry.data.authoredBy) : undefined;
-const reviewer = entry?.data.reviewer ? await getEntry(entry.data.reviewer) : undefined;
 const relatedTerms = entry
   ? (await Promise.all(entry.data.relatedTerms.map((reference) => getEntry(reference))))
     .filter((related) => related?.data.status === 'approved')
@@ -65,11 +64,10 @@ const structuredData = entry ? [{
         </article>
         <aside class="article-meta">
           <h2>Sobre este termo</h2>
-          {author && <p><strong>Autoria:</strong> {author.data.name}<br />{author.data.credentials}</p>}
-          {reviewer && <p><strong>Revisão clínica:</strong> {reviewer.data.name}<br />{reviewer.data.credentials}</p>}
-          {entry.data.reviewedAt && <p><strong>Revisado em:</strong> {entry.data.reviewedAt.toLocaleDateString('pt-BR')}</p>}
+          {author && <p><strong>Autoria:</strong> {author.data.name}</p>}
           <p><strong>Última atualização:</strong> {entry.data.lastUpdatedAt.toLocaleDateString('pt-BR')}</p>
           <p>Conteúdo educativo. Não substitui avaliação, diagnóstico ou tratamento individualizado.</p>
+          <p data-review-transparency><strong>Transparência editorial:</strong> definição preparada e auditada com assistência de IA, sem revisão profissional.</p>
           <h3>Fontes</h3>
           <ul>{entry.data.sources.map((source) => <li><a href={source.url}>{source.title}</a> — {source.publisher}</li>)}</ul>
         </aside>

@@ -8,7 +8,7 @@ contentType: article
 clinical: true
 riskDomains:
   - clinical
-status: in_review
+status: approved
 authoredBy: equipe-editorial
 lastUpdatedAt: 2026-06-08T18:05:40.812Z
 medicalDisclaimer: Este conteúdo é educativo e não interpreta resultados genéticos individuais nem recomenda exames, suplementos ou tratamentos.
@@ -76,11 +76,11 @@ Antes de atribuir um desfecho ao MTHFR, vale perguntar:
 
 ## Como tratamos alegações controversas
 
-Materiais públicos do Dr. Rodrigo Berger apresentam argumentos que valorizam MTHFR em contextos gestacionais. Eles ajudaram a identificar uma controvérsia relevante para pacientes, mas não foram usados como fonte clínica nem como endosso. O artigo apresenta a posição de diretrizes institucionais e deve receber revisão profissional capaz de avaliar divergências.
+Materiais públicos do Dr. Rodrigo Berger apresentam argumentos que valorizam MTHFR em contextos gestacionais. Eles ajudaram a identificar uma controvérsia relevante para pacientes, mas não foram usados como fonte clínica nem como endosso. O artigo apresenta a posição de diretrizes institucionais e explicita as divergências encontradas.
 
 ## Matriz de afirmações para revisão
 
-| Afirmação editorial | Fonte principal | Pendência humana |
+| Afirmação editorial | Fonte principal | Auditoria editorial |
 |---|---|---|
 | Variantes comuns de MTHFR são frequentes e não equivalem isoladamente a doença. | CDC | Revisão genética/clínica. |
 | Não há recomendação atual para testar MTHFR ou alterar orientação de ácido fólico apenas pelo genótipo. | CDC | Confirmar aplicabilidade ao público brasileiro. |
