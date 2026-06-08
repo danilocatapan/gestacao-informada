@@ -36,11 +36,12 @@ O site e preparado para publicacao em `https://danilocatapan.github.io/gestacao-
 - [Visão do produto](docs/PRODUCT.md)
 - [Roadmap inicial](docs/ROADMAP.md)
 - [Registro de decisões](docs/DECISIONS.md)
+- [Fluxo editorial seguro](docs/EDITORIAL_WORKFLOW.md)
 - [Como contribuir](CONTRIBUTING.md)
 
 ## Agentes e automações
 
-As instruções para agentes estão em [AGENTS.md](AGENTS.md). A skill local do projeto está em `.codex/skills/gestacao-informada`.
+As instruções para agentes estão em [AGENTS.md](AGENTS.md). A skill geral do projeto está em `.codex/skills/gestacao-informada` e a auditoria fail-closed em `.codex/skills/auditar-publicacao-editorial`.
 
 ## Princípio essencial
 
@@ -52,5 +53,6 @@ O conteúdo do portal é educativo e não substitui avaliação, diagnóstico ou
 - `src/content/articles`: artigos medicos sujeitos ao gate editorial.
 - `src/content/legal`: documentos juridicos nao publicaveis sem aprovacao.
 - `src/content/review-notes`: notas internas sem rotas.
+- `src/content/editorial-records`: trilha auditável de revisões, aprovações e transições.
 - `src/content/contributors`: perfis referenciados de autores e revisores.
 - `tests/smoke.spec.ts`: smoke tests das rotas publicas em desktop e mobile.

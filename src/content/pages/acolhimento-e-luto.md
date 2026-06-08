@@ -4,6 +4,7 @@ description: "Um espaço para reconhecer a perda gestacional e apoiar conversas 
 eyebrow: "Você não precisa minimizar sua dor"
 contentType: "institutional-page"
 clinical: false
+riskDomains: []
 status: "approved"
 updatedAt: "2026-06-06"
 ---

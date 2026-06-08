@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "lint": "astro check",
     "check": "astro check",
-    "test:content": "node scripts/test-content.mjs",
+    "test:content": "node scripts/test-content.mjs && node scripts/test-editorial-validation.mjs",
     "test:build": "node scripts/test-build.mjs",
     "test:e2e": "playwright test",
     "test": "npm run lint && npm run test:content && npm run build && npm run test:build",
@@ -18,7 +18,8 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource/poppins": "^5.2.7",
-    "astro": "^6.4.4"
+    "astro": "^6.4.4",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",

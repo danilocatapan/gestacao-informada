@@ -11,7 +11,18 @@ export async function getStaticPaths() {
 const { article } = Astro.props;
 const { Content } = await render(article);
 const author = article.data.authoredBy ? await getEntry(article.data.authoredBy) : undefined;
-const reviewer = article.data.reviewedBy ? await getEntry(article.data.reviewedBy) : undefined;
+const target = `articles/${article.id}`;
+const records = await getCollection('editorialRecords', ({ data }) => data.target === target);
+const domainApprovals = records
+  .filter(({ data }) => data.event === 'domain_review' && data.decision === 'approved')
+  .sort((left, right) => right.data.occurredAt.getTime() - left.data.occurredAt.getTime());
+const latestApprovals = domainApprovals.filter((record, index, all) =>
+  all.findIndex((candidate) => candidate.data.domain === record.data.domain) === index);
+const reviewers = await Promise.all(latestApprovals.map(async ({ data }) => ({
+  domain: data.domain,
+  occurredAt: data.occurredAt,
+  contributor: await getEntry(data.actor),
+})));
 const articlePath = `artigos/${article.id}/`;
 const structuredData = [
   {
@@ -22,7 +33,9 @@ const structuredData = [
     url: withCanonicalUrl(articlePath),
     dateModified: article.data.lastUpdatedAt.toISOString(),
     author: author ? { '@type': 'Organization', name: author.data.name } : undefined,
-    reviewedBy: reviewer ? { '@type': 'Person', name: reviewer.data.name } : undefined,
+    reviewedBy: reviewers
+      .filter(({ contributor }) => contributor)
+      .map(({ contributor }) => ({ '@type': 'Person', name: contributor?.data.name })),
   },
 ];
 ---
@@ -34,7 +47,9 @@ const structuredData = [
       <aside class="article-meta">
         <h2>Sobre este conteúdo</h2>
         {author && <p><strong>Autoria:</strong> {author.data.name}<br />{author.data.credentials}</p>}
-        {reviewer && <p><strong>Revisão:</strong> {reviewer.data.name}<br />{reviewer.data.credentials}</p>}
+        {reviewers.map(({ domain, occurredAt, contributor }) => contributor && (
+          <p><strong>Revisão {domain}:</strong> {contributor.data.name}<br />{contributor.data.credentials}<br />{occurredAt.toLocaleDateString('pt-BR')}</p>
+        ))}
         <p><strong>Última atualização:</strong> {article.data.lastUpdatedAt.toLocaleDateString('pt-BR')}</p>
         <p>{article.data.medicalDisclaimer}</p>
         <h3>Fontes</h3>

@@ -3,6 +3,7 @@ title: "Política de privacidade"
 description: "Placeholder interno pendente de revisão jurídica."
 contentType: "legal-document"
 clinical: false
+riskDomains: ["legal"]
 status: "draft"
 updatedAt: "2026-06-06"
 ---

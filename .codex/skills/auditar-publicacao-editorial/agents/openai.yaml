@@ -1,0 +1,4 @@
+interface:
+  display_name: "Auditar publicação editorial"
+  short_description: "Audita gates editoriais antes da publicação"
+  default_prompt: "Use $auditar-publicacao-editorial para auditar uma publicação e informar se ela está bloqueada ou apta para avaliação humana."

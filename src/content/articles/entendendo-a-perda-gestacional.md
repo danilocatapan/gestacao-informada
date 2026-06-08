@@ -6,6 +6,7 @@ objective: "Explicar conceitos iniciais com linguagem acolhedora e limites claro
 audience: "Pessoas e famílias que viveram uma perda gestacional."
 contentType: "article"
 clinical: true
+riskDomains: ["clinical"]
 status: "draft"
 lastUpdatedAt: "2026-06-06"
 medicalDisclaimer: "Conteúdo educativo em preparação que não substitui avaliação profissional."

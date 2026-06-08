@@ -4,6 +4,7 @@ description: "Uma área em preparação para reunir orientação jurídica clara
 eyebrow: "Informação prática"
 contentType: "institutional-page"
 clinical: false
+riskDomains: []
 status: "approved"
 updatedAt: "2026-06-06"
 ---

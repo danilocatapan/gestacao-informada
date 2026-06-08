@@ -4,6 +4,7 @@ description: "Um checklist não clínico para reunir informações e preparar um
 eyebrow: "Preparação com calma"
 contentType: "checklist"
 clinical: false
+riskDomains: []
 status: "approved"
 updatedAt: "2026-06-06"
 ---

@@ -73,3 +73,11 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 **Decisao:** todo conteudo publicavel declara `contentType` e `clinical`. Conteudo clinico aprovado reside na collection `articles` e exige autoria, revisao, fontes, disclaimer e datas; checklists organizacionais podem ser publicados com `clinical: false`.
 
 **Motivo:** diferenciar formato editorial de risco clinico e aplicar requisitos proporcionais sem enfraquecer os gates de seguranca.
+
+## 2026-06-07 — Governanca editorial por dominio e trilha auditavel
+
+**Status:** aceita
+
+**Decisao:** classificar conteudos pelos dominios `clinical`, `psychological` e `legal`; exigir revisoes humanas compativeis, aprovacao editorial independente e registros versionados antes de publicar conteudo governado. O agente Codex atua somente como auditor fail-closed e nunca concede aprovacao ou altera status.
+
+**Motivo:** impedir publicacao baseada em campos isolados, revisoes obsoletas ou automacao sem autoridade profissional, preservando rastreabilidade e separacao de responsabilidades.

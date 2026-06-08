@@ -5,6 +5,7 @@
 1. Leia `AGENTS.md` e `docs/PRODUCT.md`.
 2. Verifique prioridades e dependencias em `docs/ROADMAP.md`.
 3. Registre decisoes estruturais em `docs/DECISIONS.md`.
+4. Para qualquer mudanca publicavel, siga `docs/EDITORIAL_WORKFLOW.md`.
 
 ## Mudancas
 
@@ -12,6 +13,8 @@
 - Explique motivacao, impacto e como a mudanca foi verificada.
 - Nao inclua dados pessoais, informacoes clinicas identificaveis ou segredos.
 - Conteudo de saude somente pode ser publicado depois da revisao profissional definida pelo projeto.
+- Conteudo sensivel deve declarar dominios de risco e possuir registros atuais para todas as revisoes exigidas.
+- Autor, revisores profissionais e aprovador editorial devem ser participantes distintos.
 - Use os helpers de URL do projeto e nao concatene o caminho-base do GitHub Pages.
 - Nao adicione frameworks de componentes sem uma decisao registrada.
 

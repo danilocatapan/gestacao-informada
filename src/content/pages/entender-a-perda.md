@@ -4,6 +4,7 @@ description: "Um ponto de partida cuidadoso para organizar dúvidas e encontrar 
 eyebrow: "Começar a compreender"
 contentType: "institutional-page"
 clinical: false
+riskDomains: []
 status: "approved"
 updatedAt: "2026-06-06"
 ---

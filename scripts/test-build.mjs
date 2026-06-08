@@ -28,6 +28,8 @@ async function markdownFiles(directory) {
 for (const collection of ['pages', 'articles', 'legal']) {
   for (const file of await markdownFiles(path.join(content, collection))) {
     const source = await readFile(file, 'utf8');
+    const status = source.match(/^status:\s*["']?([^"'\r\n]+)/m)?.[1]?.trim();
+    if (!['draft', 'in_review', 'approved', 'archived'].includes(status)) failures.push(`Status editorial inválido em ${file}`);
     if (/^status:\s*["']?approved/m.test(source)) continue;
     const id = path.basename(file).replace(/\.(md|mdx)$/i, '');
     const routes = collection === 'articles'

@@ -35,6 +35,8 @@ Use a skill local `.codex/skills/gestacao-informada/SKILL.md` em tarefas de prod
 - Usar `withBaseUrl()` para paths relativos e `withCanonicalUrl()` para URLs absolutas. Nao concatenar o base path manualmente.
 - Conteudo medico deve residir na collection `articles`, nunca hardcoded em componentes ou paginas.
 - Artigos medicos somente podem gerar rota publica com `status: approved` e todos os requisitos editoriais preenchidos.
+- Seguir `docs/EDITORIAL_WORKFLOW.md`; conteudo sensivel deve declarar `riskDomains` e possuir trilha valida em `editorial-records`.
+- Codex e automacoes podem auditar e bloquear, mas nunca conceder aprovacao profissional ou promover conteudo para `approved`.
 - Toda ocorrencia publicavel de termo sensivel exige uma excecao documentada em `safetyReview`.
 - `npm run test:content` deve rodar antes do commit. O CI e o gate obrigatorio para merge e deploy.
 - Toda entrega de interface deve ser validada com Playwright em desktop e mobile, cobrindo todas as rotas e fluxos alterados.

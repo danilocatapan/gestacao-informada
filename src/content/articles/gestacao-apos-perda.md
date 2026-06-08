@@ -6,6 +6,7 @@ objective: "Ajudar famílias a organizar perguntas e necessidades de apoio."
 audience: "Pessoas planejando ou vivendo uma gestação após perda."
 contentType: "article"
 clinical: true
+riskDomains: ["clinical", "psychological"]
 status: "draft"
 lastUpdatedAt: "2026-06-06"
 medicalDisclaimer: "Conteúdo educativo em preparação que não substitui avaliação profissional."

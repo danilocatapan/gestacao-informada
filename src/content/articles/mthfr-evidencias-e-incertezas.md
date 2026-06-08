@@ -6,6 +6,7 @@ objective: "Explicar por que fontes e profissionais podem apresentar perspectiva
 audience: "Pessoas que receberam resultados ou informações sobre MTHFR."
 contentType: "article"
 clinical: true
+riskDomains: ["clinical"]
 status: "draft"
 lastUpdatedAt: "2026-06-06"
 medicalDisclaimer: "Conteúdo educativo em preparação que não substitui avaliação profissional."

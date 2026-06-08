@@ -6,6 +6,7 @@ objective: "Explicar o conceito e preparar perguntas para uma conversa profissio
 audience: "Pessoas que encontraram o termo durante atendimento ou investigação."
 contentType: "article"
 clinical: true
+riskDomains: ["clinical"]
 status: "draft"
 lastUpdatedAt: "2026-06-06"
 medicalDisclaimer: "Conteúdo educativo em preparação que não substitui avaliação profissional."

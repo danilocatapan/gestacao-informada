@@ -2,9 +2,11 @@ import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const status = z.enum(['draft', 'in-review', 'approved']);
+const status = z.enum(['draft', 'in_review', 'approved', 'archived']);
 const contentType = z.enum(['article', 'institutional-page', 'legal-document', 'checklist', 'glossary-entry']);
 const sourceType = z.enum(['guideline', 'review', 'law', 'institutional', 'other']);
+const riskDomain = z.enum(['clinical', 'psychological', 'legal']);
+const editorialRole = z.enum(['author', 'clinical_reviewer', 'psychological_reviewer', 'legal_reviewer', 'editorial_approver']);
 
 const source = z.object({
   title: z.string().min(1),
@@ -29,6 +31,7 @@ const pages = defineCollection({
     eyebrow: z.string().min(1),
     contentType,
     clinical: z.literal(false),
+    riskDomains: z.array(riskDomain),
     status,
     updatedAt: z.coerce.date(),
   }),
@@ -45,26 +48,21 @@ const articles = defineCollection({
       audience: z.string().min(1),
       contentType: z.literal('article'),
       clinical: z.boolean(),
+      riskDomains: z.array(riskDomain),
       status,
       authoredBy: reference('contributors').optional(),
-      reviewedBy: reference('contributors').optional(),
-      reviewedAt: z.coerce.date().optional(),
       sources: z.array(source).default([]),
       lastUpdatedAt: z.coerce.date(),
       medicalDisclaimer: z.string().min(1),
       safetyReview: z.array(safetyReview).default([]),
     })
     .superRefine((article, ctx) => {
-      if (article.status !== 'approved' || !article.clinical) return;
-
+      if (article.clinical && !article.riskDomains.includes('clinical')) {
+        ctx.addIssue({ code: 'custom', message: 'Artigo clínico deve declarar o domínio clinical.', path: ['riskDomains'] });
+      }
+      if (article.status !== 'approved') return;
       if (!article.authoredBy) {
         ctx.addIssue({ code: 'custom', message: 'Artigo aprovado exige autoria.', path: ['authoredBy'] });
-      }
-      if (!article.reviewedBy) {
-        ctx.addIssue({ code: 'custom', message: 'Artigo aprovado exige revisor.', path: ['reviewedBy'] });
-      }
-      if (!article.reviewedAt) {
-        ctx.addIssue({ code: 'custom', message: 'Artigo aprovado exige data de revisão.', path: ['reviewedAt'] });
       }
       if (article.sources.length === 0) {
         ctx.addIssue({ code: 'custom', message: 'Artigo aprovado exige ao menos uma fonte.', path: ['sources'] });
@@ -80,18 +78,13 @@ const legal = defineCollection({
       description: z.string().min(1),
       contentType: z.literal('legal-document'),
       clinical: z.literal(false),
+      riskDomains: z.array(riskDomain),
       status,
-      reviewedBy: z.string().optional(),
-      reviewedAt: z.coerce.date().optional(),
       updatedAt: z.coerce.date(),
     })
     .superRefine((document, ctx) => {
-      if (document.status !== 'approved') return;
-      if (!document.reviewedBy) {
-        ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige revisor.', path: ['reviewedBy'] });
-      }
-      if (!document.reviewedAt) {
-        ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige data de revisão.', path: ['reviewedAt'] });
+      if (!document.riskDomains.includes('legal')) {
+        ctx.addIssue({ code: 'custom', message: 'Documento jurídico deve declarar o domínio legal.', path: ['riskDomains'] });
       }
     }),
 });
@@ -111,9 +104,27 @@ const contributors = defineCollection({
   schema: z.object({
     name: z.string().min(1),
     role: z.string().min(1),
+    editorialRoles: z.array(editorialRole).min(1),
     credentials: z.string().min(1),
     bio: z.string().min(1),
   }),
 });
 
-export const collections = { pages, articles, legal, reviewNotes, contributors };
+const editorialRecords = defineCollection({
+  loader: glob({ base: './src/content/editorial-records', pattern: '**/*.{json,yaml,yml}' }),
+  schema: z.object({
+    target: z.string().regex(/^(articles|pages|legal)\/[^/]+$/),
+    event: z.enum(['submitted_for_review', 'domain_review', 'editorial_approval', 'status_transition']),
+    actor: reference('contributors'),
+    role: editorialRole,
+    domain: riskDomain.optional(),
+    decision: z.enum(['approved', 'rejected']).optional(),
+    occurredAt: z.coerce.date(),
+    contentUpdatedAt: z.coerce.date(),
+    fromStatus: status.optional(),
+    toStatus: status.optional(),
+    justification: z.string().min(20),
+  }),
+});
+
+export const collections = { pages, articles, legal, reviewNotes, contributors, editorialRecords };

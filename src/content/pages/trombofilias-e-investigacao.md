@@ -4,6 +4,7 @@ description: "Uma área para explicar conceitos, limites das evidências e pergu
 eyebrow: "Ciência em linguagem acessível"
 contentType: "institutional-page"
 clinical: false
+riskDomains: []
 status: "approved"
 updatedAt: "2026-06-06"
 ---

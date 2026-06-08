@@ -6,6 +6,7 @@ objective: "Organizar dúvidas e explicar que a investigação depende da histó
 audience: "Pessoas e famílias conversando com profissionais após perdas recorrentes."
 contentType: "article"
 clinical: true
+riskDomains: ["clinical"]
 status: "draft"
 lastUpdatedAt: "2026-06-06"
 medicalDisclaimer: "Conteúdo educativo em preparação que não substitui avaliação profissional."

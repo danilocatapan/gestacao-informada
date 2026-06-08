@@ -9,9 +9,10 @@ description: Orientar planejamento, conteudo, arquitetura e desenvolvimento do p
 
 1. Ler `AGENTS.md` e os documentos relevantes em `docs/`.
 2. Confirmar a etapa atual em `docs/ROADMAP.md`.
-3. Manter o trabalho dentro do menor escopo que entregue valor verificavel.
-4. Registrar decisoes estruturais em `docs/DECISIONS.md`.
-5. Verificar linguagem, acessibilidade, privacidade e seguranca clinica antes de concluir.
+3. Ler `docs/EDITORIAL_WORKFLOW.md` quando a tarefa afetar conteudo publicavel, revisao ou status editorial.
+4. Manter o trabalho dentro do menor escopo que entregue valor verificavel.
+5. Registrar decisoes estruturais em `docs/DECISIONS.md`.
+6. Verificar linguagem, acessibilidade, privacidade e seguranca clinica antes de concluir.
 
 ## Conteudo de saude
 

@@ -4,6 +4,7 @@ description: "Conheça o propósito, os compromissos editoriais e os limites des
 eyebrow: "Transparência desde o início"
 contentType: "institutional-page"
 clinical: false
+riskDomains: []
 status: "approved"
 updatedAt: "2026-06-06"
 ---
