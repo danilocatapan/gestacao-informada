@@ -8,8 +8,13 @@ contentType: "article"
 clinical: true
 riskDomains: ["clinical"]
 status: "draft"
+authoredBy: "equipe-editorial"
 lastUpdatedAt: "2026-06-06"
 medicalDisclaimer: "Conteúdo educativo que não substitui avaliação profissional."
+aiAssistance:
+  activities: ["safety-audit"]
+  disclosure: "Este rascunho técnico foi auditado com assistência de IA e não representa conteúdo clínico revisado ou publicável."
+inspirationCredits: []
 safetyReview: []
 sources: []
 ---

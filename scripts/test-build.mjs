@@ -14,6 +14,8 @@ const legalPublicSlugs = new Map([
 const failures = [];
 const approvedLegalRoutes = [];
 const blockedLegalRoutes = [];
+const approvedArticleRoutes = [];
+const blockedArticleRoutes = [];
 const exists = async (file) => { try { await access(file); return true; } catch { return false; } };
 
 for (const page of expectedPages) {
@@ -51,6 +53,7 @@ for (const collection of ['pages', 'articles', 'legal']) {
       if (data.slug) approvedLegalRoutes.push(data.slug);
       continue;
     }
+    if (collection === 'articles' && status === 'approved') approvedArticleRoutes.push(path.join('artigos', id));
     if (status === 'approved') continue;
 
     const routes = collection === 'articles'
@@ -60,6 +63,7 @@ for (const collection of ['pages', 'articles', 'legal']) {
         : [id];
     for (const route of routes) {
       if (collection === 'legal') blockedLegalRoutes.push(route);
+      if (collection === 'articles') blockedArticleRoutes.push(route);
       if (await exists(path.join(dist, route))) failures.push(`Conteúdo não publicável presente em dist/${route}`);
     }
   }
@@ -84,6 +88,14 @@ for (const route of approvedLegalRoutes) {
 }
 for (const route of blockedLegalRoutes) {
   if (sitemap.includes(`/${base}/${route}/`)) failures.push(`Rota jurídica não aprovada presente no sitemap: /${route}/`);
+}
+for (const route of approvedArticleRoutes) {
+  const publicRoute = route.replaceAll('\\', '/');
+  if (!sitemap.includes(`/${base}/${publicRoute}/`)) failures.push(`Artigo aprovado ausente do sitemap: /${publicRoute}/`);
+}
+for (const route of blockedArticleRoutes) {
+  const publicRoute = route.replaceAll('\\', '/');
+  if (sitemap.includes(`/${base}/${publicRoute}/`)) failures.push(`Artigo não aprovado presente no sitemap: /${publicRoute}/`);
 }
 
 if (failures.length) {

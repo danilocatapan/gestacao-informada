@@ -1,4 +1,6 @@
 import { expect, test } from '@playwright/test';
+import { existsSync, readdirSync } from 'node:fs';
+import path from 'node:path';
 
 const routes = {
   inicio: '',
@@ -16,6 +18,13 @@ const notices = {
   'acolhimento-e-luto/': 'psychological',
   'direitos/': 'legal',
 };
+
+const articlesDirectory = path.join(process.cwd(), 'dist', 'artigos');
+const approvedArticleRoutes = existsSync(articlesDirectory)
+  ? readdirSync(articlesDirectory, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => `artigos/${entry.name}/`)
+  : [];
 
 for (const viewport of [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -103,3 +112,37 @@ test.describe('interações mobile', () => {
     await expect(page.getByText('O checklist não salva nem envia informações.')).toBeVisible();
   });
 });
+
+for (const articleRoute of approvedArticleRoutes) {
+  test.describe(`artigo aprovado: ${articleRoute}`, () => {
+    for (const viewport of [
+      { name: 'desktop', width: 1440, height: 1000 },
+      { name: 'mobile', width: 360, height: 800 },
+    ]) {
+      test(`${viewport.name} apresenta metadados editoriais e não possui erros`, async ({ page }) => {
+        await page.setViewportSize({ width: viewport.width, height: viewport.height });
+        const errors: string[] = [];
+        page.on('console', (message) => {
+          if (message.type() === 'error') errors.push(message.text());
+        });
+        page.on('pageerror', (error) => errors.push(error.message));
+
+        const response = await page.goto(articleRoute);
+        expect(response?.ok()).toBeTruthy();
+        await expect(page.locator('main h1')).toBeVisible();
+        await expect(page.locator('.article-meta')).toContainText('Fontes');
+        await expect(page.locator('.article-meta')).toContainText('Assistência por IA');
+        await expect(page.locator('[data-ai-disclosure]')).toBeVisible();
+        await expect(page.locator('.article-meta')).toContainText('não substitui');
+
+        const hasOverflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+        expect(hasOverflow).toBeFalsy();
+        expect(errors).toEqual([]);
+        await page.screenshot({
+          path: `docs/qa/screenshots/artigo-${articleRoute.split('/')[1]}-${viewport.name}.png`,
+          fullPage: true,
+        });
+      });
+    }
+  });
+}

@@ -13,7 +13,12 @@ const baseContent = {
     authoredBy: 'autor',
     sources: [{ title: 'Fonte' }],
     lastUpdatedAt: updatedAt,
+    medicalDisclaimer: 'Conteúdo educativo que não substitui avaliação profissional.',
     safetyReview: [],
+    aiAssistance: {
+      activities: ['topic-research', 'source-triage', 'drafting', 'safety-audit'],
+      disclosure: 'Conteúdo preparado com assistência de IA e sujeito a revisão profissional humana.',
+    },
   },
 };
 const contributors = [
@@ -46,6 +51,10 @@ const expectFailure = (name, failures, pattern) =>
 assert.deepEqual(failuresFor(), [], 'fixture válida deve passar');
 expectFailure('sem fonte', failuresFor({ ...baseContent, data: { ...baseContent.data, sources: [] } }), /ao menos uma fonte/);
 expectFailure('sem autoria', failuresFor({ ...baseContent, data: { ...baseContent.data, authoredBy: undefined } }), /exige autoria/);
+expectFailure('sem disclaimer', failuresFor({ ...baseContent, data: { ...baseContent.data, medicalDisclaimer: '' } }), /medicalDisclaimer/);
+expectFailure('sem transparência de IA', failuresFor({ ...baseContent, data: { ...baseContent.data, aiAssistance: undefined } }), /assistência por IA/);
+expectFailure('IA não substitui revisão', failuresFor({ ...baseContent, data: { ...baseContent.data, aiAssistance: { activities: ['safety-audit'], disclosure: 'Auditoria clínica assistida por IA registrada para este conteúdo.' } } }, validRecords.filter((item) => item.event !== 'domain_review')), /revisão clinical/);
+expectFailure('termo sensível sem exceção', failuresFor({ ...baseContent, body: 'O texto menciona enoxaparina apenas em contexto educativo.' }), /termo sensível "enoxaparina"/);
 expectFailure('autor sem papel', failuresFor(baseContent, validRecords, contributors.map((person) => person.id === 'autor' ? { ...person, editorialRoles: ['editorial_approver'] } : person)), /autorizado como author/);
 expectFailure('sem revisão', failuresFor(baseContent, validRecords.filter((item) => item.event !== 'domain_review')), /revisão clinical/);
 expectFailure('credencial incompatível', failuresFor(baseContent, validRecords, contributors.map((person) => person.id === 'clinico' ? { ...person, editorialRoles: ['author'] } : person)), /não possui o papel/);

@@ -22,7 +22,11 @@ const allowedTransitions = new Set([
   'approved:archived',
   'archived:draft',
 ]);
-const sensitiveTerms = ['mg', 'ml', 'dose', 'dosagem', 'tomar', 'prescrever', 'heparina', 'enoxaparina', 'AAS', 'aspirina', 'tratamento indicado', 'garante', 'cura'];
+export const sensitiveTermGroups = {
+  medicationOrDose: ['mg', 'ml', 'dose', 'dosagem', 'tomar', 'prescrever', 'heparina', 'enoxaparina', 'AAS', 'aspirina'],
+  prescriptionOrPromise: ['tratamento indicado', 'garante', 'cura'],
+};
+const sensitiveTerms = Object.values(sensitiveTermGroups).flat();
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const termRegex = (term) => new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(term)}(?![\\p{L}\\p{N}])`, 'giu');
 
@@ -155,6 +159,8 @@ export function validateEditorialState({ contents, contributors, records }) {
       const author = contributorMap.get(data.authoredBy);
       if (data.authoredBy && (!author || !author.editorialRoles?.includes('author'))) failures.push(`${label}: autoria deve referenciar participante autorizado como author.`);
       if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: artigo aprovado exige ao menos uma fonte.`);
+      if (!data.medicalDisclaimer || !String(data.medicalDisclaimer).trim()) failures.push(`${label}: artigo aprovado exige medicalDisclaimer.`);
+      if (!data.aiAssistance?.activities?.length || !data.aiAssistance?.disclosure) failures.push(`${label}: artigo aprovado exige transparência sobre assistência por IA.`);
     }
 
     const submission = contentRecords.find((record) => record.event === 'submitted_for_review' && atOrAfter(record.occurredAt, updatedAt));

@@ -52,8 +52,17 @@ const structuredData = [
         ))}
         <p><strong>Última atualização:</strong> {article.data.lastUpdatedAt.toLocaleDateString('pt-BR')}</p>
         <p>{article.data.medicalDisclaimer}</p>
+        <h3>Assistência por IA</h3>
+        <p data-ai-disclosure>{article.data.aiAssistance.disclosure}</p>
         <h3>Fontes</h3>
         <ul>{article.data.sources.map((source) => <li><a href={source.url}>{source.title}</a> — {source.publisher}</li>)}</ul>
+        {article.data.inspirationCredits.length > 0 && (
+          <>
+            <h3>Créditos de inspiração editorial</h3>
+            <p>Estes materiais ajudaram a identificar dúvidas e pautas. Não são fontes clínicas, revisores ou endosso ao conteúdo.</p>
+            <ul data-inspiration-credits>{article.data.inspirationCredits.map((credit) => <li><a href={credit.url}>{credit.name}</a> — {credit.purpose}</li>)}</ul>
+          </>
+        )}
       </aside>
     </div>
   </section>

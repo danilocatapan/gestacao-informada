@@ -7,6 +7,7 @@ const contentType = z.enum(['article', 'institutional-page', 'legal-document', '
 const sourceType = z.enum(['guideline', 'review', 'law', 'institutional', 'other']);
 const riskDomain = z.enum(['clinical', 'psychological', 'legal']);
 const editorialRole = z.enum(['author', 'clinical_reviewer', 'psychological_reviewer', 'legal_reviewer', 'editorial_approver']);
+const aiActivity = z.enum(['topic-research', 'source-triage', 'drafting', 'safety-audit']);
 const publicSlug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 
 const source = z.object({
@@ -22,6 +23,18 @@ const safetyReview = z.object({
   justification: z.string().min(20),
   reviewedBy: reference('contributors'),
   reviewedAt: z.coerce.date(),
+});
+
+const aiAssistance = z.object({
+  activities: z.array(aiActivity).min(1),
+  disclosure: z.string().min(40),
+});
+
+const inspirationCredit = z.object({
+  name: z.string().min(1),
+  url: z.url(),
+  accessedAt: z.coerce.date(),
+  purpose: z.string().min(20),
 });
 
 const pages = defineCollection({
@@ -56,6 +69,8 @@ const articles = defineCollection({
       lastUpdatedAt: z.coerce.date(),
       medicalDisclaimer: z.string().min(1),
       safetyReview: z.array(safetyReview).default([]),
+      aiAssistance,
+      inspirationCredits: z.array(inspirationCredit).default([]),
     })
     .superRefine((article, ctx) => {
       if (article.clinical && !article.riskDomains.includes('clinical')) {

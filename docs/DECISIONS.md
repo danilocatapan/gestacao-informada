@@ -97,3 +97,11 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 **Decisao:** manter Georgia nos titulos como escolha editorial deliberada e Poppins nos demais textos. Reconstrucoes SVG derivadas dos PNGs provisórios permanecem apenas como candidatos documentados e nao substituem ativos publicos sem aprovacao formal.
 
 **Motivo:** preservar a hierarquia editorial acolhedora do MVP e impedir que ativos reconstruidos sem os arquivos-fonte sejam apresentados como identidade aprovada.
+
+## 2026-06-08 — Assistencia por IA e creditos de inspiracao editorial
+
+**Status:** aceita
+
+**Decisao:** registrar a assistencia do Codex em pesquisa de pauta, triagem de fontes, redacao e auditoria de seguranca por metadados tipados e aviso publico. A assistencia por IA e uma etapa obrigatoria de preparacao dos artigos do MVP, mas nunca concede aprovacao clinica, psicologica, juridica ou editorial e nao substitui revisao profissional humana. Materiais publicos externos podem receber credito como inspiracao editorial, em campo separado das fontes clinicas, sem implicar parceria, revisao ou endosso.
+
+**Motivo:** tornar transparente o uso de automacao sem enfraquecer a governanca fail-closed, preservar a distincao entre descoberta de pautas e evidencia clinica e evitar apropriacao indevida de conteudo de terceiros.

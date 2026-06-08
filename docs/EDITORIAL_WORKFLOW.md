@@ -13,6 +13,7 @@
 - Alterar o conteúdo invalida registros cuja `contentUpdatedAt` não corresponda à versão atual.
 - Ausência, inconsistência, rejeição vigente ou ambiguidade bloqueia a publicação.
 - Codex e automações nunca substituem aprovação profissional humana.
+- Artigos preparados com assistência de IA devem declarar publicamente as atividades realizadas e manter créditos de inspiração separados das fontes clínicas.
 
 ## Papéis
 
@@ -52,13 +53,15 @@ A promoção direta de `draft` para `approved` é inválida.
 ## Fluxo de Publicação
 
 1. O autor cria ou atualiza o conteúdo em `draft`, declara `riskDomains`, autoria, fontes e datas.
-2. A submissão para revisão é registrada e o conteúdo muda para `in_review`.
-3. Cada domínio declarado recebe uma revisão registrada por profissional compatível.
-4. A decisão mais recente de cada domínio deve ser `approved` e corresponder à versão atual.
-5. O aprovador editorial distinto confirma a integridade do fluxo.
-6. A transição de `in_review` para `approved` é registrada.
-7. A skill `auditar-publicacao-editorial`, `npm run test:content` e `npm test` devem passar.
-8. Somente então a geração estática pode criar rota pública.
+2. Quando houver assistência de IA, o artigo registra as atividades realizadas, o aviso público e eventuais créditos de inspiração.
+3. O Codex audita fontes, riscos, linguagem, metadados e bloqueios, sem conceder aprovação.
+4. A submissão para revisão é registrada e o conteúdo muda para `in_review`.
+5. Cada domínio declarado recebe uma revisão registrada por profissional compatível.
+6. A decisão mais recente de cada domínio deve ser `approved` e corresponder à versão atual.
+7. O aprovador editorial distinto confirma a integridade do fluxo.
+8. A transição de `in_review` para `approved` é registrada.
+9. A skill `auditar-publicacao-editorial`, `npm run test:content` e `npm test` devem passar.
+10. Somente então a geração estática pode criar rota pública.
 
 Os registros ficam em `src/content/editorial-records` e contêm:
 
