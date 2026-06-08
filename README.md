@@ -4,7 +4,7 @@ Portal brasileiro de informação responsável e acolhimento para famílias afet
 
 ## Estado atual
 
-O MVP técnico está funcional. Os seis artigos iniciais possuem parecer editorial v2, zero hard blockers e decisão `approved_for_publication`; estão aprovados localmente e aguardam PR, CI e confirmação pública.
+O MVP técnico está funcional. Os seis artigos iniciais possuem parecer editorial v2, zero hard blockers, decisão `approved_for_publication` e rotas públicas confirmadas no GitHub Pages.
 
 ## Desenvolvimento
 

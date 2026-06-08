@@ -17,6 +17,6 @@
 - [x] zero hard blockers;
 - [x] seis artigos sem escaladas promovidos tecnicamente para `approved`;
 - [x] nenhum OK do mantenedor foi necessário;
-- [ ] publicar e confirmar as seis rotas.
+- [x] publicar e confirmar as seis rotas no GitHub Pages.
 
 O painel não realiza commit, push ou deploy.
