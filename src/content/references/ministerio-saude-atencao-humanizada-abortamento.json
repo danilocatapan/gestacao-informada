@@ -1,0 +1,14 @@
+{
+  "id": "ministerio-saude-atencao-humanizada-abortamento",
+  "title": "Atenção humanizada ao abortamento",
+  "url": "https://bvsms.saude.gov.br/bvs/publicacoes/atencao_humanizada_abortamento_norma_tecnica_2ed.pdf",
+  "publisher": "Ministério da Saúde",
+  "type": "government",
+  "domain": "clinical",
+  "authorityLevel": "high",
+  "summary": "Norma técnica brasileira sobre atenção humanizada ao abortamento.",
+  "usableFor": ["contexto brasileiro e cuidado humanizado"],
+  "notUsableFor": ["aconselhamento individual"],
+  "limitations": ["verificar atualização normativa antes da publicação"],
+  "lastCheckedAt": "2026-06-08"
+}

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { validateEditorialState, validateGlossaryInventory, validateLegalInventory } from './editorial-validation.mjs';
+import { validateEditorialState, validateGlossaryInventory, validateLegalInventory, validateReferenceInventory } from './editorial-validation.mjs';
 
 const updatedAt = '2026-06-07T12:00:00.000Z';
 const baseContent = {
@@ -209,6 +209,9 @@ expectFailure('slug jurídico duplicado', validateLegalInventory([
   { ...legalContent, id: 'legal/termos-de-uso' },
   legalDraft('politica-editorial'),
 ]), /compartilhar slug/);
+
+expectFailure('fonte nao centralizada', validateReferenceInventory([baseContent], []), /fonte não centralizada/);
+expectFailure('fonte low em conteudo aprovado', validateReferenceInventory([baseContent], [{ url: undefined, authorityLevel: 'low' }]), /autoridade low/);
 
 assert.deepEqual(validateEditorialState({
   contents: [{ id: 'pages/baixo-risco', collection: 'pages', body: 'Apresentação institucional.', data: { status: 'approved', clinical: false, riskDomains: [], updatedAt } }],

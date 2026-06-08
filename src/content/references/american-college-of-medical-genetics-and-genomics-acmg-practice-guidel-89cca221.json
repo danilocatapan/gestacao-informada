@@ -1,0 +1,20 @@
+{
+  "id": "american-college-of-medical-genetics-and-genomics-acmg-practice-guidel-89cca221",
+  "title": "ACMG Practice Guideline: lack of evidence for MTHFR polymorphism testing",
+  "url": "https://www.acmg.net/docs/MTHFR_gim2012165a_Feb2013.pdf",
+  "publisher": "American College of Medical Genetics and Genomics",
+  "type": "guideline",
+  "domain": "clinical",
+  "authorityLevel": "high",
+  "summary": "Referência centralizada a partir de conteúdo editorial existente.",
+  "usableFor": [
+    "fundamentação e revisão editorial no domínio declarado"
+  ],
+  "notUsableFor": [
+    "orientação individual ou aprovação profissional"
+  ],
+  "limitations": [
+    "classificação inicial exige revisão periódica"
+  ],
+  "lastCheckedAt": "2026-06-08"
+}

@@ -2,6 +2,9 @@
 
 Esta pasta guarda screenshots gerados durante a validacao Playwright de interfaces.
 
+- `painel-editorial-desktop.png`: painel local com artigo, marcacao e apontamento em desktop.
+- `painel-editorial-mobile.png`: painel local responsivo, sem overflow, em viewport mobile.
+
 Antes de concluir mudancas visuais:
 
 - validar todas as rotas alteradas em desktop e mobile;

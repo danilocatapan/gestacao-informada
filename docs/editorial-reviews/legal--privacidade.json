@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "c943059e-c3c5-460f-b591-c118cfeeb583",
+  "target": "legal/privacidade",
+  "generatedAt": "2026-06-08T11:50:15.393Z",
+  "updatedAt": "2026-06-08T11:50:15.393Z",
+  "contentHash": "810fc661094fe653ac1202cd4a89ce621d36e029e33013f7ddd98aaa11d20b04",
+  "contentStatus": "draft",
+  "riskDomains": [
+    "legal"
+  ],
+  "decision": "needs_changes",
+  "publicationAllowed": false,
+  "summary": "1 apontamento(s) exigem decisão.",
+  "agents": {
+    "research": "pending_assisted_execution",
+    "challenge": "needs_changes",
+    "editorial": "suggestions_available",
+    "aiApproval": "needs_changes",
+    "publication": "blocked_until_human_gates"
+  },
+  "findings": [
+    {
+      "id": "f922d32a63ea9174",
+      "domain": "editorial",
+      "severity": "high",
+      "exactText": "",
+      "occurrence": 0,
+      "line": 0,
+      "rationale": "O frontmatter contém placeholder editorial e precisa ser corrigido diretamente no arquivo.",
+      "suggestedReplacement": "",
+      "relatedSources": [],
+      "resolution": {
+        "status": "pending",
+        "replacement": "",
+        "justification": ""
+      }
+    }
+  ],
+  "history": [
+    {
+      "occurredAt": "2026-06-08T11:50:15.393Z",
+      "action": "review_generated",
+      "actor": "editorial-pipeline"
+    }
+  ]
+}

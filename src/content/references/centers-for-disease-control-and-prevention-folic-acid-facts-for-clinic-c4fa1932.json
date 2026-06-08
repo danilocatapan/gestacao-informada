@@ -1,0 +1,20 @@
+{
+  "id": "centers-for-disease-control-and-prevention-folic-acid-facts-for-clinic-c4fa1932",
+  "title": "Folic Acid: Facts for Clinicians",
+  "url": "https://www.cdc.gov/folic-acid/hcp/clinical-overview/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "type": "guideline",
+  "domain": "clinical",
+  "authorityLevel": "high",
+  "summary": "Referência centralizada a partir de conteúdo editorial existente.",
+  "usableFor": [
+    "fundamentação e revisão editorial no domínio declarado"
+  ],
+  "notUsableFor": [
+    "orientação individual ou aprovação profissional"
+  ],
+  "limitations": [
+    "classificação inicial exige revisão periódica"
+  ],
+  "lastCheckedAt": "2026-06-08"
+}

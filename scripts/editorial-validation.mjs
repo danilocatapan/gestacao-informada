@@ -26,6 +26,8 @@ export const sensitiveTermGroups = {
   medicationOrDose: ['mg', 'ml', 'dose', 'dosagem', 'tomar', 'prescrever', 'heparina', 'enoxaparina', 'AAS', 'aspirina'],
   prescriptionOrPromise: ['tratamento indicado', 'garante', 'cura'],
 };
+const forbiddenPlaceholderPattern = /\b(?:TODO|FIXME|placeholder|revisar depois|fonte pendente)\b/iu;
+const forbiddenPromisePattern = /\b(?:garante|cura|prevenção garantida)\b/iu;
 const sensitiveTerms = Object.values(sensitiveTermGroups).flat();
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const termRegex = (term) => new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(term)}(?![\\p{L}\\p{N}])`, 'giu');
@@ -98,6 +100,25 @@ export function validateGlossaryInventory(contents) {
   return failures;
 }
 
+export function validateReferenceInventory(contents, references = []) {
+  const failures = [];
+  const byUrl = new Map();
+  for (const reference of references) {
+    if (byUrl.has(reference.url)) failures.push(`references: URL duplicada: ${reference.url}.`);
+    byUrl.set(reference.url, reference);
+  }
+  for (const content of contents) {
+    for (const source of content.data.sources ?? []) {
+      const reference = byUrl.get(source.url);
+      if (!reference) failures.push(`${content.id}: fonte não centralizada em references: ${source.url}.`);
+      if (content.data.status === 'approved' && reference?.authorityLevel === 'low') {
+        failures.push(`${content.id}: conteúdo aprovado não pode depender de fonte de autoridade low.`);
+      }
+    }
+  }
+  return failures;
+}
+
 export function validateEditorialState({ contents, contributors, records }) {
   const failures = [];
   const contributorMap = new Map(contributors.map((contributor) => [contributor.id, contributor]));
@@ -139,6 +160,8 @@ export function validateEditorialState({ contents, contributors, records }) {
     const data = content.data;
     const riskDomains = Array.isArray(data.riskDomains) ? data.riskDomains : [];
     const contentRecords = records.filter((record) => record.target === content.id);
+    const inspectableText = [content.body, data.title, data.description, data.term, data.shortDefinition, data.fullDefinition]
+      .filter(Boolean).join('\n');
 
     if (!statuses.includes(data.status)) failures.push(`${label}: status editorial inválido.`);
     if (!Array.isArray(data.riskDomains)) failures.push(`${label}: conteúdo exige riskDomains.`);
@@ -186,6 +209,8 @@ export function validateEditorialState({ contents, contributors, records }) {
         if (!data.reviewedAt) failures.push(`${label}: termo aprovado exige reviewedAt.`);
       }
     }
+    if (data.status !== 'draft' && forbiddenPlaceholderPattern.test(inspectableText)) failures.push(`${label}: conteúdo contém placeholder editorial proibido.`);
+    if (forbiddenPromisePattern.test(inspectableText)) failures.push(`${label}: conteúdo contém promessa de resultado proibida.`);
 
     if (data.status !== 'approved') continue;
 
@@ -329,5 +354,11 @@ export async function loadEditorialState(root = process.cwd()) {
     const source = await readFile(file, 'utf8');
     records.push(file.endsWith('.json') ? JSON.parse(source) : parseYaml(source));
   }
-  return { contents, contributors, records };
+  const references = [];
+  const referencesRoot = path.join(contentRoot, 'references');
+  for (const file of await filesIn(referencesRoot, ['.json', '.yaml', '.yml'])) {
+    const source = await readFile(file, 'utf8');
+    references.push(file.endsWith('.json') ? JSON.parse(source) : parseYaml(source));
+  }
+  return { contents, contributors, records, references };
 }

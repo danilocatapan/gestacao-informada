@@ -121,3 +121,26 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 **Decisão:** permitir conteúdo clínico nas collections `articles` e `glossary`, ambas sujeitas ao gate editorial completo e à trilha auditável. Publicar glossário e busca estática somente quando existirem ao menos seis artigos e seis termos de glossário aprovados. A busca indexa exclusivamente conteúdo público `approved`.
 
 **Motivo:** ampliar a compreensão sem criar uma via paralela de publicação clínica nem expor rascunhos, registros internos ou conteúdo ainda sem revisão profissional.
+
+## 2026-06-08 — Pipeline assistida e painel editorial exclusivamente local
+
+**Status:** aceita
+
+**Decisão:** usar agentes especializados e uma pipeline determinística para pesquisa, contraponto,
+edição e parecer multidomínio. Os pareceres automatizados podem bloquear ou declarar conteúdo apto
+para avaliação humana, mas nunca concedem aprovação profissional. Um painel servido exclusivamente
+em `127.0.0.1` permite resolver apontamentos e enviar conteúdo para `in_review`, sem commit, push,
+deploy ou promoção para `approved`.
+
+**Motivo:** reduzir o trabalho manual do mantenedor sem expor rascunhos nem criar uma autoridade de
+aprovação incompatível com a governança clínica e jurídica fail-closed.
+
+## 2026-06-08 — Base central de referências
+
+**Status:** aceita
+
+**Decisão:** manter fontes reutilizáveis em `src/content/references`, com classificação de autoridade,
+domínio, limitações e data de verificação. Fontes inline devem possuir registro central correspondente.
+
+**Motivo:** reduzir duplicação, tornar limitações visíveis e impedir que fontes fracas sejam usadas
+como sustentação principal de conteúdo governado.

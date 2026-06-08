@@ -37,6 +37,26 @@ const inspirationCredit = z.object({
   purpose: z.string().min(20),
 });
 
+const referenceEntry = z.object({
+  id: publicSlug,
+  title: z.string().min(1),
+  url: z.url(),
+  publisher: z.string().min(1),
+  type: z.enum(['guideline', 'scientific_article', 'medical_society', 'hospital', 'university', 'government', 'ngo', 'blog', 'instagram', 'book', 'law', 'institutional', 'review', 'other']),
+  domain: z.enum(['clinical', 'legal', 'psychological', 'support', 'editorial_language']),
+  authorityLevel: z.enum(['high', 'medium', 'low']),
+  summary: z.string().min(1),
+  usableFor: z.array(z.string().min(1)).min(1),
+  notUsableFor: z.array(z.string().min(1)).default([]),
+  limitations: z.array(z.string().min(1)).default([]),
+  lastCheckedAt: z.coerce.date(),
+});
+
+const references = defineCollection({
+  loader: glob({ base: './src/content/references', pattern: '**/*.{json,yaml,yml}' }),
+  schema: referenceEntry,
+});
+
 const pages = defineCollection({
   loader: glob({ base: './src/content/pages', pattern: '**/*.{md,mdx}' }),
   schema: z.object({
@@ -217,4 +237,4 @@ const editorialRecords = defineCollection({
   }),
 });
 
-export const collections = { pages, articles, glossary, legal, reviewNotes, contributors, editorialRecords };
+export const collections = { pages, articles, glossary, legal, references, reviewNotes, contributors, editorialRecords };

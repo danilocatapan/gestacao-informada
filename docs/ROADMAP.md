@@ -15,6 +15,8 @@
 - [x] Definir modelo de conteúdo com autoria, fontes e data de revisão
 - [x] Implementar e documentar fluxo editorial auditável com gates fail-closed
 - [x] Criar agente Codex de auditoria editorial sem autoridade de aprovação
+- [x] Implementar pipeline assistida e painel local de revisão com marcações
+- [x] Centralizar e classificar referências editoriais reutilizáveis
 - [x] Criar páginas dos quatro pilares iniciais
 - [ ] Publicar primeiros seis conteúdos revisados
 - [x] Criar checklist de preparação para consulta

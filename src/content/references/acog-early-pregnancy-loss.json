@@ -1,0 +1,14 @@
+{
+  "id": "acog-early-pregnancy-loss",
+  "title": "Early Pregnancy Loss",
+  "url": "https://www.acog.org/womens-health/faqs/early-pregnancy-loss",
+  "publisher": "American College of Obstetricians and Gynecologists",
+  "type": "medical_society",
+  "domain": "clinical",
+  "authorityLevel": "high",
+  "summary": "Material institucional para pacientes sobre perda gestacional precoce.",
+  "usableFor": ["informação clínica geral e linguagem pública"],
+  "notUsableFor": ["conduta individual ou prescrição"],
+  "limitations": ["material internacional"],
+  "lastCheckedAt": "2026-06-08"
+}

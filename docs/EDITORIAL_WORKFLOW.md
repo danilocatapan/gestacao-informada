@@ -94,3 +94,21 @@ Conteúdo clínico, psicológico e jurídico pode influenciar decisões em conte
 - O fluxo técnico está definido e auditável, mas não nomeia nem valida revisores humanos.
 - Os artigos clínicos e documentos jurídicos existentes permanecem bloqueados.
 - A publicação futura depende de registros humanos íntegros, testes verdes e revisão recorrente das fontes.
+
+## Pipeline e Painel Local
+
+Os agentes automatizados podem emitir `ready_for_human_review`, `needs_changes` ou `blocked`.
+Esses pareceres nunca equivalem ao status editorial `approved` e nunca substituem revisão
+profissional humana.
+
+```text
+npm run editorial:review -- articles/identificador
+npm run editorial:review:all
+npm run editorial:mark-draft -- articles/identificador --reason "Motivo auditável"
+npm run editorial:panel
+```
+
+Os pareceres ficam em `docs/editorial-reviews`. O painel escuta somente em `127.0.0.1`, destaca
+trechos no contexto do artigo, permite aceitar ou rejeitar sugestões e recusa aplicar decisões quando
+o hash do conteúdo mudou. Sua ação final pode enviar conteúdo para `in_review`, mas nunca promove
+conteúdo para `approved`, cria commit, executa push ou publica o site.

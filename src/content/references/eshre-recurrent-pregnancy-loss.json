@@ -1,0 +1,14 @@
+{
+  "id": "eshre-recurrent-pregnancy-loss",
+  "title": "Guideline on the management of recurrent pregnancy loss",
+  "url": "https://www.eshre.eu/Guidelines-and-Legal/Guidelines/Recurrent-pregnancy-loss",
+  "publisher": "European Society of Human Reproduction and Embryology",
+  "type": "guideline",
+  "domain": "clinical",
+  "authorityLevel": "high",
+  "summary": "Diretriz europeia sobre perdas gestacionais recorrentes.",
+  "usableFor": ["fundamentação clínica e incertezas"],
+  "notUsableFor": ["conduta individual"],
+  "limitations": ["contexto europeu"],
+  "lastCheckedAt": "2026-06-08"
+}

@@ -1,7 +1,12 @@
-import { loadEditorialState, validateEditorialState, validateGlossaryInventory, validateLegalInventory } from './editorial-validation.mjs';
+import { loadEditorialState, validateEditorialState, validateGlossaryInventory, validateLegalInventory, validateReferenceInventory } from './editorial-validation.mjs';
 
 const state = await loadEditorialState();
-const failures = [...validateEditorialState(state), ...validateGlossaryInventory(state.contents), ...validateLegalInventory(state.contents)];
+const failures = [
+  ...validateEditorialState(state),
+  ...validateGlossaryInventory(state.contents),
+  ...validateLegalInventory(state.contents),
+  ...validateReferenceInventory(state.contents, state.references),
+];
 
 if (failures.length) {
   console.error(`Validação editorial falhou:\n- ${failures.join('\n- ')}`);

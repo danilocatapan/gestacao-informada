@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "2e0c0583-4c7b-4d19-896f-e7055b111aa8",
+  "target": "articles/entendendo-a-perda-gestacional",
+  "generatedAt": "2026-06-08T11:47:35.905Z",
+  "updatedAt": "2026-06-08T11:47:35.905Z",
+  "contentHash": "0da3339340e29c8725bad84de31c91fa09f5d258ea6063753eef4c1814376b25",
+  "contentStatus": "draft",
+  "riskDomains": [
+    "clinical",
+    "psychological"
+  ],
+  "decision": "needs_changes",
+  "publicationAllowed": false,
+  "summary": "1 apontamento(s) exigem decisão.",
+  "agents": {
+    "research": "pending_assisted_execution",
+    "challenge": "needs_changes",
+    "editorial": "suggestions_available",
+    "aiApproval": "needs_changes",
+    "publication": "blocked_until_human_gates"
+  },
+  "findings": [
+    {
+      "id": "7953e48d27e2c49f",
+      "domain": "editorial",
+      "severity": "medium",
+      "exactText": "Pendência humana",
+      "occurrence": 1,
+      "line": 39,
+      "rationale": "O texto declara uma pendência humana que precisa ser confirmada antes da publicação.",
+      "suggestedReplacement": "Pendência humana",
+      "relatedSources": [],
+      "resolution": {
+        "status": "pending",
+        "replacement": "",
+        "justification": ""
+      }
+    }
+  ],
+  "history": [
+    {
+      "occurredAt": "2026-06-08T11:47:35.905Z",
+      "action": "review_generated",
+      "actor": "editorial-pipeline"
+    }
+  ]
+}

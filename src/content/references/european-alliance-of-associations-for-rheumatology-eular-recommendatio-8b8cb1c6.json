@@ -1,0 +1,20 @@
+{
+  "id": "european-alliance-of-associations-for-rheumatology-eular-recommendatio-8b8cb1c6",
+  "title": "EULAR recommendations for the management of antiphospholipid syndrome in adults",
+  "url": "https://ard.bmj.com/content/78/10/1296",
+  "publisher": "European Alliance of Associations for Rheumatology",
+  "type": "guideline",
+  "domain": "clinical",
+  "authorityLevel": "high",
+  "summary": "Referência centralizada a partir de conteúdo editorial existente.",
+  "usableFor": [
+    "fundamentação e revisão editorial no domínio declarado"
+  ],
+  "notUsableFor": [
+    "orientação individual ou aprovação profissional"
+  ],
+  "limitations": [
+    "classificação inicial exige revisão periódica"
+  ],
+  "lastCheckedAt": "2026-06-08"
+}

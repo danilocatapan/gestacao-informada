@@ -24,6 +24,9 @@ const blockedSearchTexts = [];
 const approvedSearchUrls = [];
 let legalGuideStatus;
 const exists = async (file) => { try { await access(file); return true; } catch { return false; } };
+for (const internalPath of ['editorial-reviews', 'editorial-records', 'review-notes', 'editorial-panel']) {
+  if (await exists(path.join(dist, internalPath))) failures.push(`Conteúdo interno vazou em dist/${internalPath}`);
+}
 
 for (const page of expectedPages) {
   const file = path.join(dist, page, 'index.html');

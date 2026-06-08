@@ -43,6 +43,16 @@ O site e preparado para publicacao em `https://danilocatapan.github.io/gestacao-
 
 As instruções para agentes estão em [AGENTS.md](AGENTS.md). A skill geral do projeto está em `.codex/skills/gestacao-informada` e a auditoria fail-closed em `.codex/skills/auditar-publicacao-editorial`.
 
+Pipeline e painel editorial local:
+
+```bash
+npm run editorial:review -- articles/entendendo-a-perda-gestacional
+npm run editorial:panel
+```
+
+O painel abre somente em `127.0.0.1`, permite resolver apontamentos e enviar conteúdo para
+`in_review`. Ele nunca aprova profissionalmente, publica, cria commit ou executa push.
+
 ## Princípio essencial
 
 O conteúdo do portal é educativo e não substitui avaliação, diagnóstico ou tratamento individualizado. Todo conteúdo clínico deve indicar fontes, autoria e data de revisão, além de passar por revisão profissional antes da publicação.
@@ -55,4 +65,6 @@ O conteúdo do portal é educativo e não substitui avaliação, diagnóstico ou
 - `src/content/review-notes`: notas internas sem rotas.
 - `src/content/editorial-records`: trilha auditável de revisões, aprovações e transições.
 - `src/content/contributors`: perfis referenciados de autores e revisores.
+- `src/content/references`: base central de fontes, autoridade e limitações.
+- `docs/editorial-reviews`: pareceres automatizados e decisões tomadas no painel local.
 - `tests/smoke.spec.ts`: smoke tests das rotas publicas em desktop e mobile.
