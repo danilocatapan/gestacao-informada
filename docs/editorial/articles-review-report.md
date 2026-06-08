@@ -8,9 +8,9 @@ Atualizado em 8 de junho de 2026.
 - zero artigos possuem hard blockers;
 - zero artigos possuem escaladas pendentes;
 - seis artigos possuem decisão `approved_for_publication` e status local `approved`;
-- zero artigos estão publicados.
+- seis artigos estão publicados no GitHub Pages e responderam `200` em 8 de junho de 2026.
 
-Trechos herdados do fluxo anterior foram reconciliados com a governança v2 e auditados novamente. Nenhum OK do mantenedor foi necessário. A publicação só ocorrerá após testes, PR, CI e confirmação do deploy.
+Trechos herdados do fluxo anterior foram reconciliados com a governança v2 e auditados novamente. Nenhum OK do mantenedor foi necessário. O PR #3 passou pelo CI, foi mesclado e teve o deploy confirmado.
 
 ## Transparência
 

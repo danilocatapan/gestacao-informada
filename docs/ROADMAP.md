@@ -13,7 +13,7 @@
 - [x] Implementar parecer editorial v2 com hard blockers e escaladas
 - [x] Simplificar o painel local para correções e um único OK do mantenedor
 - [x] Regenerar os pareceres dos seis artigos iniciais
-- [ ] Publicar os seis artigos iniciais (seis aprovados localmente pelo parecer v2; zero hard blockers; aguardam PR, CI e confirmação pública)
+- [x] Publicar os seis artigos iniciais (seis rotas confirmadas no GitHub Pages em 8 de junho de 2026)
 - [x] Criar páginas dos quatro pilares e checklist de consulta
 - [x] Implementar infraestrutura de glossário e busca
 - [ ] Produzir e publicar seis termos do glossário
