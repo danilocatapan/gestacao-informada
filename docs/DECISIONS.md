@@ -2,6 +2,22 @@
 
 Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetura.
 
+## 2026-06-08 — Fluxo editorial v2 simplificado
+
+**Status:** aceita; substitui as decisões anteriores que exigiam revisão profissional, participantes distintos, registros em `editorial-records` e aprovação multidomínio.
+
+**Decisão:** o Codex orquestra agentes especialistas e registra um parecer editorial v2. Bloqueios objetivos não aceitam override; decisões subjetivas ou sensíveis exigem um único OK do mantenedor vinculado ao hash. Conteúdo limpo pode ser promovido tecnicamente para `approved`. O painel permanece local e a publicação ocorre por PR, CI e GitHub Pages.
+
+**Motivo:** manter fontes, segurança, rastreabilidade e transparência sem depender de revisores profissionais indisponíveis nem sustentar cadastros e cerimônias que impediam a publicação.
+
+## 2026-06-08 — Síntese original rastreável e transparência
+
+**Status:** aceita.
+
+**Decisão:** artigos devem ser sínteses originais baseadas em fontes rastreáveis. Referenciar uma obra não autoriza reprodução ou adaptação extensa. Todo conteúdo governado publicado declara assistência de IA, ausência de revisão profissional e limites educativos.
+
+**Motivo:** reduzir risco autoral, clínico e reputacional sem ocultar a governança real do portal.
+
 ## 2026-06-06 — Repositorio inicial sem stack definida
 
 **Status:** aceita
@@ -124,13 +140,14 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 
 ## 2026-06-08 — Pipeline assistida e painel editorial exclusivamente local
 
-**Status:** aceita
+**Status:** parcialmente substituída pela decisão “Decisões humanas auditáveis no painel local”
 
 **Decisão:** usar agentes especializados e uma pipeline determinística para pesquisa, contraponto,
 edição e parecer multidomínio. Os pareceres automatizados podem bloquear ou declarar conteúdo apto
 para avaliação humana, mas nunca concedem aprovação profissional. Um painel servido exclusivamente
-em `127.0.0.1` permite resolver apontamentos e enviar conteúdo para `in_review`, sem commit, push,
-deploy ou promoção para `approved`.
+em `127.0.0.1` permite resolver apontamentos e enviar conteúdo para `in_review`, sem commit, push
+ou deploy. A automação não promove conteúdo para `approved`; a aplicação local de decisões humanas
+válidas foi incorporada posteriormente.
 
 **Motivo:** reduzir o trabalho manual do mantenedor sem expor rascunhos nem criar uma autoridade de
 aprovação incompatível com a governança clínica e jurídica fail-closed.
@@ -158,3 +175,17 @@ corretas.
 **Motivo:** impedir divergências entre código e documentação, evitar que trabalho tecnicamente
 concluído permaneça marcado como pendente e preservar a confiabilidade dos contratos usados por
 agentes, contribuidores e revisores.
+
+## 2026-06-08 — Decisões humanas auditáveis no painel local
+
+**Status:** aceita
+
+**Decisão:** separar no painel local a triagem automatizada das decisões humanas. Participantes
+humanos cadastrados podem registrar pessoalmente revisões por domínio, exceções de segurança,
+aprovação editorial e a transição local para `approved`. Cada ação exige confirmação nominal,
+papel compatível, justificativa auditável, independência entre participantes e correspondência com
+a versão atual. Registros editoriais são append-only e usam nomes resistentes a colisões.
+
+**Motivo:** permitir que o fluxo humano seja executado localmente com rastreabilidade sem conceder
+autoridade profissional a agentes, armazenar evidências privadas ou permitir que o painel faça
+commit, push ou deploy.

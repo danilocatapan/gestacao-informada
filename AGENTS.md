@@ -15,7 +15,7 @@ Use a skill local `.codex/skills/gestacao-informada/SKILL.md` em tarefas de prod
 ## Regras essenciais
 
 - Não apresentar conteúdo como diagnóstico, prescrição ou recomendação individual.
-- Não publicar doses, calculadoras de medicamentos ou cronogramas terapêuticos sem aprovação clínica e jurídica explícita.
+- Não publicar doses, calculadoras de medicamentos ou cronogramas terapêuticos.
 - Diferenciar evidências, diretrizes, opiniões profissionais e relatos pessoais.
 - Exigir fonte, autoria e data de revisão para conteúdo clínico.
 - Tratar perda gestacional e luto com linguagem respeitosa, sem falsas promessas.
@@ -58,10 +58,11 @@ Na resposta final, informar:
 - Não adicionar framework de componentes por padrão. Islands React ou Preact exigem necessidade real e decisão registrada.
 - Usar `withBaseUrl()` para paths relativos e `withCanonicalUrl()` para URLs absolutas. Não concatenar o base path manualmente.
 - Artigos médicos devem residir na collection `articles`; termos clínicos devem residir em `glossary`. Conteúdo clínico nunca deve ser hardcoded em componentes ou páginas.
-- Artigos médicos somente podem gerar rota pública com `status: approved` e todos os requisitos editoriais preenchidos.
-- Seguir `docs/EDITORIAL_WORKFLOW.md`; conteúdo sensível deve declarar `riskDomains` e possuir trilha válida em `editorial-records`.
-- Codex e automações podem auditar e bloquear, mas nunca conceder aprovação profissional ou promover conteúdo para `approved`.
-- Toda ocorrência publicável de termo sensível exige uma exceção documentada em `safetyReview`.
+- Artigos médicos somente podem gerar rota pública com `status: approved` e parecer editorial v2 atual com decisão `approved_for_publication`.
+- Seguir `docs/EDITORIAL_WORKFLOW.md`; conteúdo sensível deve declarar `riskDomains` e possuir parecer atual em `docs/editorial-reviews`.
+- Codex pode aprovar tecnicamente e promover conteúdo sem escaladas; decisões subjetivas ou sensíveis exigem OK do mantenedor no painel.
+- Bloqueios objetivos nunca aceitam override.
+- Toda ocorrência publicável de termo sensível exige auditoria documentada em `safetyReview`.
 - `npm run test:content` deve rodar antes do commit. O CI é o gate obrigatório para merge e deploy.
 - Toda entrega de interface deve ser validada com Playwright em desktop e mobile, cobrindo todas as rotas e fluxos alterados.
 - Salvar screenshots de evidência em `docs/qa/screenshots/` e verificar overflow, componentes quebrados e erros de console.

@@ -28,7 +28,7 @@ Checklists para consultas, perguntas para profissionais de saúde, direitos e pr
 ## Princípios editoriais
 
 1. Toda afirmação clínica relevante deve possuir fonte rastreável.
-2. Conteúdos devem apresentar data e responsável pela última revisão.
+2. Conteúdos devem apresentar data, autoria e transparência sobre a auditoria editorial.
 3. Divergências entre evidências, diretrizes e práticas clínicas devem ser explicitadas.
 4. O portal não prescreve medicamentos, doses ou condutas individualizadas.
 5. Relatos pessoais devem ser identificados como experiências, nunca como evidência de eficácia.
@@ -47,7 +47,7 @@ Checklists para consultas, perguntas para profissionais de saúde, direitos e pr
 ## Critérios de sucesso do MVP
 
 - experiência responsiva e acessível;
-- pelo menos seis conteúdos revisados por especialistas;
+- pelo menos seis conteúdos com parecer editorial v2 e transparência pública;
 - fontes e datas de revisão visíveis;
 - fluxo claro para quem acabou de viver uma perda;
 - checklist de preparação para consulta sem recomendações prescritivas;

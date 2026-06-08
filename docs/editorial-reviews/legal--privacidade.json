@@ -3,7 +3,7 @@
   "id": "c943059e-c3c5-460f-b591-c118cfeeb583",
   "target": "legal/privacidade",
   "generatedAt": "2026-06-08T11:50:15.393Z",
-  "updatedAt": "2026-06-08T11:50:15.393Z",
+  "updatedAt": "2026-06-08T13:30:13.227Z",
   "contentHash": "810fc661094fe653ac1202cd4a89ce621d36e029e33013f7ddd98aaa11d20b04",
   "contentStatus": "draft",
   "riskDomains": [
@@ -31,7 +31,7 @@
       "suggestedReplacement": "",
       "relatedSources": [],
       "resolution": {
-        "status": "pending",
+        "status": "accepted",
         "replacement": "",
         "justification": ""
       }
@@ -42,6 +42,12 @@
       "occurredAt": "2026-06-08T11:50:15.393Z",
       "action": "review_generated",
       "actor": "editorial-pipeline"
+    },
+    {
+      "occurredAt": "2026-06-08T13:30:13.227Z",
+      "action": "finding_accepted",
+      "actor": "local-maintainer",
+      "findingId": "f922d32a63ea9174"
     }
   ]
 }

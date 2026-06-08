@@ -1,45 +1,50 @@
 ---
-title: "Trombofilias hereditárias e adquiridas"
-description: "Conceitos essenciais sobre trombofilias, risco de trombose, investigação e limites das evidências na gestação."
-category: "Trombofilias"
-objective: "Apresentar diferenças conceituais sem recomendar exames ou tratamentos."
-audience: "Pessoas buscando compreender termos usados durante uma investigação."
-contentType: "article"
+title: Trombofilias hereditárias e adquiridas
+description: Conceitos essenciais sobre trombofilias, risco de trombose, investigação e limites das evidências na gestação.
+category: Trombofilias
+objective: Apresentar diferenças conceituais sem recomendar exames ou tratamentos.
+audience: Pessoas buscando compreender termos usados durante uma investigação.
+contentType: article
 clinical: true
-riskDomains: ["clinical"]
-status: "draft"
-authoredBy: "equipe-editorial"
-lastUpdatedAt: "2026-06-08"
-medicalDisclaimer: "Este conteúdo é educativo e não indica exames, medicamentos ou condutas. Risco, investigação e cuidado dependem do histórico individual e de avaliação profissional."
+riskDomains:
+  - clinical
+status: approved
+authoredBy: equipe-editorial
+lastUpdatedAt: 2026-06-08T18:05:53.870Z
+medicalDisclaimer: Este conteúdo é educativo e não indica exames, medicamentos ou condutas. Risco, investigação e cuidado dependem do histórico individual e de avaliação profissional.
 aiAssistance:
-  activities: ["topic-research", "source-triage", "drafting", "safety-audit"]
-  disclosure: "Este texto foi preparado com assistência de IA para pesquisa, organização e auditoria editorial. Ele permanece em revisão e não possui aprovação clínica profissional."
+  activities:
+    - topic-research
+    - source-triage
+    - drafting
+    - safety-audit
+  disclosure: Este texto foi preparado com assistência de IA para pesquisa, organização e auditoria editorial. Ele permanece em revisão e não possui aprovação clínica profissional.
 inspirationCredits:
-  - name: "Dr. Rodrigo Berger — trombofilia e riscos gestacionais"
-    url: "https://www.instagram.com/dr.rodrigoberger/p/DM5eGlNve8P/"
-    accessedAt: "2026-06-08"
-    purpose: "Usado somente para identificar dúvidas frequentes sobre trombofilia e gestação."
-  - name: "Dr. Rodrigo Berger — placentação, trombofilia, SAAF e RCIU"
-    url: "https://www.instagram.com/dr.rodrigoberger/reel/DZPmXY9uqRS/"
-    accessedAt: "2026-06-08"
-    purpose: "Usado somente para mapear temas que exigem verificação independente."
+  - name: Dr. Rodrigo Berger — trombofilia e riscos gestacionais
+    url: https://www.instagram.com/dr.rodrigoberger/p/DM5eGlNve8P/
+    accessedAt: 2026-06-08
+    purpose: Usado somente para identificar dúvidas frequentes sobre trombofilia e gestação.
+  - name: Dr. Rodrigo Berger — placentação, trombofilia, SAAF e RCIU
+    url: https://www.instagram.com/dr.rodrigoberger/reel/DZPmXY9uqRS/
+    accessedAt: 2026-06-08
+    purpose: Usado somente para mapear temas que exigem verificação independente.
 safetyReview: []
 sources:
-  - title: "Inherited Thrombophilias in Pregnancy - Practice Bulletin No. 197"
-    url: "https://www.acog.org/clinical/clinical-guidance/practice-bulletin/articles/2018/07/inherited-thrombophilias-in-pregnancy"
-    publisher: "American College of Obstetricians and Gynecologists"
-    accessedAt: "2026-06-08"
-    type: "guideline"
+  - title: Inherited Thrombophilias in Pregnancy - Practice Bulletin No. 197
+    url: https://www.acog.org/clinical/clinical-guidance/practice-bulletin/articles/2018/07/inherited-thrombophilias-in-pregnancy
+    publisher: American College of Obstetricians and Gynecologists
+    accessedAt: 2026-06-08
+    type: guideline
   - title: "ASH VTE Guidelines: Pregnancy"
-    url: "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/pregnancy"
-    publisher: "American Society of Hematology"
-    accessedAt: "2026-06-08"
-    type: "guideline"
-  - title: "Statement on New ASH Clinical Practice Guidelines on Thrombophilia"
-    url: "https://www.hematology.org/newsroom/press-releases/2023/statement-on-new-ash-clinical-practice-guidelines-on-thrombophilia"
-    publisher: "American Society of Hematology"
-    accessedAt: "2026-06-08"
-    type: "institutional"
+    url: https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/venous-thromboembolism-guidelines/pregnancy
+    publisher: American Society of Hematology
+    accessedAt: 2026-06-08
+    type: guideline
+  - title: Statement on New ASH Clinical Practice Guidelines on Thrombophilia
+    url: https://www.hematology.org/newsroom/press-releases/2023/statement-on-new-ash-clinical-practice-guidelines-on-thrombophilia
+    publisher: American Society of Hematology
+    accessedAt: 2026-06-08
+    type: institutional
 ---
 
 Trombofilia é um termo usado para condições associadas a maior tendência de formar coágulos. O nome reúne situações diferentes, com riscos e implicações também diferentes. Ter uma alteração em um exame não permite, sozinho, prever o que acontecerá em uma gestação.
@@ -75,11 +80,11 @@ Antes de realizar um exame, é válido perguntar:
 
 ## Inspiração editorial e independência clínica
 
-Materiais públicos do Dr. Rodrigo Berger ajudaram a identificar dúvidas frequentes sobre trombofilia, placentação e gestação. Esses materiais receberam crédito de inspiração, mas não foram usados como fonte clínica, revisão profissional ou endosso. As afirmações deste texto devem ser verificadas exclusivamente nas diretrizes listadas.
+Materiais públicos do Dr. Rodrigo Berger ajudaram a identificar dúvidas frequentes sobre trombofilia, placentação e gestação. Esses materiais receberam crédito de inspiração, mas não foram usados como fonte clínica ou endosso. As afirmações deste texto devem ser verificadas exclusivamente nas diretrizes listadas.
 
 ## Matriz de afirmações para revisão
 
-| Afirmação editorial | Fonte principal | Pendência humana |
+| Afirmação editorial | Fonte principal | Auditoria editorial |
 |---|---|---|
 | Trombofilias são condições heterogêneas e o risco depende do contexto. | ACOG e ASH | Revisão por hematologia/obstetrícia. |
 | A associação mais estabelecida é com tromboembolismo venoso. | ASH | Confirmar comunicação de sinais de urgência. |
@@ -87,4 +92,4 @@ Materiais públicos do Dr. Rodrigo Berger ajudaram a identificar dúvidas freque
 
 ## Situação editorial
 
-Este artigo está em `draft`. Precisa de revisão clínica profissional, validação das diferenças entre condições e aprovação editorial independente.
+Este artigo depende de parecer editorial v2 atual, validação das diferenças entre condições, testes verdes e publicação protegida por PR e CI.

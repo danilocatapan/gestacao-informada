@@ -1,31 +1,20 @@
-# Política de Revisão Assistida por IA
-
-## Objetivo
-
-A IA reduz o trabalho de pesquisa, triagem, contraponto e preparação editorial. Ela opera de forma
-fail-closed e não substitui médicos, psicólogos, advogados ou aprovadores editoriais humanos.
+# Política de Auditoria Assistida por IA
 
 ## Autoridade
 
-Os agentes podem produzir pareceres `ready_for_human_review`, `needs_changes` ou `blocked`.
-Nenhum parecer automatizado concede aprovação profissional, promove conteúdo para `approved`,
-cria commit, executa push ou publica o site.
+O Codex orquestra agentes especialistas e pode conceder aprovação técnica quando não existem bloqueios ou escaladas. Ele não é médico, psicólogo ou advogado e não concede aprovação profissional.
 
-Conteúdo clínico, psicológico ou jurídico somente pode ser publicado após os registros humanos
-exigidos em `docs/EDITORIAL_WORKFLOW.md`.
+O parecer v2 registra hash, fontes, resultados dos agentes, bloqueios, escaladas, decisão e eventual OK do mantenedor.
 
-## Painel local
+## Transparência
 
-O painel iniciado por `npm run editorial:panel` escuta exclusivamente em `127.0.0.1`. Ele apresenta
-apontamentos no contexto do artigo e permite aceitar, ajustar ou rejeitar sugestões com justificativa.
+Todo conteúdo clínico, psicológico ou jurídico publicado informa que:
 
-A ação final aplica somente mudanças aceitas e envia conteúdo elegível para `in_review`. Se um
-conteúdo `approved` for alterado, ele retorna para `draft` e perde a rota pública até uma nova rodada
-completa de revisão.
+- foi preparado e auditado com assistência de IA;
+- não recebeu revisão profissional;
+- pode ter recebido OK do mantenedor não especialista para escaladas;
+- não substitui atendimento individual.
 
-## Rastreabilidade
+## Limites
 
-Pareceres ficam em `docs/editorial-reviews`. Cada parecer contém o hash da versão analisada,
-apontamentos, decisões e histórico. Uma mudança posterior no arquivo invalida a aplicação do parecer.
-
-O painel não registra decisões clínicas, psicológicas ou jurídicas em nome de profissionais.
+Bloqueios objetivos não aceitam override. Alterações invalidam o parecer e o OK anteriores. O painel local não faz commit, push, merge ou deploy.

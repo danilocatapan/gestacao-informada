@@ -10,7 +10,6 @@ const publishedGuide = guide?.data.status === 'approved' ? guide : undefined;
 const { Content: PageContent } = await render(page);
 const GuideContent = publishedGuide ? (await render(publishedGuide)).Content : undefined;
 const author = publishedGuide?.data.authoredBy ? await getEntry(publishedGuide.data.authoredBy) : undefined;
-const reviewer = publishedGuide?.data.reviewer ? await getEntry(publishedGuide.data.reviewer) : undefined;
 const approvedDocuments = await getCollection('legal', ({ data }) =>
   data.status === 'approved' && data.contentType === 'legal-document');
 const institutionalLinks = [
@@ -41,11 +40,10 @@ const display = publishedGuide
       <GuideContent />
       <section class="article-meta" aria-labelledby="sobre-guia-juridico">
         <h2 id="sobre-guia-juridico">Sobre este conteúdo</h2>
-        {author && <p><strong>Autoria:</strong> {author.data.name}<br />{author.data.credentials}</p>}
-        {reviewer && <p><strong>Revisão jurídica:</strong> {reviewer.data.name}<br />{reviewer.data.credentials}</p>}
-        {publishedGuide.data.reviewedAt && <p><strong>Revisado em:</strong> {publishedGuide.data.reviewedAt.toLocaleDateString('pt-BR')}</p>}
+        {author && <p><strong>Autoria:</strong> {author.data.name}</p>}
         <p><strong>Atualizado em:</strong> {publishedGuide.data.updatedAt.toLocaleDateString('pt-BR')}</p>
         <p>{publishedGuide.data.legalDisclaimer}</p>
+        <p data-review-transparency><strong>Transparência editorial:</strong> conteúdo preparado e auditado com assistência de IA, sem revisão jurídica profissional.</p>
         <h3>Fontes oficiais consultadas</h3>
         <ul>{publishedGuide.data.sources.map((source) => <li><a href={source.url}>{source.title}</a> — {source.publisher}</li>)}</ul>
         {institutionalLinks.length > 0 && (

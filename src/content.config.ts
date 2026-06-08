@@ -6,7 +6,6 @@ const status = z.enum(['draft', 'in_review', 'approved', 'archived']);
 const contentType = z.enum(['article', 'institutional-page', 'legal-document', 'legal-guide', 'checklist', 'glossary-entry']);
 const sourceType = z.enum(['guideline', 'review', 'law', 'institutional', 'other']);
 const riskDomain = z.enum(['clinical', 'psychological', 'legal']);
-const editorialRole = z.enum(['author', 'clinical_reviewer', 'psychological_reviewer', 'legal_reviewer', 'editorial_approver']);
 const aiActivity = z.enum(['topic-research', 'source-triage', 'drafting', 'safety-audit']);
 const publicSlug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 
@@ -21,8 +20,7 @@ const source = z.object({
 const safetyReview = z.object({
   term: z.string().min(1),
   justification: z.string().min(20),
-  reviewedBy: reference('contributors'),
-  reviewedAt: z.coerce.date(),
+  auditedAt: z.coerce.date(),
 });
 
 const aiAssistance = z.object({
@@ -117,8 +115,6 @@ const glossary = defineCollection({
       fullDefinition: z.string().min(1),
       relatedTerms: z.array(reference('glossary')).default([]),
       sources: z.array(source).default([]),
-      reviewer: reference('contributors').nullable(),
-      reviewedAt: z.coerce.date().nullable(),
       status,
       contentType: z.literal('glossary-entry'),
       clinical: z.literal(true),
@@ -138,12 +134,6 @@ const glossary = defineCollection({
       if (entry.sources.length === 0) {
         ctx.addIssue({ code: 'custom', message: 'Termo aprovado exige ao menos uma fonte.', path: ['sources'] });
       }
-      if (!entry.reviewer) {
-        ctx.addIssue({ code: 'custom', message: 'Termo aprovado exige revisor clínico.', path: ['reviewer'] });
-      }
-      if (!entry.reviewedAt) {
-        ctx.addIssue({ code: 'custom', message: 'Termo aprovado exige data de revisão clínica.', path: ['reviewedAt'] });
-      }
     }),
 });
 
@@ -161,8 +151,6 @@ const legal = defineCollection({
       authoredBy: reference('contributors').optional(),
       sources: z.array(source).default([]),
       legalDisclaimer: z.string().min(1).optional(),
-      reviewer: reference('contributors').nullable(),
-      reviewedAt: z.coerce.date().nullable(),
       legalBasis: z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]).optional(),
       slug: publicSlug.optional(),
     })
@@ -178,12 +166,6 @@ const legal = defineCollection({
       }
       if (document.contentType === 'legal-document' && document.status === 'approved' && !document.slug) {
         ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige slug público.', path: ['slug'] });
-      }
-      if (document.status === 'approved' && !document.reviewer) {
-        ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige revisor jurídico.', path: ['reviewer'] });
-      }
-      if (document.status === 'approved' && !document.reviewedAt) {
-        ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige data de revisão jurídica.', path: ['reviewedAt'] });
       }
       if (document.contentType === 'legal-guide' && document.status === 'approved') {
         if (!document.authoredBy) {
@@ -214,27 +196,8 @@ const contributors = defineCollection({
   schema: z.object({
     name: z.string().min(1),
     role: z.string().min(1),
-    editorialRoles: z.array(editorialRole).min(1),
-    credentials: z.string().min(1),
     bio: z.string().min(1),
   }),
 });
 
-const editorialRecords = defineCollection({
-  loader: glob({ base: './src/content/editorial-records', pattern: '**/*.{json,yaml,yml}' }),
-  schema: z.object({
-    target: z.string().regex(/^(articles|pages|legal|glossary)\/[^/]+$/),
-    event: z.enum(['submitted_for_review', 'domain_review', 'editorial_approval', 'status_transition']),
-    actor: reference('contributors'),
-    role: editorialRole,
-    domain: riskDomain.optional(),
-    decision: z.enum(['approved', 'rejected']).optional(),
-    occurredAt: z.coerce.date(),
-    contentUpdatedAt: z.coerce.date(),
-    fromStatus: status.optional(),
-    toStatus: status.optional(),
-    justification: z.string().min(20),
-  }),
-});
-
-export const collections = { pages, articles, glossary, legal, references, reviewNotes, contributors, editorialRecords };
+export const collections = { pages, articles, glossary, legal, references, reviewNotes, contributors };

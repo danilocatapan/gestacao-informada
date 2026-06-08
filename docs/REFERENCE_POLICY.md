@@ -21,4 +21,4 @@ afirmação clínica ou jurídica.
 
 Toda fonte declarada em conteúdo deve existir na base central. Conteúdo aprovado não pode depender
 de fonte classificada como `low`. A presença de uma fonte não transforma uma afirmação em correta
-nem substitui revisão profissional.
+nem constitui revisão profissional ou autorização para reprodução extensa.

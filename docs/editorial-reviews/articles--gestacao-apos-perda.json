@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 2,
+  "id": "4059b44f-ac1a-43cf-bd1b-61acf2f25d29",
+  "target": "articles/gestacao-apos-perda",
+  "generatedAt": "2026-06-08T18:45:29.905Z",
+  "updatedAt": "2026-06-08T18:46:20.202Z",
+  "contentHash": "3d84af0922cfeac9ba6950822cb32900d663c0bdfdc67ab077dba82574ccf28b",
+  "contentStatus": "in_review",
+  "riskDomains": [
+    "clinical",
+    "psychological"
+  ],
+  "decision": "approved_for_publication",
+  "publicationAllowed": true,
+  "sourceCoverage": {
+    "sourceCount": 3,
+    "synthesisPolicy": "original_traceable_synthesis",
+    "verified": true
+  },
+  "specialists": {
+    "research": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "challenge": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "editorial": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "safetyAudit": {
+      "status": "approved_for_publication",
+      "findingIds": []
+    }
+  },
+  "blockers": [],
+  "escalations": [],
+  "ownerApproval": null,
+  "findings": [],
+  "history": [
+    {
+      "occurredAt": "2026-06-08T18:45:29.905Z",
+      "action": "review_v2_generated",
+      "actor": "codex-editorial-orchestrator"
+    },
+    {
+      "occurredAt": "2026-06-08T18:46:20.202Z",
+      "action": "review_applied",
+      "actor": "codex-editorial-orchestrator",
+      "resultingStatus": "approved"
+    }
+  ],
+  "resultingContentHash": "3d84af0922cfeac9ba6950822cb32900d663c0bdfdc67ab077dba82574ccf28b",
+  "resultingStatus": "approved"
+}

@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -13,7 +13,6 @@ export async function getStaticPaths() {
 
 const { document } = Astro.props;
 const { Content } = await render(document);
-const reviewer = document.data.reviewer ? await getEntry(document.data.reviewer) : undefined;
 const documentPath = `${document.data.slug}/`;
 ---
 
@@ -30,9 +29,8 @@ const documentPath = `${document.data.slug}/`;
       <article class="prose"><Content /></article>
       <aside class="article-meta">
         <h2>Sobre este documento</h2>
-        {reviewer && <p><strong>Revisão jurídica:</strong> {reviewer.data.name}<br />{reviewer.data.credentials}</p>}
-        {document.data.reviewedAt && <p><strong>Revisado em:</strong> {document.data.reviewedAt.toLocaleDateString('pt-BR')}</p>}
         <p><strong>Atualizado em:</strong> {document.data.updatedAt.toLocaleDateString('pt-BR')}</p>
+        <p data-review-transparency><strong>Transparência editorial:</strong> documento preparado e auditado com assistência de IA, sem revisão jurídica profissional.</p>
       </aside>
     </div>
   </section>

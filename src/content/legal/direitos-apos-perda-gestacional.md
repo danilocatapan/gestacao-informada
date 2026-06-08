@@ -34,8 +34,6 @@ sources:
     accessedAt: "2026-06-08"
     type: "institutional"
 legalDisclaimer: "Este conteúdo é informativo e apresenta uma visão geral de normas federais. Ele não substitui orientação jurídica sobre uma situação específica."
-reviewer: null
-reviewedAt: null
 legalBasis:
   - "Consolidação das Leis do Trabalho, art. 395"
   - "Lei nº 15.139/2025"

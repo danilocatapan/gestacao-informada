@@ -9,31 +9,25 @@ export const requiredLegalDocuments = new Map([
   ['legal/termos-de-uso', 'termos'],
   ['legal/politica-editorial', 'politica-editorial'],
 ]);
-const roleForDomain = {
-  clinical: 'clinical_reviewer',
-  psychological: 'psychological_reviewer',
-  legal: 'legal_reviewer',
-};
-const allowedTransitions = new Set([
-  'draft:in_review',
-  'in_review:draft',
-  'in_review:approved',
-  'approved:draft',
-  'approved:archived',
-  'archived:draft',
-]);
 export const sensitiveTermGroups = {
   medicationOrDose: ['mg', 'ml', 'dose', 'dosagem', 'tomar', 'prescrever', 'heparina', 'enoxaparina', 'AAS', 'aspirina'],
   prescriptionOrPromise: ['tratamento indicado', 'garante', 'cura'],
 };
+
 const forbiddenPlaceholderPattern = /\b(?:TODO|FIXME|placeholder|revisar depois|fonte pendente)\b/iu;
 const forbiddenPromisePattern = /\b(?:garante|cura|prevenção garantida)\b/iu;
 const sensitiveTerms = Object.values(sensitiveTermGroups).flat();
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const termRegex = (term) => new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(term)}(?![\\p{L}\\p{N}])`, 'giu');
+const termRegex = (term) => new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(term)}(?![\\p{L}\\p{N}])`, 'iu');
+const hasOwn = (object, property) => Object.prototype.hasOwnProperty.call(object, property);
 
 async function filesIn(directory, extensions) {
-  const entries = await readdir(directory, { withFileTypes: true });
+  let entries = [];
+  try {
+    entries = await readdir(directory, { withFileTypes: true });
+  } catch {
+    return [];
+  }
   return (await Promise.all(entries.map((entry) => entry.isDirectory()
     ? filesIn(path.join(directory, entry.name), extensions)
     : path.join(directory, entry.name))))
@@ -47,30 +41,21 @@ function parseMarkdown(source) {
   return { data: parseYaml(match[1]) ?? {}, body: match[2] };
 }
 
-const sameTime = (left, right) => new Date(left).getTime() === new Date(right).getTime();
-const atOrAfter = (left, right) => new Date(left).getTime() >= new Date(right).getTime();
-const recordActors = (records) => records.map((record) => record.actor);
-const hasOwn = (object, property) => Object.prototype.hasOwnProperty.call(object, property);
-
 export function validateLegalInventory(contents) {
   const failures = [];
   const legalDocuments = contents.filter((content) => content.collection === 'legal');
   const legalMap = new Map(legalDocuments.map((document) => [document.id, document]));
-
   for (const [id, publicSlug] of requiredLegalDocuments) {
     const document = legalMap.get(id);
-    if (!document) {
-      failures.push(`${id}: documento jurídico obrigatório ausente.`);
-    } else if (document.data.status === 'approved' && document.data.slug !== publicSlug) {
+    if (!document) failures.push(`${id}: documento jurídico obrigatório ausente.`);
+    else if (document.data.status === 'approved' && document.data.slug !== publicSlug) {
       failures.push(`${id}: documento aprovado deve usar o slug público "${publicSlug}".`);
     }
   }
-
   const approvedSlugs = legalDocuments
     .filter((document) => document.data.status === 'approved' && document.data.slug)
     .map((document) => document.data.slug);
   if (new Set(approvedSlugs).size !== approvedSlugs.length) failures.push('legal: documentos aprovados não podem compartilhar slug público.');
-
   return failures;
 }
 
@@ -79,14 +64,10 @@ export function validateGlossaryInventory(contents) {
   const glossaryEntries = contents.filter((content) => content.collection === 'glossary');
   const glossaryMap = new Map(glossaryEntries.map((entry) => [entry.id, entry]));
   const slugs = glossaryEntries.map((entry) => entry.data.slug);
-
   if (new Set(slugs).size !== slugs.length) failures.push('glossary: termos não podem compartilhar slug público.');
-
   for (const entry of glossaryEntries) {
     const relatedTerms = entry.data.relatedTerms ?? [];
-    if (new Set(relatedTerms).size !== relatedTerms.length) {
-      failures.push(`${entry.id}: relatedTerms não pode conter termos duplicados.`);
-    }
+    if (new Set(relatedTerms).size !== relatedTerms.length) failures.push(`${entry.id}: relatedTerms não pode conter termos duplicados.`);
     for (const relatedTerm of relatedTerms) {
       const target = glossaryMap.get(`glossary/${relatedTerm}`);
       if (!target) failures.push(`${entry.id}: relatedTerms referencia termo inexistente: ${relatedTerm}.`);
@@ -96,7 +77,6 @@ export function validateGlossaryInventory(contents) {
       }
     }
   }
-
   return failures;
 }
 
@@ -119,208 +99,51 @@ export function validateReferenceInventory(contents, references = []) {
   return failures;
 }
 
-export function validateEditorialState({ contents, contributors, records }) {
+export function validateEditorialState({ contents, contributors = [], reviews = [] }) {
   const failures = [];
-  const contributorMap = new Map(contributors.map((contributor) => [contributor.id, contributor]));
-  const contentMap = new Map(contents.map((content) => [content.id, content]));
-
-  for (const contributor of contributors) {
-    if (!Array.isArray(contributor.editorialRoles) || contributor.editorialRoles.length === 0) failures.push(`${contributor.id}: participante exige editorialRoles.`);
-    if (!contributor.credentials || !String(contributor.credentials).trim()) failures.push(`${contributor.id}: participante exige credenciais registradas.`);
-  }
-
-  for (const record of records) {
-    const label = record.target ?? 'registro sem alvo';
-    const contributor = contributorMap.get(record.actor);
-    if (!record.occurredAt || !record.contentUpdatedAt) failures.push(`${label}: registro exige occurredAt e contentUpdatedAt.`);
-    if (!record.justification || String(record.justification).trim().length < 20) failures.push(`${label}: registro exige justificativa auditável.`);
-    if (!contentMap.has(record.target)) failures.push(`${label}: registro referencia conteúdo inexistente.`);
-    if (!contributor) {
-      failures.push(`${label}: registro referencia participante inexistente: ${record.actor}.`);
-    } else if (!contributor.editorialRoles?.includes(record.role)) {
-      failures.push(`${label}: ${record.actor} não possui o papel ${record.role}.`);
-    }
-    if (record.event === 'submitted_for_review' && record.role !== 'author') failures.push(`${label}: submissão para revisão exige papel de autor.`);
-    if (record.event === 'domain_review') {
-      if (!record.domain || !record.decision) failures.push(`${label}: revisão de domínio exige domain e decision.`);
-      if (record.role !== roleForDomain[record.domain]) failures.push(`${label}: revisão ${record.domain} exige o papel ${roleForDomain[record.domain]}.`);
-    }
-    if (record.event === 'editorial_approval' && (record.role !== 'editorial_approver' || !record.decision)) {
-      failures.push(`${label}: aprovação editorial exige papel editorial_approver e decision.`);
-    }
-    if (record.event === 'status_transition') {
-      if (!record.fromStatus || !record.toStatus || !allowedTransitions.has(`${record.fromStatus}:${record.toStatus}`)) {
-        failures.push(`${label}: transição editorial inválida.`);
-      }
-    }
-  }
+  const contributorIds = new Set(contributors.map((contributor) => contributor.id));
+  const reviewMap = new Map(reviews.map((review) => [review.target, review]));
 
   for (const content of contents) {
+    const { data } = content;
     const label = content.id;
-    const data = content.data;
     const riskDomains = Array.isArray(data.riskDomains) ? data.riskDomains : [];
-    const contentRecords = records.filter((record) => record.target === content.id);
-    const inspectableText = [content.body, data.title, data.description, data.term, data.shortDefinition, data.fullDefinition]
-      .filter(Boolean).join('\n');
-
+    const text = [content.body, data.title, data.description, data.term, data.shortDefinition, data.fullDefinition].filter(Boolean).join('\n');
     if (!statuses.includes(data.status)) failures.push(`${label}: status editorial inválido.`);
     if (!Array.isArray(data.riskDomains)) failures.push(`${label}: conteúdo exige riskDomains.`);
     if (new Set(riskDomains).size !== riskDomains.length) failures.push(`${label}: riskDomains não pode conter valores duplicados.`);
-    for (const domain of riskDomains) {
-      if (!domains.includes(domain)) failures.push(`${label}: domínio de risco inválido: ${domain}.`);
-    }
+    for (const domain of riskDomains) if (!domains.includes(domain)) failures.push(`${label}: domínio de risco inválido: ${domain}.`);
     if (data.clinical === true && !['articles', 'glossary'].includes(content.collection)) failures.push(`${label}: conteúdo clínico deve residir em articles ou glossary.`);
     if (data.clinical === true && !riskDomains.includes('clinical')) failures.push(`${label}: conteúdo clínico deve declarar o domínio clinical.`);
-    if (content.collection === 'legal') {
-      if (!riskDomains.includes('legal')) failures.push(`${label}: documento jurídico deve declarar o domínio legal.`);
-      if (!hasOwn(data, 'reviewer')) failures.push(`${label}: documento jurídico exige o campo reviewer, mesmo quando nulo.`);
-      if (!hasOwn(data, 'reviewedAt')) failures.push(`${label}: documento jurídico exige o campo reviewedAt, mesmo quando nulo.`);
-      if (data.reviewedAt && !data.reviewer) failures.push(`${label}: reviewedAt exige reviewer identificado.`);
-      if (data.contentType === 'legal-guide' && data.slug) failures.push(`${label}: guia jurídico usa rota dedicada e não deve declarar slug.`);
-      if (data.contentType !== 'legal-guide' && data.status !== 'approved' && data.slug) failures.push(`${label}: documento jurídico não aprovado não pode declarar slug público.`);
-      if (data.status === 'approved') {
-        if (data.contentType !== 'legal-guide' && !data.slug) failures.push(`${label}: documento jurídico aprovado exige slug público.`);
-        if (!data.reviewer) failures.push(`${label}: documento jurídico aprovado exige reviewer.`);
-        if (!data.reviewedAt) failures.push(`${label}: documento jurídico aprovado exige reviewedAt.`);
-        if (data.contentType === 'legal-guide') {
-          if (!data.authoredBy) failures.push(`${label}: guia jurídico aprovado exige autoria.`);
-          const author = contributorMap.get(data.authoredBy);
-          if (data.authoredBy && (!author || !author.editorialRoles?.includes('author'))) failures.push(`${label}: autoria deve referenciar participante autorizado como author.`);
-          if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: guia jurídico aprovado exige ao menos uma fonte.`);
-          if (!data.legalDisclaimer || !String(data.legalDisclaimer).trim()) failures.push(`${label}: guia jurídico aprovado exige legalDisclaimer.`);
-        }
-      }
-      if (data.legalBasis !== undefined
-        && !(typeof data.legalBasis === 'string' && data.legalBasis.trim())
-        && !(Array.isArray(data.legalBasis) && data.legalBasis.length > 0 && data.legalBasis.every((item) => typeof item === 'string' && item.trim()))) {
-        failures.push(`${label}: legalBasis deve ser texto ou lista não vazia quando informado.`);
-      }
-    }
-    if (content.collection === 'glossary') {
-      if (!riskDomains.includes('clinical')) failures.push(`${label}: termo clínico deve declarar o domínio clinical.`);
-      if (!hasOwn(data, 'reviewer')) failures.push(`${label}: termo clínico exige o campo reviewer, mesmo quando nulo.`);
-      if (!hasOwn(data, 'reviewedAt')) failures.push(`${label}: termo clínico exige o campo reviewedAt, mesmo quando nulo.`);
-      if (data.reviewedAt && !data.reviewer) failures.push(`${label}: reviewedAt exige reviewer identificado.`);
-      if (data.status === 'approved') {
-        if (!data.slug) failures.push(`${label}: termo aprovado exige slug público.`);
-        if (!data.authoredBy) failures.push(`${label}: termo aprovado exige autoria.`);
-        if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: termo aprovado exige ao menos uma fonte.`);
-        if (!data.reviewer) failures.push(`${label}: termo aprovado exige reviewer.`);
-        if (!data.reviewedAt) failures.push(`${label}: termo aprovado exige reviewedAt.`);
-      }
-    }
-    if (data.status !== 'draft' && forbiddenPlaceholderPattern.test(inspectableText)) failures.push(`${label}: conteúdo contém placeholder editorial proibido.`);
-    if (forbiddenPromisePattern.test(inspectableText)) failures.push(`${label}: conteúdo contém promessa de resultado proibida.`);
-
+    if (content.collection === 'legal' && !riskDomains.includes('legal')) failures.push(`${label}: documento jurídico deve declarar o domínio legal.`);
+    if (content.collection === 'legal' && (hasOwn(data, 'reviewer') || hasOwn(data, 'reviewedAt'))) failures.push(`${label}: campos de revisão profissional não pertencem ao fluxo simplificado.`);
+    if (content.collection === 'glossary' && (hasOwn(data, 'reviewer') || hasOwn(data, 'reviewedAt'))) failures.push(`${label}: campos de revisão profissional não pertencem ao fluxo simplificado.`);
+    if (data.authoredBy && !contributorIds.has(data.authoredBy)) failures.push(`${label}: autoria referencia perfil inexistente.`);
     if (data.status !== 'approved') continue;
-
-    const exceptions = (data.safetyReview ?? []).map((review) => String(review.term).toLocaleLowerCase('pt-BR'));
-    const publishableText = content.collection === 'glossary'
-      ? [content.body, data.term, data.shortDefinition, data.fullDefinition].filter(Boolean).join('\n')
-      : content.body;
+    if (forbiddenPlaceholderPattern.test(text)) failures.push(`${label}: placeholder editorial não permitido.`);
+    if (forbiddenPromisePattern.test(text)) failures.push(`${label}: promessa de resultado não permitida.`);
+    if (riskDomains.length > 0) {
+      const review = reviewMap.get(label);
+      if (!review || review.schemaVersion !== 2 || review.decision !== 'approved_for_publication') {
+        failures.push(`${label}: publicação exige parecer editorial v2 aprovado.`);
+      }
+      if (review?.resultingContentHash && review.resultingContentHash !== content.contentHash) {
+        failures.push(`${label}: parecer editorial não corresponde à versão atual.`);
+      }
+    }
+    if (['articles', 'glossary'].includes(content.collection) || data.contentType === 'legal-guide') {
+      if (!data.authoredBy) failures.push(`${label}: conteúdo aprovado exige autoria.`);
+      if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: conteúdo aprovado exige ao menos uma fonte.`);
+    }
+    const exceptions = (data.safetyReview ?? []).map((item) => String(item.term).toLocaleLowerCase('pt-BR'));
     for (const term of sensitiveTerms) {
-      if (termRegex(term).test(publishableText) && !exceptions.includes(term.toLocaleLowerCase('pt-BR'))) {
-        failures.push(`${label}: termo sensível "${term}" exige safetyReview.`);
+      if (termRegex(term).test(text) && !exceptions.includes(term.toLocaleLowerCase('pt-BR'))) {
+        failures.push(`${label}: termo sensível "${term}" exige auditoria documentada em safetyReview.`);
       }
     }
-
-    const governed = ['articles', 'glossary', 'legal'].includes(content.collection) || riskDomains.length > 0;
-    if (!governed) continue;
-
-    const updatedAt = data.lastUpdatedAt ?? data.updatedAt;
-    if (!updatedAt) failures.push(`${label}: conteúdo aprovado exige data de atualização.`);
-    if (content.collection === 'articles') {
-      if (!data.authoredBy) failures.push(`${label}: artigo aprovado exige autoria.`);
-      const author = contributorMap.get(data.authoredBy);
-      if (data.authoredBy && (!author || !author.editorialRoles?.includes('author'))) failures.push(`${label}: autoria deve referenciar participante autorizado como author.`);
-      if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: artigo aprovado exige ao menos uma fonte.`);
-      if (!data.medicalDisclaimer || !String(data.medicalDisclaimer).trim()) failures.push(`${label}: artigo aprovado exige medicalDisclaimer.`);
-      if (!data.aiAssistance?.activities?.length || !data.aiAssistance?.disclosure) failures.push(`${label}: artigo aprovado exige transparência sobre assistência por IA.`);
-      const glossaryTerms = data.glossaryTerms ?? [];
-      if (new Set(glossaryTerms).size !== glossaryTerms.length) {
-        failures.push(`${label}: glossaryTerms não pode conter termos duplicados.`);
-      }
-      for (const term of glossaryTerms) {
-        const target = contentMap.get(`glossary/${term}`);
-        if (!target || target.data.status !== 'approved') failures.push(`${label}: artigo aprovado só pode referenciar termos de glossário approved.`);
-      }
-    }
-    if (content.collection === 'glossary') {
-      if (!data.authoredBy) failures.push(`${label}: termo aprovado exige autoria.`);
-      const author = contributorMap.get(data.authoredBy);
-      if (data.authoredBy && (!author || !author.editorialRoles?.includes('author'))) failures.push(`${label}: autoria deve referenciar participante autorizado como author.`);
-      if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: termo aprovado exige ao menos uma fonte.`);
-    }
-
-    const submission = contentRecords.find((record) => record.event === 'submitted_for_review' && atOrAfter(record.occurredAt, updatedAt));
-    if (!submission) failures.push(`${label}: aprovação exige submissão para revisão posterior à última atualização.`);
-
-    const transition = contentRecords.find((record) => record.event === 'status_transition'
-      && record.fromStatus === 'in_review'
-      && record.toStatus === 'approved'
-      && atOrAfter(record.occurredAt, updatedAt));
-    if (!transition) failures.push(`${label}: aprovação exige transição registrada de in_review para approved.`);
-
-    const editorialApprovals = contentRecords
-      .filter((record) => record.event === 'editorial_approval')
-      .sort((left, right) => new Date(left.occurredAt) - new Date(right.occurredAt));
-    const editorialApproval = editorialApprovals.at(-1);
-    if (!editorialApproval || editorialApproval.decision !== 'approved' || !atOrAfter(editorialApproval.occurredAt, updatedAt)) {
-      failures.push(`${label}: aprovação editorial válida e atualizada é obrigatória.`);
-    }
-
-    const requiredRecords = [submission, editorialApproval, transition].filter(Boolean);
-    for (const domain of riskDomains) {
-      const reviews = contentRecords
-        .filter((record) => record.event === 'domain_review' && record.domain === domain)
-        .sort((left, right) => new Date(left.occurredAt) - new Date(right.occurredAt));
-      const latest = reviews.at(-1);
-      if (!latest || latest.decision !== 'approved' || !atOrAfter(latest.occurredAt, updatedAt)) {
-        failures.push(`${label}: revisão ${domain} aprovada e atualizada é obrigatória.`);
-      } else {
-        requiredRecords.push(latest);
-      }
-    }
-
-    if (content.collection === 'legal' && data.reviewer && data.reviewedAt) {
-      const reviewer = contributorMap.get(data.reviewer);
-      if (!reviewer || !reviewer.editorialRoles?.includes('legal_reviewer')) {
-        failures.push(`${label}: reviewer deve referenciar participante autorizado como legal_reviewer.`);
-      }
-      const latestLegalReview = contentRecords
-        .filter((record) => record.event === 'domain_review' && record.domain === 'legal')
-        .sort((left, right) => new Date(left.occurredAt) - new Date(right.occurredAt))
-        .at(-1);
-      if (latestLegalReview && (latestLegalReview.actor !== data.reviewer || !sameTime(latestLegalReview.occurredAt, data.reviewedAt))) {
-        failures.push(`${label}: reviewer e reviewedAt devem corresponder à revisão legal aprovada mais recente.`);
-      }
-    }
-    if (content.collection === 'glossary' && data.reviewer && data.reviewedAt) {
-      const reviewer = contributorMap.get(data.reviewer);
-      if (!reviewer || !reviewer.editorialRoles?.includes('clinical_reviewer')) {
-        failures.push(`${label}: reviewer deve referenciar participante autorizado como clinical_reviewer.`);
-      }
-      const latestClinicalReview = contentRecords
-        .filter((record) => record.event === 'domain_review' && record.domain === 'clinical')
-        .sort((left, right) => new Date(left.occurredAt) - new Date(right.occurredAt))
-        .at(-1);
-      if (latestClinicalReview && (latestClinicalReview.actor !== data.reviewer || !sameTime(latestClinicalReview.occurredAt, data.reviewedAt))) {
-        failures.push(`${label}: reviewer e reviewedAt devem corresponder à revisão clinical aprovada mais recente.`);
-      }
-    }
-
-    const decisionRecords = [editorialApproval, ...riskDomains.map((domain) => contentRecords
-      .filter((record) => record.event === 'domain_review' && record.domain === domain)
-      .sort((left, right) => new Date(left.occurredAt) - new Date(right.occurredAt))
-      .at(-1))].filter(Boolean);
-    const actors = [data.authoredBy, ...recordActors(decisionRecords)].filter(Boolean);
-    if (new Set(actors).size !== actors.length) failures.push(`${label}: autor, revisores e aprovador editorial devem ser distintos.`);
-
-    for (const record of requiredRecords) {
-      if (updatedAt && !sameTime(record.contentUpdatedAt, updatedAt)) failures.push(`${label}: registro ${record.event} não corresponde à versão atual do conteúdo.`);
-    }
+    if (content.collection === 'articles' && riskDomains.includes('clinical') && !data.medicalDisclaimer) failures.push(`${label}: artigo clínico aprovado exige disclaimer médico.`);
+    if (data.contentType === 'legal-guide' && !data.legalDisclaimer) failures.push(`${label}: guia jurídico aprovado exige disclaimer jurídico.`);
   }
-
   return [...new Set(failures)];
 }
 
@@ -329,36 +152,30 @@ export async function loadEditorialState(root = process.cwd()) {
   const contents = [];
   for (const collection of ['pages', 'articles', 'glossary', 'legal']) {
     for (const file of await filesIn(path.join(contentRoot, collection), ['.md', '.mdx'])) {
-      const { data, body } = parseMarkdown(await readFile(file, 'utf8'));
+      const source = await readFile(file, 'utf8');
+      const { data, body } = parseMarkdown(source);
       contents.push({
         id: `${collection}/${path.basename(file).replace(/\.(md|mdx)$/i, '')}`,
         collection,
         data,
         body,
+        contentHash: (await import('node:crypto')).createHash('sha256').update(source).digest('hex'),
       });
     }
   }
-
   const contributors = [];
   for (const file of await filesIn(path.join(contentRoot, 'contributors'), ['.json', '.yaml', '.yml'])) {
     const source = await readFile(file, 'utf8');
-    contributors.push({
-      id: path.basename(file).replace(/\.(json|yaml|yml)$/i, ''),
-      ...(file.endsWith('.json') ? JSON.parse(source) : parseYaml(source)),
-    });
-  }
-
-  const records = [];
-  const recordsRoot = path.join(contentRoot, 'editorial-records');
-  for (const file of await filesIn(recordsRoot, ['.json', '.yaml', '.yml'])) {
-    const source = await readFile(file, 'utf8');
-    records.push(file.endsWith('.json') ? JSON.parse(source) : parseYaml(source));
+    contributors.push({ id: path.basename(file).replace(/\.(json|yaml|yml)$/i, ''), ...(file.endsWith('.json') ? JSON.parse(source) : parseYaml(source)) });
   }
   const references = [];
-  const referencesRoot = path.join(contentRoot, 'references');
-  for (const file of await filesIn(referencesRoot, ['.json', '.yaml', '.yml'])) {
+  for (const file of await filesIn(path.join(contentRoot, 'references'), ['.json', '.yaml', '.yml'])) {
     const source = await readFile(file, 'utf8');
     references.push(file.endsWith('.json') ? JSON.parse(source) : parseYaml(source));
   }
-  return { contents, contributors, records, references };
+  const reviews = [];
+  for (const file of await filesIn(path.join(root, 'docs', 'editorial-reviews'), ['.json'])) {
+    reviews.push(JSON.parse(await readFile(file, 'utf8')));
+  }
+  return { contents, contributors, references, reviews };
 }

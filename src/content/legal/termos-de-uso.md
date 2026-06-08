@@ -6,8 +6,6 @@ clinical: false
 riskDomains: ["legal"]
 status: "draft"
 updatedAt: "2026-06-06"
-reviewer: null
-reviewedAt: null
 ---
 
 Documento interno não publicável.

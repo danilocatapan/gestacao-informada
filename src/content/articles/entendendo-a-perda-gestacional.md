@@ -1,37 +1,43 @@
 ---
-title: "Entendendo a perda gestacional"
-description: "Informações iniciais sobre perda gestacional, confirmação diagnóstica, acolhimento e sinais para buscar atendimento."
-category: "Entender a perda"
-objective: "Explicar conceitos iniciais com linguagem acolhedora e limites claros."
-audience: "Pessoas e famílias que viveram ou estão investigando uma possível perda gestacional."
-contentType: "article"
+title: Entendendo a perda gestacional
+description: Informações iniciais sobre perda gestacional, confirmação diagnóstica, acolhimento e sinais para buscar atendimento.
+category: Entender a perda
+objective: Explicar conceitos iniciais com linguagem acolhedora e limites claros.
+audience: Pessoas e famílias que viveram ou estão investigando uma possível perda gestacional.
+contentType: article
 clinical: true
-riskDomains: ["clinical", "psychological"]
-status: "draft"
-authoredBy: "equipe-editorial"
-lastUpdatedAt: "2026-06-08"
-medicalDisclaimer: "Este conteúdo é educativo, não confirma diagnóstico e não substitui avaliação profissional. Sangramento intenso, dor forte, desmaio, febre ou piora importante exigem atendimento de saúde."
+riskDomains:
+  - clinical
+  - psychological
+status: approved
+authoredBy: equipe-editorial
+lastUpdatedAt: 2026-06-08T13:29:32.981Z
+medicalDisclaimer: Este conteúdo é educativo, não confirma diagnóstico e não substitui avaliação profissional. Sangramento intenso, dor forte, desmaio, febre ou piora importante exigem atendimento de saúde.
 aiAssistance:
-  activities: ["topic-research", "source-triage", "drafting", "safety-audit"]
-  disclosure: "Este texto foi preparado com assistência de IA para pesquisa, organização e auditoria editorial. Ele permanece em revisão e não possui aprovação clínica profissional."
+  activities:
+    - topic-research
+    - source-triage
+    - drafting
+    - safety-audit
+  disclosure: Este texto foi preparado com assistência de IA para pesquisa, organização e auditoria editorial. Ele permanece em revisão e não possui aprovação clínica profissional.
 inspirationCredits: []
 safetyReview: []
 sources:
-  - title: "Early Pregnancy Loss"
-    url: "https://www.acog.org/womens-health/faqs/early-pregnancy-loss"
-    publisher: "American College of Obstetricians and Gynecologists"
-    accessedAt: "2026-06-08"
-    type: "institutional"
-  - title: "Early Pregnancy Loss - Practice Bulletin No. 200"
-    url: "https://www.acog.org/clinical/clinical-guidance/practice-bulletin/articles/2018/11/early-pregnancy-loss"
-    publisher: "American College of Obstetricians and Gynecologists"
-    accessedAt: "2026-06-08"
-    type: "guideline"
-  - title: "Atenção humanizada ao abortamento"
-    url: "https://bvsms.saude.gov.br/bvs/publicacoes/atencao_humanizada_abortamento_norma_tecnica_2ed.pdf"
-    publisher: "Ministério da Saúde"
-    accessedAt: "2026-06-08"
-    type: "guideline"
+  - title: Early Pregnancy Loss
+    url: https://www.acog.org/womens-health/faqs/early-pregnancy-loss
+    publisher: American College of Obstetricians and Gynecologists
+    accessedAt: 2026-06-08
+    type: institutional
+  - title: Early Pregnancy Loss - Practice Bulletin No. 200
+    url: https://www.acog.org/clinical/clinical-guidance/practice-bulletin/articles/2018/11/early-pregnancy-loss
+    publisher: American College of Obstetricians and Gynecologists
+    accessedAt: 2026-06-08
+    type: guideline
+  - title: Atenção humanizada ao abortamento
+    url: https://bvsms.saude.gov.br/bvs/publicacoes/atencao_humanizada_abortamento_norma_tecnica_2ed.pdf
+    publisher: Ministério da Saúde
+    accessedAt: 2026-06-08
+    type: guideline
 ---
 
 Perder uma gestação pode trazer tristeza, choque, dúvidas e uma busca urgente por explicações. Essas reações são legítimas. A perda não deve ser tratada como um detalhe clínico nem como responsabilidade da pessoa que gestava.
@@ -71,7 +77,7 @@ Um cuidado respeitoso inclui escuta, privacidade, informações compreensíveis 
 
 ## Matriz de afirmações para revisão
 
-| Afirmação editorial | Fonte principal | Pendência humana |
+| Afirmação editorial | Fonte principal | Auditoria editorial |
 |---|---|---|
 | Sintomas isolados podem não confirmar perda e a avaliação pode exigir exames seriados. | ACOG Practice Bulletin No. 200 | Confirmar adequação ao contexto brasileiro. |
 | Muitas perdas precoces estão associadas a alterações cromossômicas ao acaso. | ACOG Early Pregnancy Loss | Revisar linguagem de causalidade e acolhimento. |
@@ -79,4 +85,4 @@ Um cuidado respeitoso inclui escuta, privacidade, informações compreensíveis 
 
 ## Situação editorial
 
-Este artigo está em `draft`. Precisa de revisão clínica e psicológica profissionais, checagem final das fontes e aprovação editorial independente antes de qualquer publicação.
+Este artigo depende de parecer editorial v2 atual, testes verdes e publicação protegida por PR e CI.

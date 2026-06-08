@@ -13,9 +13,9 @@
 - Mantenha cada alteração focada em um objetivo.
 - Explique motivação, impacto e como a mudança foi verificada.
 - Não inclua dados pessoais, informações clínicas identificáveis ou segredos.
-- Conteúdo de saúde somente pode ser publicado depois da revisão profissional definida pelo projeto.
+- Conteúdo de saúde somente pode ser publicado com parecer editorial v2 atual e decisão `approved_for_publication`.
 - Conteúdo sensível deve declarar domínios de risco e possuir registros atuais para todas as revisões exigidas.
-- Autor, revisores profissionais e aprovador editorial devem ser participantes distintos.
+- Bloqueios objetivos exigem correção; escaladas exigem OK do mantenedor no painel local.
 - Use os helpers de URL do projeto e não concatene o caminho-base do GitHub Pages.
 - Não adicione frameworks de componentes sem uma decisão registrada.
 - Atualize `docs/ROADMAP.md` quando progresso, bloqueios, escopo ou dependências mudarem.

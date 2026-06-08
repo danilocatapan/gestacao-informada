@@ -1,6 +1,6 @@
 # Backlog editorial
 
-Este backlog combina lacunas dos artigos atuais, dúvidas frequentes e temas encontrados em materiais públicos. Materiais externos servem somente para descoberta de pauta; cada artigo futuro exigirá fontes clínicas independentes e revisão profissional.
+Este backlog combina lacunas dos artigos atuais, dúvidas frequentes e temas encontrados em materiais públicos. Materiais externos servem somente para descoberta de pauta; cada artigo futuro exigirá síntese original, fontes fortes e parecer editorial v2.
 
 ## Prioridade alta
 
@@ -18,7 +18,7 @@ Origem da pauta: [post público do Dr. Rodrigo Berger](https://www.instagram.com
 
 Risco clínico: muito alto.
 
-Status sugerido: pesquisa bloqueada até definir revisor clínico.
+Status sugerido: pesquisa bloqueada até reunir fontes fortes suficientes.
 
 ### Placentação: o que o termo significa e quais são seus limites
 
@@ -64,7 +64,7 @@ Fontes necessárias: ASH, ACOG, RCOG e diretrizes brasileiras.
 
 Risco clínico: alto.
 
-Status sugerido: aguardando revisores.
+Status sugerido: aguardando execução da auditoria editorial v2.
 
 ### Progesterona, imunologia e perdas: onde existe incerteza
 
@@ -96,4 +96,4 @@ Status sugerido: pesquisa crítica.
 
 Termos iniciais: perda gestacional, perda recorrente, trombose, trombofilia, SAF/SAAF, placentação, fator V Leiden, protrombina, MTHFR e homocisteína.
 
-Status sugerido: iniciar somente após revisão profissional das definições.
+Status sugerido: iniciar após consolidar fontes e critérios de auditoria das definições.

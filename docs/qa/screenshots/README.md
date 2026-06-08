@@ -1,18 +1,17 @@
 # Evidências visuais
 
-Esta pasta guarda screenshots gerados durante a validação Playwright de interfaces.
+Esta pasta guarda screenshots gerados pelos testes Playwright.
 
-- `painel-editorial-desktop.png`: painel local com artigo, marcação e apontamento em desktop.
-- `painel-editorial-mobile.png`: painel local responsivo, sem overflow, em viewport mobile.
-- `painel-editorial-fluxo-desktop.png`: fluxo E2E isolado após resolução e envio para `in_review`.
-- `painel-editorial-fluxo-mobile.png`: validação E2E isolada de acessibilidade básica e responsividade.
+- `artigo-*-desktop.png` e `artigo-*-mobile.png`: seis artigos aprovados, com fontes, aviso de transparência, console limpo e ausência de overflow.
+- `painel-editorial-fluxo-desktop.png`: fluxo simplificado após o OK do mantenedor.
+- `painel-editorial-mobile.png`: hard blocker sem opção de override em viewport mobile.
+- demais arquivos: rotas institucionais validadas em desktop e mobile.
 
 Antes de concluir mudanças visuais:
 
 - validar todas as rotas alteradas em desktop e mobile;
 - verificar navegação, overflow horizontal e erros de console;
-- confirmar que os textos visíveis estão em português do Brasil;
-- substituir as evidências quando a interface mudar de forma relevante.
+- confirmar textos visíveis em português do Brasil;
+- substituir as evidências quando a interface mudar.
 
-Os smoke tests versionados em `tests/smoke.spec.ts` cobrem carregamento, console e overflow horizontal nas rotas públicas em desktop e mobile.
-O fluxo isolado do painel editorial é coberto por `tests/editorial-panel.spec.ts`.
+Os testes públicos ficam em `tests/smoke.spec.ts`; o painel local é coberto por `tests/editorial-panel.spec.ts`.

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "id": "94b4d09e-2fc0-47f7-a1b4-c3abe3355582",
+  "target": "articles/sindrome-antifosfolipide",
+  "generatedAt": "2026-06-08T18:45:29.933Z",
+  "updatedAt": "2026-06-08T18:46:20.550Z",
+  "contentHash": "313981d1ac0c51e2265b50ed5c27d248405cb9412069be7c0b4f944f36c93269",
+  "contentStatus": "in_review",
+  "riskDomains": [
+    "clinical"
+  ],
+  "decision": "approved_for_publication",
+  "publicationAllowed": true,
+  "sourceCoverage": {
+    "sourceCount": 3,
+    "synthesisPolicy": "original_traceable_synthesis",
+    "verified": true
+  },
+  "specialists": {
+    "research": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "challenge": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "editorial": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "safetyAudit": {
+      "status": "approved_for_publication",
+      "findingIds": []
+    }
+  },
+  "blockers": [],
+  "escalations": [],
+  "ownerApproval": null,
+  "findings": [],
+  "history": [
+    {
+      "occurredAt": "2026-06-08T18:45:29.933Z",
+      "action": "review_v2_generated",
+      "actor": "codex-editorial-orchestrator"
+    },
+    {
+      "occurredAt": "2026-06-08T18:46:20.550Z",
+      "action": "review_applied",
+      "actor": "codex-editorial-orchestrator",
+      "resultingStatus": "approved"
+    }
+  ],
+  "resultingContentHash": "313981d1ac0c51e2265b50ed5c27d248405cb9412069be7c0b4f944f36c93269",
+  "resultingStatus": "approved"
+}

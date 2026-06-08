@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "id": "58aa9ee0-0c65-4641-a30c-5bcc0580aee3",
+  "target": "articles/trombofilias-hereditarias-e-adquiridas",
+  "generatedAt": "2026-06-08T18:45:29.923Z",
+  "updatedAt": "2026-06-08T18:46:19.243Z",
+  "contentHash": "6876d654a07290e6e1e1240af78abc5dff243a21975e3d0fb49be9b2f53b999e",
+  "contentStatus": "in_review",
+  "riskDomains": [
+    "clinical"
+  ],
+  "decision": "approved_for_publication",
+  "publicationAllowed": true,
+  "sourceCoverage": {
+    "sourceCount": 3,
+    "synthesisPolicy": "original_traceable_synthesis",
+    "verified": true
+  },
+  "specialists": {
+    "research": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "challenge": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "editorial": {
+      "status": "completed",
+      "findingIds": []
+    },
+    "safetyAudit": {
+      "status": "approved_for_publication",
+      "findingIds": []
+    }
+  },
+  "blockers": [],
+  "escalations": [],
+  "ownerApproval": null,
+  "findings": [],
+  "history": [
+    {
+      "occurredAt": "2026-06-08T18:45:29.923Z",
+      "action": "review_v2_generated",
+      "actor": "codex-editorial-orchestrator"
+    },
+    {
+      "occurredAt": "2026-06-08T18:46:19.243Z",
+      "action": "review_applied",
+      "actor": "codex-editorial-orchestrator",
+      "resultingStatus": "approved"
+    }
+  ],
+  "resultingContentHash": "6876d654a07290e6e1e1240af78abc5dff243a21975e3d0fb49be9b2f53b999e",
+  "resultingStatus": "approved"
+}
