@@ -32,7 +32,7 @@
 ## Fase 2 — Recursos de Apoio
 
 - [ ] Cartilha de acolhimento para familiares e amigos
-- [ ] Materiais sobre direitos após perda gestacional
+- [ ] Materiais sobre direitos após perda gestacional (guia inicial em draft, aguardando revisão jurídica)
 - [ ] Recursos de memória e rituais de despedida
 - [ ] Fluxo de encaminhamento para apoio psicológico
 - [ ] Newsletter editorial com consentimento explícito

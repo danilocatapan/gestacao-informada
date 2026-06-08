@@ -1,16 +1,60 @@
 ---
-import { getEntry, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import InstitutionalPage from '../layouts/InstitutionalPage.astro';
+import { withBaseUrl } from '../lib/urls';
+
 const page = await getEntry('pages', 'direitos');
 if (!page) throw new Error('Página institucional não encontrada.');
-const { Content } = await render(page);
+const guide = await getEntry('legal', 'direitos-apos-perda-gestacional');
+const publishedGuide = guide?.data.status === 'approved' ? guide : undefined;
+const { Content: PageContent } = await render(page);
+const GuideContent = publishedGuide ? (await render(publishedGuide)).Content : undefined;
+const author = publishedGuide?.data.authoredBy ? await getEntry(publishedGuide.data.authoredBy) : undefined;
+const reviewer = publishedGuide?.data.reviewer ? await getEntry(publishedGuide.data.reviewer) : undefined;
+const approvedDocuments = await getCollection('legal', ({ data }) =>
+  data.status === 'approved' && data.contentType === 'legal-document');
+const institutionalLinks = [
+  { id: 'termos-de-uso', label: 'Termos de uso' },
+  { id: 'privacidade', label: 'Política de privacidade' },
+  { id: 'politica-editorial', label: 'Política editorial' },
+].flatMap(({ id, label }) => {
+  const document = approvedDocuments.find((entry) => entry.id === id);
+  return document?.data.slug ? [{ label, href: withBaseUrl(`${document.data.slug}/`) }] : [];
+});
+const display = publishedGuide
+  ? { title: publishedGuide.data.title, description: publishedGuide.data.description }
+  : { title: page.data.title, description: page.data.description };
 ---
 <InstitutionalPage
   {...page.data}
+  {...display}
   path="direitos/"
+  showNotice={!publishedGuide}
   noticeKind="legal"
   nextSteps={[
     { label: 'Preparar informações para uma conversa', href: 'materiais/', primary: true },
     { label: 'Conhecer os compromissos do portal', href: 'sobre/' },
   ]}
-><Content /></InstitutionalPage>
+>
+  {publishedGuide && GuideContent ? (
+    <div data-legal-guide>
+      <GuideContent />
+      <section class="article-meta" aria-labelledby="sobre-guia-juridico">
+        <h2 id="sobre-guia-juridico">Sobre este conteúdo</h2>
+        {author && <p><strong>Autoria:</strong> {author.data.name}<br />{author.data.credentials}</p>}
+        {reviewer && <p><strong>Revisão jurídica:</strong> {reviewer.data.name}<br />{reviewer.data.credentials}</p>}
+        {publishedGuide.data.reviewedAt && <p><strong>Revisado em:</strong> {publishedGuide.data.reviewedAt.toLocaleDateString('pt-BR')}</p>}
+        <p><strong>Atualizado em:</strong> {publishedGuide.data.updatedAt.toLocaleDateString('pt-BR')}</p>
+        <p>{publishedGuide.data.legalDisclaimer}</p>
+        <h3>Fontes oficiais consultadas</h3>
+        <ul>{publishedGuide.data.sources.map((source) => <li><a href={source.url}>{source.title}</a> — {source.publisher}</li>)}</ul>
+        {institutionalLinks.length > 0 && (
+          <>
+            <h3>Compromissos do portal</h3>
+            <ul>{institutionalLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}</ul>
+          </>
+        )}
+      </section>
+    </div>
+  ) : <PageContent />}
+</InstitutionalPage>

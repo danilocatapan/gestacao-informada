@@ -3,7 +3,7 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const status = z.enum(['draft', 'in_review', 'approved', 'archived']);
-const contentType = z.enum(['article', 'institutional-page', 'legal-document', 'checklist', 'glossary-entry']);
+const contentType = z.enum(['article', 'institutional-page', 'legal-document', 'legal-guide', 'checklist', 'glossary-entry']);
 const sourceType = z.enum(['guideline', 'review', 'law', 'institutional', 'other']);
 const riskDomain = z.enum(['clinical', 'psychological', 'legal']);
 const editorialRole = z.enum(['author', 'clinical_reviewer', 'psychological_reviewer', 'legal_reviewer', 'editorial_approver']);
@@ -92,11 +92,14 @@ const legal = defineCollection({
     .object({
       title: z.string().min(1),
       description: z.string().min(1),
-      contentType: z.literal('legal-document'),
+      contentType: z.enum(['legal-document', 'legal-guide']),
       clinical: z.literal(false),
       riskDomains: z.array(riskDomain),
       status,
       updatedAt: z.coerce.date(),
+      authoredBy: reference('contributors').optional(),
+      sources: z.array(source).default([]),
+      legalDisclaimer: z.string().min(1).optional(),
       reviewer: reference('contributors').nullable(),
       reviewedAt: z.coerce.date().nullable(),
       legalBasis: z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]).optional(),
@@ -106,10 +109,13 @@ const legal = defineCollection({
       if (!document.riskDomains.includes('legal')) {
         ctx.addIssue({ code: 'custom', message: 'Documento jurídico deve declarar o domínio legal.', path: ['riskDomains'] });
       }
-      if (document.status !== 'approved' && document.slug) {
+      if (document.contentType === 'legal-guide' && document.slug) {
+        ctx.addIssue({ code: 'custom', message: 'Guia jurídico usa uma rota pública dedicada e não deve declarar slug.', path: ['slug'] });
+      }
+      if (document.contentType === 'legal-document' && document.status !== 'approved' && document.slug) {
         ctx.addIssue({ code: 'custom', message: 'Documento jurídico não aprovado não pode declarar slug público.', path: ['slug'] });
       }
-      if (document.status === 'approved' && !document.slug) {
+      if (document.contentType === 'legal-document' && document.status === 'approved' && !document.slug) {
         ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige slug público.', path: ['slug'] });
       }
       if (document.status === 'approved' && !document.reviewer) {
@@ -117,6 +123,17 @@ const legal = defineCollection({
       }
       if (document.status === 'approved' && !document.reviewedAt) {
         ctx.addIssue({ code: 'custom', message: 'Documento jurídico aprovado exige data de revisão jurídica.', path: ['reviewedAt'] });
+      }
+      if (document.contentType === 'legal-guide' && document.status === 'approved') {
+        if (!document.authoredBy) {
+          ctx.addIssue({ code: 'custom', message: 'Guia jurídico aprovado exige autoria.', path: ['authoredBy'] });
+        }
+        if (document.sources.length === 0) {
+          ctx.addIssue({ code: 'custom', message: 'Guia jurídico aprovado exige ao menos uma fonte.', path: ['sources'] });
+        }
+        if (!document.legalDisclaimer) {
+          ctx.addIssue({ code: 'custom', message: 'Guia jurídico aprovado exige disclaimer jurídico.', path: ['legalDisclaimer'] });
+        }
       }
     }),
 });

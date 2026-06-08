@@ -16,6 +16,7 @@ const approvedLegalRoutes = [];
 const blockedLegalRoutes = [];
 const approvedArticleRoutes = [];
 const blockedArticleRoutes = [];
+let legalGuideStatus;
 const exists = async (file) => { try { await access(file); return true; } catch { return false; } };
 
 for (const page of expectedPages) {
@@ -47,6 +48,10 @@ for (const collection of ['pages', 'articles', 'legal']) {
     if (!['draft', 'in_review', 'approved', 'archived'].includes(status)) failures.push(`Status editorial inválido em ${file}`);
     const id = path.basename(file).replace(/\.(md|mdx)$/i, '');
 
+    if (collection === 'legal' && data.contentType === 'legal-guide') {
+      legalGuideStatus = status;
+      continue;
+    }
     if (collection === 'legal' && status === 'approved') {
       const expectedSlug = legalPublicSlugs.get(id);
       if (data.slug !== expectedSlug) failures.push(`Slug público incorreto para legal/${id}.`);
@@ -75,6 +80,17 @@ for (const route of approvedLegalRoutes) {
   const html = await readFile(file, 'utf8');
   const canonical = `https://danilocatapan.github.io/${base}/${route}/`;
   if (!html.includes(`rel="canonical" href="${canonical}"`)) failures.push(`Canonical incorreto em /${route}/`);
+}
+
+const rightsHtml = await readFile(path.join(dist, 'direitos', 'index.html'), 'utf8');
+if (legalGuideStatus === 'approved') {
+  if (!rightsHtml.includes('data-legal-guide')) failures.push('Guia jurídico aprovado ausente de /direitos/.');
+  for (const route of approvedLegalRoutes) {
+    if (!rightsHtml.includes(`href="/${base}/${route}/"`)) failures.push(`Link jurídico publicado ausente de /direitos/: /${route}/`);
+  }
+} else {
+  if (rightsHtml.includes('data-legal-guide')) failures.push('Guia jurídico não aprovado vazou em /direitos/.');
+  if (rightsHtml.includes('Você não precisa compreender tudo de uma vez')) failures.push('Texto do guia jurídico não aprovado vazou em /direitos/.');
 }
 
 const robots = await readFile(path.join(dist, 'robots.txt'), 'utf8');

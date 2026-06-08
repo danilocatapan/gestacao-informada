@@ -70,6 +70,7 @@ const legalContent = {
   collection: 'legal',
   body: 'Documento jurídico aprovado.',
   data: {
+    contentType: 'legal-document',
     status: 'approved',
     clinical: false,
     riskDomains: ['legal'],
@@ -94,7 +95,37 @@ expectFailure('legal revisor incompatível', failuresFor({ ...legalContent, data
 expectFailure('legal data divergente', failuresFor({ ...legalContent, data: { ...legalContent.data, reviewedAt: '2026-06-07T13:30:00.000Z' } }, validLegalRecords), /corresponder à revisão legal/);
 expectFailure('legalBasis vazio', failuresFor({ ...legalContent, data: { ...legalContent.data, legalBasis: [] } }, validLegalRecords), /legalBasis/);
 
-const legalDraft = (id) => ({ id: `legal/${id}`, collection: 'legal', body: 'Placeholder.', data: { status: 'draft', reviewer: null, reviewedAt: null } });
+const legalGuide = {
+  id: 'legal/direitos-apos-perda-gestacional',
+  collection: 'legal',
+  body: 'Guia jurídico informativo e acolhedor.',
+  data: {
+    contentType: 'legal-guide',
+    status: 'approved',
+    clinical: false,
+    riskDomains: ['legal'],
+    updatedAt,
+    authoredBy: 'autor',
+    sources: [{ title: 'Fonte oficial' }],
+    legalDisclaimer: 'Conteúdo informativo que não substitui orientação jurídica individual.',
+    reviewer: 'juridico',
+    reviewedAt: '2026-06-07T13:00:00.000Z',
+  },
+};
+const legalGuideRecord = (overrides) => record({ target: 'legal/direitos-apos-perda-gestacional', ...overrides });
+const validLegalGuideRecords = [
+  legalGuideRecord({ event: 'submitted_for_review', actor: 'submissor', role: 'author' }),
+  legalGuideRecord({ event: 'domain_review', actor: 'juridico', role: 'legal_reviewer', domain: 'legal', decision: 'approved' }),
+  legalGuideRecord({ event: 'editorial_approval', decision: 'approved', occurredAt: '2026-06-07T14:00:00.000Z' }),
+  legalGuideRecord({ event: 'status_transition', actor: 'submissor', role: 'author', fromStatus: 'in_review', toStatus: 'approved', occurredAt: '2026-06-07T15:00:00.000Z' }),
+];
+assert.deepEqual(failuresFor(legalGuide, validLegalGuideRecords), [], 'guia jurídico válido deve passar');
+expectFailure('guia jurídico sem autoria', failuresFor({ ...legalGuide, data: { ...legalGuide.data, authoredBy: undefined } }, validLegalGuideRecords), /guia jurídico aprovado exige autoria/);
+expectFailure('guia jurídico sem fonte', failuresFor({ ...legalGuide, data: { ...legalGuide.data, sources: [] } }, validLegalGuideRecords), /guia jurídico aprovado exige ao menos uma fonte/);
+expectFailure('guia jurídico sem disclaimer', failuresFor({ ...legalGuide, data: { ...legalGuide.data, legalDisclaimer: '' } }, validLegalGuideRecords), /legalDisclaimer/);
+expectFailure('guia jurídico com slug', failuresFor({ ...legalGuide, data: { ...legalGuide.data, slug: 'direitos' } }, validLegalGuideRecords), /rota dedicada.*não deve declarar slug/);
+
+const legalDraft = (id) => ({ id: `legal/${id}`, collection: 'legal', body: 'Placeholder.', data: { contentType: 'legal-document', status: 'draft', reviewer: null, reviewedAt: null } });
 const legalInventory = [legalDraft('privacidade'), legalDraft('termos-de-uso'), legalDraft('politica-editorial')];
 assert.deepEqual(validateLegalInventory(legalInventory), [], 'inventário jurídico obrigatório deve passar');
 expectFailure('documento jurídico obrigatório ausente', validateLegalInventory(legalInventory.slice(1)), /privacidade.*ausente/);

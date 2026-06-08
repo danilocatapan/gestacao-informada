@@ -105,3 +105,11 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 **Decisao:** registrar a assistencia do Codex em pesquisa de pauta, triagem de fontes, redacao e auditoria de seguranca por metadados tipados e aviso publico. A assistencia por IA e uma etapa obrigatoria de preparacao dos artigos do MVP, mas nunca concede aprovacao clinica, psicologica, juridica ou editorial e nao substitui revisao profissional humana. Materiais publicos externos podem receber credito como inspiracao editorial, em campo separado das fontes clinicas, sem implicar parceria, revisao ou endosso.
 
 **Motivo:** tornar transparente o uso de automacao sem enfraquecer a governanca fail-closed, preservar a distincao entre descoberta de pautas e evidencia clinica e evitar apropriacao indevida de conteudo de terceiros.
+
+## 2026-06-08 — Guias juridicos acolhedores em rota dedicada
+
+**Status:** aceita
+
+**Decisao:** tratar guias juridico-informativos como conteudo legal governado, com autoria, fontes oficiais, disclaimer, revisao juridica humana e trilha editorial antes da publicacao. A linguagem acolhedora e requisito obrigatorio tambem para conteudo juridico, sem reduzir a precisao, criar garantias ou substituir orientacao individual. O guia sobre direitos ocupa a rota dedicada `/direitos/` somente quando aprovado; enquanto estiver bloqueado, a rota preserva a apresentacao institucional.
+
+**Motivo:** oferecer informacao util em um momento de vulnerabilidade sem expor familias a aconselhamento juridico impreciso ou publicar conteudo ainda nao revisado.

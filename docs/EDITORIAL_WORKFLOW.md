@@ -7,6 +7,7 @@
 - Os domínios de risco permitidos são `clinical`, `psychological` e `legal`.
 - Conteúdo clínico deve residir em `articles` e declarar `clinical` em `riskDomains`.
 - Documento jurídico deve declarar `legal` em `riskDomains`.
+- Guia jurídico deve declarar autoria, fontes oficiais e disclaimer, manter linguagem acolhedora e receber revisão jurídica antes de ocupar sua rota dedicada.
 - Páginas institucionais de baixo risco podem usar `riskDomains: []` somente quando não apresentarem orientação ou afirmações clínicas, psicológicas ou jurídicas.
 - Todo artigo aprovado exige autoria identificada, fontes rastreáveis, data de atualização, aprovações dos domínios declarados e aprovação editorial final.
 - Autor, revisores profissionais e aprovador editorial devem ser participantes distintos.

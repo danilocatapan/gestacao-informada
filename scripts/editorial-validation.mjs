@@ -127,11 +127,19 @@ export function validateEditorialState({ contents, contributors, records }) {
       if (!hasOwn(data, 'reviewer')) failures.push(`${label}: documento jurídico exige o campo reviewer, mesmo quando nulo.`);
       if (!hasOwn(data, 'reviewedAt')) failures.push(`${label}: documento jurídico exige o campo reviewedAt, mesmo quando nulo.`);
       if (data.reviewedAt && !data.reviewer) failures.push(`${label}: reviewedAt exige reviewer identificado.`);
-      if (data.status !== 'approved' && data.slug) failures.push(`${label}: documento jurídico não aprovado não pode declarar slug público.`);
+      if (data.contentType === 'legal-guide' && data.slug) failures.push(`${label}: guia jurídico usa rota dedicada e não deve declarar slug.`);
+      if (data.contentType !== 'legal-guide' && data.status !== 'approved' && data.slug) failures.push(`${label}: documento jurídico não aprovado não pode declarar slug público.`);
       if (data.status === 'approved') {
-        if (!data.slug) failures.push(`${label}: documento jurídico aprovado exige slug público.`);
+        if (data.contentType !== 'legal-guide' && !data.slug) failures.push(`${label}: documento jurídico aprovado exige slug público.`);
         if (!data.reviewer) failures.push(`${label}: documento jurídico aprovado exige reviewer.`);
         if (!data.reviewedAt) failures.push(`${label}: documento jurídico aprovado exige reviewedAt.`);
+        if (data.contentType === 'legal-guide') {
+          if (!data.authoredBy) failures.push(`${label}: guia jurídico aprovado exige autoria.`);
+          const author = contributorMap.get(data.authoredBy);
+          if (data.authoredBy && (!author || !author.editorialRoles?.includes('author'))) failures.push(`${label}: autoria deve referenciar participante autorizado como author.`);
+          if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: guia jurídico aprovado exige ao menos uma fonte.`);
+          if (!data.legalDisclaimer || !String(data.legalDisclaimer).trim()) failures.push(`${label}: guia jurídico aprovado exige legalDisclaimer.`);
+        }
       }
       if (data.legalBasis !== undefined
         && !(typeof data.legalBasis === 'string' && data.legalBasis.trim())

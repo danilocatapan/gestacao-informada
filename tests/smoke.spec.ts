@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
 const routes = {
@@ -12,11 +12,13 @@ const routes = {
   sobre: 'sobre/',
 };
 
+const rightsHtmlPath = path.join(process.cwd(), 'dist', 'direitos', 'index.html');
+const rightsGuidePublished = existsSync(rightsHtmlPath) && readFileSync(rightsHtmlPath, 'utf8').includes('data-legal-guide');
 const notices = {
   'entender-a-perda/': 'clinical',
   'trombofilias-e-investigacao/': 'clinical',
   'acolhimento-e-luto/': 'psychological',
-  'direitos/': 'legal',
+  ...(!rightsGuidePublished ? { 'direitos/': 'legal' } : {}),
 };
 
 const articlesDirectory = path.join(process.cwd(), 'dist', 'artigos');
@@ -67,6 +69,11 @@ for (const viewport of [
             return Boolean(notice && article && (notice.compareDocumentPosition(article) & Node.DOCUMENT_POSITION_FOLLOWING));
           });
           expect(noticePrecedesArticle).toBeTruthy();
+        }
+        if (route === 'direitos/' && rightsGuidePublished) {
+          await expect(page.locator('[data-legal-guide]')).toBeVisible();
+          await expect(page.locator('[data-legal-guide] .article-meta')).toContainText('Fontes oficiais consultadas');
+          await expect(page.locator('[data-legal-guide] .article-meta')).toContainText('não substitui orientação jurídica');
         }
 
         const hasOverflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);

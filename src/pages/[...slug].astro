@@ -3,7 +3,8 @@ import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-  const approvedDocuments = await getCollection('legal', ({ data }) => data.status === 'approved');
+  const approvedDocuments = await getCollection('legal', ({ data }) =>
+    data.status === 'approved' && data.contentType === 'legal-document');
   return approvedDocuments.map((document) => ({
     params: { slug: document.data.slug },
     props: { document },
