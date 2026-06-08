@@ -26,7 +26,7 @@ const { title, description, path = '', additionalStructuredData = [] } = Astro.p
   </head>
   <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-    <Header />
+    <Header path={path} />
     <main id="conteudo"><slot /></main>
     <Footer />
   </body>

@@ -2,6 +2,11 @@
 import { site } from '../lib/site';
 import { withBaseUrl } from '../lib/urls';
 
+interface Props {
+  path?: string;
+}
+
+const { path = '' } = Astro.props;
 const links = [
   ['Entender a perda', 'entender-a-perda/'],
   ['Trombofilias', 'trombofilias-e-investigacao/'],
@@ -18,10 +23,40 @@ const links = [
       <img src={withBaseUrl('brand/symbol.png')} width="56" height="56" alt="" />
       <span><strong>Gestação</strong><small>Informada</small></span>
     </a>
-    <nav aria-label="Navegação principal">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+      <span>Menu</span>
+      <span class="menu-toggle-icon" aria-hidden="true"></span>
+    </button>
+    <nav id="primary-navigation" aria-label="Navegação principal">
       <ul>
-        {links.map(([label, path]) => <li><a href={withBaseUrl(path)}>{label}</a></li>)}
+        {links.map(([label, linkPath]) => (
+          <li><a href={withBaseUrl(linkPath)} aria-current={path === linkPath ? 'page' : undefined}>{label}</a></li>
+        ))}
       </ul>
     </nav>
   </div>
 </header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const navigation = document.querySelector<HTMLElement>('#primary-navigation');
+  header?.setAttribute('data-menu-ready', '');
+
+  const closeMenu = () => {
+    toggle?.setAttribute('aria-expanded', 'false');
+    navigation?.removeAttribute('data-open');
+  };
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    navigation?.toggleAttribute('data-open', open);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeMenu();
+      toggle?.focus();
+    }
+  });
+</script>

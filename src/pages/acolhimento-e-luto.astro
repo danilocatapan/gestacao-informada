@@ -5,4 +5,12 @@ const page = await getEntry('pages', 'acolhimento-e-luto');
 if (!page) throw new Error('Página institucional não encontrada.');
 const { Content } = await render(page);
 ---
-<InstitutionalPage {...page.data} path="acolhimento-e-luto/"><Content /></InstitutionalPage>
+<InstitutionalPage
+  {...page.data}
+  path="acolhimento-e-luto/"
+  noticeKind="psychological"
+  nextSteps={[
+    { label: 'Organizar uma conversa importante', href: 'materiais/', primary: true },
+    { label: 'Entender a perda gestacional', href: 'entender-a-perda/' },
+  ]}
+><Content /></InstitutionalPage>

@@ -1,5 +1,7 @@
 ---
-import ContentNotice from '../components/ContentNotice.astro';
+import ContentNotice, { type NoticeKind } from '../components/ContentNotice.astro';
+import NextSteps, { type NextStep } from '../components/NextSteps.astro';
+import PrintAction from '../components/PrintAction.astro';
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
@@ -8,9 +10,21 @@ interface Props {
   eyebrow: string;
   path: string;
   showNotice?: boolean;
+  noticeKind?: NoticeKind;
+  nextSteps?: NextStep[];
+  printable?: boolean;
 }
 
-const { title, description, eyebrow, path, showNotice = true } = Astro.props;
+const {
+  title,
+  description,
+  eyebrow,
+  path,
+  showNotice = true,
+  noticeKind = 'clinical',
+  nextSteps = [],
+  printable = false,
+} = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} path={path}>
@@ -22,9 +36,13 @@ const { title, description, eyebrow, path, showNotice = true } = Astro.props;
     </div>
   </section>
   <section class="content-section">
-    <div class="container article-grid">
-      <article class="prose"><slot /></article>
-      {showNotice && <ContentNotice />}
+    <div class:list={['container', 'article-grid', { 'article-grid-single': !showNotice }]}>
+      {showNotice && <ContentNotice kind={noticeKind} />}
+      <article class="prose">
+        {printable && <PrintAction />}
+        <slot />
+        {nextSteps.length > 0 && <NextSteps steps={nextSteps} />}
+      </article>
     </div>
   </section>
 </BaseLayout>

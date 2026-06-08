@@ -1,0 +1,17 @@
+---
+export type IconName = 'heart' | 'science' | 'support' | 'rights' | 'checklist';
+
+interface Props {
+  name: IconName;
+}
+
+const { name } = Astro.props;
+---
+
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {name === 'heart' && <path d="M20.8 4.6a5.4 5.4 0 0 0-7.6 0L12 5.8l-1.2-1.2a5.4 5.4 0 1 0-7.6 7.6L12 21l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z" />}
+  {name === 'science' && <><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3" /><path d="M8 15h8" /></>}
+  {name === 'support' && <><path d="M12 21s-7-3.8-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 11c0 6.2-7 10-7 10Z" /><path d="M8.5 13.5c1.5 1.5 5.5 1.5 7 0" /></>}
+  {name === 'rights' && <><path d="M12 3v18M5 7h14M7 7l-4 7h8L7 7ZM17 7l-4 7h8l-4-7ZM8 21h8" /></>}
+  {name === 'checklist' && <><path d="M9 5h10M9 12h10M9 19h10" /><path d="m3 5 1.5 1.5L7 4M3 12l1.5 1.5L7 11M3 19l1.5 1.5L7 18" /></>}
+</svg>

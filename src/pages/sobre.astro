@@ -5,4 +5,12 @@ const page = await getEntry('pages', 'sobre');
 if (!page) throw new Error('Página institucional não encontrada.');
 const { Content } = await render(page);
 ---
-<InstitutionalPage {...page.data} path="sobre/" showNotice={false}><Content /></InstitutionalPage>
+<InstitutionalPage
+  {...page.data}
+  path="sobre/"
+  showNotice={false}
+  nextSteps={[
+    { label: 'Usar os materiais disponíveis', href: 'materiais/', primary: true },
+    { label: 'Conhecer as áreas do portal', href: 'entender-a-perda/' },
+  ]}
+><Content /></InstitutionalPage>

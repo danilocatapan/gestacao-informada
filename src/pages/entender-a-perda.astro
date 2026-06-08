@@ -5,4 +5,11 @@ const page = await getEntry('pages', 'entender-a-perda');
 if (!page) throw new Error('Página institucional não encontrada.');
 const { Content } = await render(page);
 ---
-<InstitutionalPage {...page.data} path="entender-a-perda/"><Content /></InstitutionalPage>
+<InstitutionalPage
+  {...page.data}
+  path="entender-a-perda/"
+  nextSteps={[
+    { label: 'Preparar perguntas para uma consulta', href: 'materiais/', primary: true },
+    { label: 'Conhecer o espaço de acolhimento', href: 'acolhimento-e-luto/' },
+  ]}
+><Content /></InstitutionalPage>

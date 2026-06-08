@@ -1,18 +1,21 @@
 ---
 import { withBaseUrl } from '../lib/urls';
+import Icon, { type IconName } from './Icon.astro';
 
 interface Props {
   title: string;
   description: string;
   href: string;
-  icon: string;
+  icon: IconName;
+  status: string;
 }
 
-const { title, description, href, icon } = Astro.props;
+const { title, description, href, icon, status } = Astro.props;
 ---
 
 <a class="topic-card" href={withBaseUrl(href)}>
-  <span class="topic-icon" aria-hidden="true">{icon}</span>
+  <span class="topic-icon"><Icon name={icon} /></span>
+  <span class="topic-status">{status}</span>
   <h3>{title}</h3>
   <p>{description}</p>
   <span class="card-link">Conhecer esta área <span aria-hidden="true">→</span></span>

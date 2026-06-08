@@ -1,0 +1,8 @@
+<div class="print-action">
+  <button class="button secondary" type="button" data-print-checklist>Imprimir checklist</button>
+  <p>O checklist não salva nem envia informações.</p>
+</div>
+
+<script>
+  document.querySelector('[data-print-checklist]')?.addEventListener('click', () => window.print());
+</script>

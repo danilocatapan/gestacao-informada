@@ -1,7 +1,29 @@
-<aside class="notice" aria-label="Aviso importante">
-  <strong>Conteúdo clínico em preparação</strong>
-  <p>
-    Estamos construindo esta área com fontes rastreáveis e revisão profissional. As informações
-    disponíveis agora são institucionais e não substituem uma consulta.
-  </p>
+---
+export type NoticeKind = 'clinical' | 'psychological' | 'legal';
+
+interface Props {
+  kind?: NoticeKind;
+}
+
+const { kind = 'clinical' } = Astro.props;
+const notices = {
+  clinical: {
+    title: 'Conteúdo clínico em preparação',
+    body: 'Esta área está sendo construída com fontes rastreáveis e revisão profissional. As informações disponíveis agora são institucionais e não substituem uma consulta.',
+  },
+  psychological: {
+    title: 'Conteúdo de acolhimento em preparação',
+    body: 'Esta área está sendo construída com revisão especializada e linguagem cuidadosa. O conteúdo disponível agora não substitui apoio psicológico profissional.',
+  },
+  legal: {
+    title: 'Conteúdo jurídico em preparação',
+    body: 'Esta área aguarda revisão jurídica. As informações disponíveis agora são institucionais e não substituem orientação profissional sobre uma situação específica.',
+  },
+};
+const notice = notices[kind];
+---
+
+<aside class:list={['notice', `notice-${kind}`]} aria-label="Aviso importante" data-notice-kind={kind}>
+  <strong>{notice.title}</strong>
+  <p>{notice.body}</p>
 </aside>

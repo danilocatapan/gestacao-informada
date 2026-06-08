@@ -1,33 +1,45 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopicCard from '../components/TopicCard.astro';
+import type { IconName } from '../components/Icon.astro';
 import { site } from '../lib/site';
 import { withBaseUrl } from '../lib/urls';
 
-const topics = [
+const topics: { title: string; description: string; href: string; icon: IconName; status: string }[] = [
   {
     title: 'Entender a perda',
     description: 'Um ponto de partida respeitoso para compreender termos, dúvidas e próximos passos possíveis.',
     href: 'entender-a-perda/',
-    icon: '♡',
+    icon: 'heart',
+    status: 'Introdução disponível',
   },
   {
     title: 'Trombofilias e investigação',
     description: 'Uma área em preparação para explicar conceitos e divergências com responsabilidade.',
     href: 'trombofilias-e-investigacao/',
-    icon: '⌁',
+    icon: 'science',
+    status: 'Em preparação',
   },
   {
     title: 'Acolhimento e luto',
     description: 'Informação para validar o luto e apoiar pessoas, famílias e redes de cuidado.',
     href: 'acolhimento-e-luto/',
-    icon: '◡',
+    icon: 'support',
+    status: 'Introdução disponível',
   },
   {
     title: 'Direitos',
     description: 'Orientação institucional sobre os materiais jurídicos que serão desenvolvidos.',
     href: 'direitos/',
-    icon: '§',
+    icon: 'rights',
+    status: 'Em preparação',
+  },
+  {
+    title: 'Materiais para se organizar',
+    description: 'Um checklist prático para reunir informações e preparar uma conversa com profissionais.',
+    href: 'materiais/',
+    icon: 'checklist',
+    status: 'Disponível agora',
   },
 ];
 ---
@@ -43,9 +55,8 @@ const topics = [
           sempre com fontes rastreáveis e revisão profissional.
         </p>
         <div class="actions">
-          <a class="button" href={withBaseUrl('entender-a-perda/')}>Encontrar um ponto de partida</a>
-          <a class="button secondary" href={withBaseUrl('acolhimento-e-luto/')}>Conhecer o espaço de acolhimento</a>
-          <a class="button secondary" href={withBaseUrl('materiais/')}>Preparar uma conversa</a>
+          <a class="button" href={withBaseUrl('materiais/')}>Preparar uma conversa</a>
+          <a class="button secondary" href={withBaseUrl('acolhimento-e-luto/')}>Preciso de acolhimento</a>
         </div>
       </div>
       <div class="hero-mark" aria-hidden="true">

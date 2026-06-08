@@ -5,4 +5,12 @@ const page = await getEntry('pages', 'direitos');
 if (!page) throw new Error('Página institucional não encontrada.');
 const { Content } = await render(page);
 ---
-<InstitutionalPage {...page.data} path="direitos/"><Content /></InstitutionalPage>
+<InstitutionalPage
+  {...page.data}
+  path="direitos/"
+  noticeKind="legal"
+  nextSteps={[
+    { label: 'Preparar informações para uma conversa', href: 'materiais/', primary: true },
+    { label: 'Conhecer os compromissos do portal', href: 'sobre/' },
+  ]}
+><Content /></InstitutionalPage>

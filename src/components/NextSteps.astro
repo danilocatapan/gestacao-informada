@@ -1,0 +1,25 @@
+---
+import { withBaseUrl } from '../lib/urls';
+
+export interface NextStep {
+  label: string;
+  href: string;
+  primary?: boolean;
+}
+
+interface Props {
+  steps: NextStep[];
+}
+
+const { steps } = Astro.props;
+---
+
+<nav class="next-steps" aria-labelledby="next-steps-title">
+  <span class="eyebrow">Próximos passos</span>
+  <h2 id="next-steps-title">Continue pelo que fizer sentido agora</h2>
+  <div class="actions">
+    {steps.map((step) => (
+      <a class:list={['button', { secondary: !step.primary }]} href={withBaseUrl(step.href)}>{step.label}</a>
+    ))}
+  </div>
+</nav>

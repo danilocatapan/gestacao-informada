@@ -5,4 +5,11 @@ const page = await getEntry('pages', 'trombofilias-e-investigacao');
 if (!page) throw new Error('Página institucional não encontrada.');
 const { Content } = await render(page);
 ---
-<InstitutionalPage {...page.data} path="trombofilias-e-investigacao/"><Content /></InstitutionalPage>
+<InstitutionalPage
+  {...page.data}
+  path="trombofilias-e-investigacao/"
+  nextSteps={[
+    { label: 'Preparar uma conversa com profissionais', href: 'materiais/', primary: true },
+    { label: 'Entender os limites do portal', href: 'sobre/' },
+  ]}
+><Content /></InstitutionalPage>

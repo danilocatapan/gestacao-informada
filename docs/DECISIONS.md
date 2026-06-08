@@ -89,3 +89,11 @@ Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetur
 **Decisao:** usar `in_review` como estado canonico equivalente a uma pendencia em revisao, manter documentos legais sem slug ou rota enquanto nao aprovados e reservar as URLs publicas `/privacidade/`, `/termos/` e `/politica-editorial/`. A publicacao exige metadados de revisao juridica coerentes com a trilha em `editorial-records`.
 
 **Motivo:** evitar estados editoriais duplicados, bloquear exposicao prematura e manter URLs institucionais curtas sem enfraquecer os gates auditaveis.
+
+## 2026-06-08 — Direcao tipografica editorial e candidatos vetoriais
+
+**Status:** aceita
+
+**Decisao:** manter Georgia nos titulos como escolha editorial deliberada e Poppins nos demais textos. Reconstrucoes SVG derivadas dos PNGs provisórios permanecem apenas como candidatos documentados e nao substituem ativos publicos sem aprovacao formal.
+
+**Motivo:** preservar a hierarquia editorial acolhedora do MVP e impedir que ativos reconstruidos sem os arquivos-fonte sejam apresentados como identidade aprovada.
