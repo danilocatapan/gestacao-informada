@@ -12,6 +12,7 @@
     "test:content": "node scripts/test-content.mjs && node scripts/test-editorial-validation.mjs && node scripts/test-publication-search.mjs && node scripts/test-editorial-pipeline.mjs",
     "test:build": "node scripts/test-build.mjs",
     "test:e2e": "playwright test",
+    "test:e2e:editorial": "playwright test --config=playwright.editorial.config.ts",
     "editorial:review": "node scripts/run-editorial-pipeline.mjs review",
     "editorial:review:all": "node scripts/run-editorial-pipeline.mjs review-all",
     "editorial:mark-draft": "node scripts/run-editorial-pipeline.mjs mark-draft",

@@ -4,6 +4,8 @@ Esta pasta guarda screenshots gerados durante a validação Playwright de interf
 
 - `painel-editorial-desktop.png`: painel local com artigo, marcação e apontamento em desktop.
 - `painel-editorial-mobile.png`: painel local responsivo, sem overflow, em viewport mobile.
+- `painel-editorial-fluxo-desktop.png`: fluxo E2E isolado após resolução e envio para `in_review`.
+- `painel-editorial-fluxo-mobile.png`: validação E2E isolada de acessibilidade básica e responsividade.
 
 Antes de concluir mudanças visuais:
 
@@ -13,3 +15,4 @@ Antes de concluir mudanças visuais:
 - substituir as evidências quando a interface mudar de forma relevante.
 
 Os smoke tests versionados em `tests/smoke.spec.ts` cobrem carregamento, console e overflow horizontal nas rotas públicas em desktop e mobile.
+O fluxo isolado do painel editorial é coberto por `tests/editorial-panel.spec.ts`.

@@ -6,8 +6,8 @@
 - [x] Criar documentação e instruções iniciais do repositório
 - [x] Instituir reconciliação documental obrigatória entre implementação, roadmap e agentes
 - [x] Publicar repositório
-- [ ] Configurar proteção da branch principal (checklist operacional manual)
-- [ ] Definir responsáveis por revisão clínica, psicológica e jurídica
+- [x] Configurar proteção da branch principal (regras aplicadas; validação por pull request de teste pendente)
+- [ ] Definir responsáveis por revisão clínica, psicológica e jurídica (processo de cadastro preparado; aguardando identidades, credenciais e consentimentos)
 - [x] Definir stack técnica e arquitetura inicial
 - [x] Definir identidade visual
 
@@ -33,7 +33,7 @@
 - [ ] Publicar glossário após revisão clínica
 - [ ] Publicar busca quando houver volume suficiente de conteúdo aprovado
 - [x] Ampliar testes automatizados para fluxos interativos públicos
-- [ ] Cobrir o fluxo completo do painel editorial local com teste E2E isolado
+- [x] Cobrir o fluxo completo do painel editorial local com teste E2E isolado
 
 ## Fase 2 — Recursos de Apoio
 
