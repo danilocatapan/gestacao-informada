@@ -33,7 +33,7 @@
 - [ ] Publicar glossário após revisão clínica
 - [ ] Publicar busca quando houver volume suficiente de conteúdo aprovado
 - [x] Ampliar testes automatizados para fluxos interativos públicos
-- [ ] Cobrir o fluxo completo do painel editorial local com teste E2E isolado
+- [x] Cobrir o fluxo completo do painel editorial local com teste E2E isolado
 
 ## Fase 2 — Recursos de Apoio
 
