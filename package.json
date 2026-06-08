@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "lint": "astro check",
     "check": "astro check",
-    "test:content": "node scripts/test-content.mjs && node scripts/test-editorial-validation.mjs",
+    "test:content": "node scripts/test-content.mjs && node scripts/test-editorial-validation.mjs && node scripts/test-publication-search.mjs",
     "test:build": "node scripts/test-build.mjs",
     "test:e2e": "playwright test",
     "test": "npm run lint && npm run test:content && npm run build && npm run test:build",

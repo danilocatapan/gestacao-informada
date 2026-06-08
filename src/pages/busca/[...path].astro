@@ -24,7 +24,7 @@ const searchIndexUrl = withBaseUrl('busca/indice.json');
     </div>
   </section>
   <section class="content-section">
-    <div class="container narrow search-page" data-search-index={searchIndexUrl}>
+    <div class="container narrow search-page" data-search-index={searchIndexUrl} aria-busy="true">
       <form class="search-form" role="search">
         <label for="busca">O que você procura?</label>
         <div class="search-controls">
@@ -91,19 +91,28 @@ const searchIndexUrl = withBaseUrl('busca/indice.json');
     }
   };
 
-  if (root && form && input) {
-    const response = await fetch(root.dataset.searchIndex ?? '');
-    items = response.ok ? await response.json() : [];
-    const query = new URLSearchParams(window.location.search).get('q') ?? '';
-    input.value = query;
-    renderResults(query);
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const value = input.value.trim();
-      const url = new URL(window.location.href);
-      value ? url.searchParams.set('q', value) : url.searchParams.delete('q');
-      window.history.replaceState({}, '', url);
-      renderResults(value);
-    });
+  if (root && form && input && status) {
+    try {
+      const response = await fetch(root.dataset.searchIndex ?? '');
+      if (!response.ok) throw new Error(`Falha ao carregar índice: ${response.status}`);
+      items = await response.json();
+      const query = new URLSearchParams(window.location.search).get('q') ?? '';
+      input.value = query;
+      renderResults(query);
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const value = input.value.trim();
+        const url = new URL(window.location.href);
+        value ? url.searchParams.set('q', value) : url.searchParams.delete('q');
+        window.history.replaceState({}, '', url);
+        renderResults(value);
+      });
+    } catch {
+      status.textContent = 'Não foi possível carregar a busca. Tente novamente mais tarde.';
+      input.disabled = true;
+      form.querySelector<HTMLButtonElement>('button[type="submit"]')?.setAttribute('disabled', '');
+    } finally {
+      root.setAttribute('aria-busy', 'false');
+    }
   }
 </script>

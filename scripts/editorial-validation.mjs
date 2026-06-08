@@ -81,9 +81,14 @@ export function validateGlossaryInventory(contents) {
   if (new Set(slugs).size !== slugs.length) failures.push('glossary: termos não podem compartilhar slug público.');
 
   for (const entry of glossaryEntries) {
-    for (const relatedTerm of entry.data.relatedTerms ?? []) {
+    const relatedTerms = entry.data.relatedTerms ?? [];
+    if (new Set(relatedTerms).size !== relatedTerms.length) {
+      failures.push(`${entry.id}: relatedTerms não pode conter termos duplicados.`);
+    }
+    for (const relatedTerm of relatedTerms) {
       const target = glossaryMap.get(`glossary/${relatedTerm}`);
       if (!target) failures.push(`${entry.id}: relatedTerms referencia termo inexistente: ${relatedTerm}.`);
+      if (target?.id === entry.id) failures.push(`${entry.id}: relatedTerms não pode referenciar o próprio termo.`);
       if (entry.data.status === 'approved' && target?.data.status !== 'approved') {
         failures.push(`${entry.id}: termo aprovado só pode relacionar termos approved.`);
       }
@@ -206,7 +211,11 @@ export function validateEditorialState({ contents, contributors, records }) {
       if (!Array.isArray(data.sources) || data.sources.length === 0) failures.push(`${label}: artigo aprovado exige ao menos uma fonte.`);
       if (!data.medicalDisclaimer || !String(data.medicalDisclaimer).trim()) failures.push(`${label}: artigo aprovado exige medicalDisclaimer.`);
       if (!data.aiAssistance?.activities?.length || !data.aiAssistance?.disclosure) failures.push(`${label}: artigo aprovado exige transparência sobre assistência por IA.`);
-      for (const term of data.glossaryTerms ?? []) {
+      const glossaryTerms = data.glossaryTerms ?? [];
+      if (new Set(glossaryTerms).size !== glossaryTerms.length) {
+        failures.push(`${label}: glossaryTerms não pode conter termos duplicados.`);
+      }
+      for (const term of glossaryTerms) {
         const target = contentMap.get(`glossary/${term}`);
         if (!target || target.data.status !== 'approved') failures.push(`${label}: artigo aprovado só pode referenciar termos de glossário approved.`);
       }

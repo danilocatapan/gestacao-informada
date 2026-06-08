@@ -73,6 +73,14 @@ expectFailure('artigo com termo não aprovado', validateEditorialState({
   contributors,
   records: validRecords,
 }), /só pode referenciar termos de glossário approved/);
+expectFailure('artigo com termo duplicado', validateEditorialState({
+  contents: [
+    { ...baseContent, data: { ...baseContent.data, glossaryTerms: ['aprovado', 'aprovado'] } },
+    { id: 'glossary/aprovado', collection: 'glossary', body: '', data: { status: 'approved', clinical: true, riskDomains: ['clinical'], reviewer: 'clinico', reviewedAt: updatedAt, relatedTerms: [] } },
+  ],
+  contributors,
+  records: validRecords,
+}), /glossaryTerms não pode conter termos duplicados/);
 
 const glossaryContent = {
   id: 'glossary/perda-gestacional',
@@ -120,6 +128,13 @@ expectFailure('glossário termo relacionado não aprovado', validateGlossaryInve
   { ...glossaryContent, data: { ...glossaryContent.data, relatedTerms: ['rascunho'] } },
   { ...glossaryContent, id: 'glossary/rascunho', data: { ...glossaryContent.data, slug: 'rascunho', status: 'draft' } },
 ]), /só pode relacionar termos approved/);
+expectFailure('glossário termo relacionado duplicado', validateGlossaryInventory([
+  { ...glossaryContent, data: { ...glossaryContent.data, relatedTerms: ['outro-termo', 'outro-termo'] } },
+  { ...glossaryContent, id: 'glossary/outro-termo', data: { ...glossaryContent.data, slug: 'outro-termo' } },
+]), /relatedTerms não pode conter termos duplicados/);
+expectFailure('glossário autorreferenciado', validateGlossaryInventory([
+  { ...glossaryContent, data: { ...glossaryContent.data, relatedTerms: ['perda-gestacional'] } },
+]), /não pode referenciar o próprio termo/);
 
 const legalContent = {
   id: 'legal/privacidade',
