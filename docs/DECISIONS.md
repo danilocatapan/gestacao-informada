@@ -2,6 +2,14 @@
 
 Este arquivo registra decisoes que afetam a direcao do produto ou sua arquitetura.
 
+## 2026-06-09 — Navegação por necessidades e busca independente do glossário
+
+**Status:** aceita; substitui parcialmente a decisão “Glossário clínico e busca condicionados a conteúdo aprovado”.
+
+**Decisão:** limitar a navegação principal a `Entender`, `Acolhimento`, `Organizar` e `Buscar`. Artigos, investigação, direitos e informações institucionais permanecem acessíveis nos contextos relevantes e no rodapé. A busca estática pode ser publicada independentemente do glossário, mas indexa somente rotas efetivamente públicas e conteúdo `approved`. O glossário mantém o marco de seis artigos e seis termos aprovados.
+
+**Motivo:** reduzir carga cognitiva para pessoas em situação de vulnerabilidade, tornar os artigos já publicados encontráveis e evitar que a ausência de termos do glossário bloqueie a descoberta de conteúdo público seguro.
+
 ## 2026-06-08 — Fluxo editorial v2 simplificado
 
 **Status:** aceita; substitui as decisões anteriores que exigiam revisão profissional, participantes distintos, registros em `editorial-records` e aprovação multidomínio.

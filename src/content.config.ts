@@ -7,6 +7,7 @@ const contentType = z.enum(['article', 'institutional-page', 'legal-document', '
 const sourceType = z.enum(['guideline', 'review', 'law', 'institutional', 'other']);
 const riskDomain = z.enum(['clinical', 'psychological', 'legal']);
 const aiActivity = z.enum(['topic-research', 'source-triage', 'drafting', 'safety-audit']);
+const articleJourney = z.enum(['understand-loss', 'recurrent-loss', 'pregnancy-after-loss']);
 const publicSlug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 
 const source = z.object({
@@ -76,6 +77,8 @@ const articles = defineCollection({
       title: z.string().min(1),
       description: z.string().min(1),
       category: z.string().min(1),
+      journeys: z.array(articleJourney).min(1),
+      featuredOnHome: z.boolean().default(false),
       objective: z.string().min(1),
       audience: z.string().min(1),
       contentType: z.literal('article'),

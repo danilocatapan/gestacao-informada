@@ -9,8 +9,7 @@ export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => data.status === 'approved');
   const glossary = await getCollection('glossary', ({ data }) => data.status === 'approved');
   const legal = await getCollection('legal', ({ data }) => data.status === 'approved');
-  if (!canPublishGlossary(articles.length, glossary.length)) return [];
-
+  const publicGlossary = canPublishGlossary(articles.length, glossary.length) ? glossary : [];
   const items: SearchItem[] = [
     ...pages.map((entry) => ({
       title: entry.data.title,
@@ -26,7 +25,7 @@ export async function getStaticPaths() {
       type: 'Artigo',
       text: entry.body ?? '',
     })),
-    ...glossary.map((entry) => ({
+    ...publicGlossary.map((entry) => ({
       title: entry.data.term,
       summary: entry.data.shortDefinition,
       url: withBaseUrl(`glossario/${entry.data.slug}/`),

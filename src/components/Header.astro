@@ -1,7 +1,5 @@
 ---
 import { site } from '../lib/site';
-import { getCollection } from 'astro:content';
-import { canPublishGlossary } from '../lib/publication';
 import { withBaseUrl } from '../lib/urls';
 
 interface Props {
@@ -9,18 +7,12 @@ interface Props {
 }
 
 const { path = '' } = Astro.props;
-const approvedArticles = await getCollection('articles', ({ data }) => data.status === 'approved');
-const approvedTerms = await getCollection('glossary', ({ data }) => data.status === 'approved');
-const glossaryPublished = canPublishGlossary(approvedArticles.length, approvedTerms.length);
-const isCurrent = (linkPath: string) => path === linkPath || (linkPath === 'glossario/' && path.startsWith(linkPath));
+const isCurrent = (linkPath: string) => path === linkPath || path.startsWith(linkPath);
 const links = [
-  ['Entender a perda', 'entender-a-perda/'],
-  ['Trombofilias', 'trombofilias-e-investigacao/'],
+  ['Entender', 'entender-a-perda/'],
   ['Acolhimento', 'acolhimento-e-luto/'],
-  ['Direitos', 'direitos/'],
-  ['Materiais', 'materiais/'],
-  ['Sobre', 'sobre/'],
-  ...(glossaryPublished ? [['Glossário', 'glossario/'], ['Busca', 'busca/']] : []),
+  ['Organizar', 'materiais/'],
+  ['Buscar', 'busca/'],
 ];
 ---
 

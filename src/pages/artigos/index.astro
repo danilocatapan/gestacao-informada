@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleCollection from '../../components/ArticleCollection.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const articles = (await getCollection('articles', ({ data }) => data.status === 'approved'))
+  .sort((left, right) => right.data.lastUpdatedAt.getTime() - left.data.lastUpdatedAt.getTime());
+---
+
+<BaseLayout
+  title="Artigos"
+  description="Artigos educativos sobre perda gestacional, investigação e gestação após perda."
+  path="artigos/"
+>
+  <section class="page-hero">
+    <div class="container narrow">
+      <span class="eyebrow">Informação responsável</span>
+      <h1>Artigos</h1>
+      <p class="lead">Leia no seu ritmo. Cada artigo apresenta fontes, data de atualização e os limites do conteúdo.</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="container">
+      <ArticleCollection
+        articles={articles}
+        id="todos-os-artigos"
+        title="Todos os artigos disponíveis"
+        description="Use a busca se estiver procurando um termo ou assunto específico."
+      />
+    </div>
+  </section>
+</BaseLayout>

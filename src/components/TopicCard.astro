@@ -7,16 +7,17 @@ interface Props {
   description: string;
   href: string;
   icon: IconName;
-  status: string;
+  status?: string;
+  linkLabel?: string;
 }
 
-const { title, description, href, icon, status } = Astro.props;
+const { title, description, href, icon, status, linkLabel = 'Acessar' } = Astro.props;
 ---
 
 <a class="topic-card" href={withBaseUrl(href)}>
   <span class="topic-icon"><Icon name={icon} /></span>
-  <span class="topic-status">{status}</span>
+  {status && <span class="topic-status">{status}</span>}
   <h3>{title}</h3>
   <p>{description}</p>
-  <span class="card-link">Conhecer esta área <span aria-hidden="true">→</span></span>
+  <span class="card-link">{linkLabel} <span aria-hidden="true">→</span></span>
 </a>

@@ -76,6 +76,7 @@ h2 { margin-top: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); }
 .section { padding: 82px 0; }
 .section-heading { max-width: 690px; margin-bottom: 38px; }
 .topic-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.journey-grid { grid-template-columns: repeat(4, 1fr); }
 .topic-card {
   display: flex; flex-direction: column; align-items: flex-start; padding: 24px; border: 1px solid var(--border);
   border-radius: 20px; background: var(--white); color: var(--charcoal); text-decoration: none;
@@ -91,6 +92,23 @@ h2 { margin-top: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); }
 .topic-card h3 { margin: 14px 0 10px; font-size: 1.08rem; }
 .topic-card p { flex: 1; font-size: .9rem; }
 .card-link { color: var(--teal); font-size: .88rem; font-weight: 600; }
+.article-highlight { background: #f1ede7; }
+.article-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+.article-card {
+  display: flex; flex-direction: column; min-width: 0; padding: 24px; border: 1px solid var(--border);
+  border-radius: 20px; background: var(--white); box-shadow: 0 8px 24px rgba(44,65,64,.05);
+}
+.article-card h3 { margin: 12px 0 10px; font-size: 1.25rem; }
+.article-card h3 a { color: #263638; text-decoration-color: rgba(15,91,99,.35); text-underline-offset: 4px; }
+.article-card p { flex: 1; margin-top: 0; }
+.article-card-date { color: var(--sage-text); font-size: .78rem; font-weight: 600; }
+.section-action { margin: 30px 0 0; }
+.related-content { margin-top: 54px; padding-top: 38px; border-top: 1px solid var(--border); }
+.immediate-support {
+  margin-bottom: 38px; padding: 24px; border: 1px solid #d9b77f; border-radius: 18px; background: #fff8ef;
+}
+.immediate-support h2 { margin: 8px 0 12px; font-size: 1.45rem; }
+.immediate-support p:last-child { margin-bottom: 0; }
 .principles { background: var(--teal); color: white; }
 .principles h2, .principles h3 { color: white; }
 .principle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 36px; }
@@ -138,7 +156,7 @@ h2 { margin-top: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); }
 :focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
 
 @media (max-width: 1100px) {
-  .topic-grid { grid-template-columns: repeat(3, 1fr); }
+  .topic-grid, .journey-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 900px) {

@@ -2,6 +2,8 @@
 title: Investigação após perdas recorrentes
 description: Como conversar sobre uma investigação de perdas recorrentes sem transformar possibilidades em uma lista automática de exames.
 category: Investigação
+journeys: [recurrent-loss]
+featuredOnHome: true
 objective: Organizar dúvidas e explicar que a investigação depende da história de cada pessoa.
 audience: Pessoas e famílias conversando com profissionais após perdas recorrentes.
 contentType: article

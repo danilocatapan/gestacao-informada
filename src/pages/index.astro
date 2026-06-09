@@ -1,45 +1,48 @@
 ---
+import { getCollection } from 'astro:content';
+import ArticleCollection from '../components/ArticleCollection.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopicCard from '../components/TopicCard.astro';
 import type { IconName } from '../components/Icon.astro';
 import { site } from '../lib/site';
 import { withBaseUrl } from '../lib/urls';
 
-const topics: { title: string; description: string; href: string; icon: IconName; status: string }[] = [
+const articles = (await getCollection('articles', ({ data }) => data.status === 'approved'))
+  .sort((left, right) => right.data.lastUpdatedAt.getTime() - left.data.lastUpdatedAt.getTime());
+const featuredArticles = articles
+  .filter(({ data }) => data.featuredOnHome)
+  .sort((left, right) => {
+    const journeyOrder = ['understand-loss', 'pregnancy-after-loss', 'recurrent-loss'];
+    return journeyOrder.indexOf(left.data.journeys[0]) - journeyOrder.indexOf(right.data.journeys[0]);
+  });
+const journeys: { title: string; description: string; href: string; icon: IconName; linkLabel: string }[] = [
   {
-    title: 'Entender a perda',
-    description: 'Um ponto de partida respeitoso para compreender termos, dúvidas e próximos passos possíveis.',
+    title: 'Entender o que aconteceu',
+    description: 'Comece por explicações cuidadosas sobre perda gestacional e dúvidas comuns.',
     href: 'entender-a-perda/',
     icon: 'heart',
-    status: 'Introdução disponível',
+    linkLabel: 'Começar a entender',
   },
   {
-    title: 'Trombofilias e investigação',
-    description: 'Uma área em preparação para explicar conceitos e divergências com responsabilidade.',
+    title: 'Investigar perdas recorrentes',
+    description: 'Compreenda termos, limites das evidências e perguntas para profissionais.',
     href: 'trombofilias-e-investigacao/',
     icon: 'science',
-    status: 'Em preparação',
+    linkLabel: 'Explorar a investigação',
   },
   {
-    title: 'Acolhimento e luto',
-    description: 'Informação para validar o luto e apoiar pessoas, famílias e redes de cuidado.',
+    title: 'Buscar acolhimento',
+    description: 'Encontre palavras de apoio e caminhos para momentos difíceis.',
     href: 'acolhimento-e-luto/',
     icon: 'support',
-    status: 'Introdução disponível',
+    linkLabel: 'Encontrar acolhimento',
   },
   {
-    title: 'Direitos',
-    description: 'Orientação institucional sobre os materiais jurídicos que serão desenvolvidos.',
-    href: 'direitos/',
-    icon: 'rights',
-    status: 'Em preparação',
-  },
-  {
-    title: 'Materiais para se organizar',
-    description: 'Um checklist prático para reunir informações e preparar uma conversa com profissionais.',
+    title: 'Preparar uma conversa',
+    description: 'Organize dúvidas e informações para conversar com profissionais.',
     href: 'materiais/',
     icon: 'checklist',
-    status: 'Disponível agora',
+    linkLabel: 'Usar o checklist',
   },
 ];
 ---
@@ -51,11 +54,11 @@ const topics: { title: string; description: string; href: string; icon: IconName
         <span class="eyebrow">Ciência que acolhe</span>
         <h1>Informação segura para atravessar uma perda gestacional.</h1>
         <p class="lead">
-          Um portal brasileiro em construção para reunir clareza, acolhimento e orientação responsável,
-          sempre com fontes rastreáveis e auditoria editorial assistida por IA.
+          Encontre explicações cuidadosas, acolhimento e formas práticas de organizar suas dúvidas,
+          sempre com fontes rastreáveis e limites claros.
         </p>
         <div class="actions">
-          <a class="button" href={withBaseUrl('materiais/')}>Preparar uma conversa</a>
+          <a class="button" href={withBaseUrl('entender-a-perda/')}>Quero entender o que aconteceu</a>
           <a class="button secondary" href={withBaseUrl('acolhimento-e-luto/')}>Preciso de acolhimento</a>
         </div>
       </div>
@@ -68,13 +71,25 @@ const topics: { title: string; description: string; href: string; icon: IconName
   <section class="section">
     <div class="container">
       <div class="section-heading">
-        <span class="eyebrow">Cada passo importa</span>
-        <h2>Comece pelo que você precisa hoje</h2>
-        <p>As áreas abaixo apresentam o propósito do portal enquanto os materiais especializados passam por revisão.</p>
+        <span class="eyebrow">Comece por aqui</span>
+        <h2>O que você precisa neste momento?</h2>
+        <p>Escolha um caminho. Você não precisa compreender ou resolver tudo agora.</p>
       </div>
-      <div class="topic-grid">
-        {topics.map((topic) => <TopicCard {...topic} />)}
+      <div class="topic-grid journey-grid">
+        {journeys.map((journey) => <TopicCard {...journey} />)}
       </div>
+    </div>
+  </section>
+
+  <section class="section article-highlight">
+    <div class="container">
+      <ArticleCollection
+        articles={featuredArticles}
+        id="artigos-em-destaque"
+        title="Informações para ler com calma"
+        description="Sínteses educativas com fontes visíveis, sem diagnóstico ou recomendação individual."
+      />
+      <p class="section-action"><a class="button secondary" href={withBaseUrl('artigos/')}>Ver todos os artigos</a></p>
     </div>
   </section>
 
@@ -83,7 +98,7 @@ const topics: { title: string; description: string; href: string; icon: IconName
       <span class="eyebrow">Nosso compromisso</span>
       <h2>Clareza sem atalhos. Acolhimento sem falsas promessas.</h2>
       <div class="principle-grid">
-        <div class="principle"><h3>Informação auditável</h3><p>Conteúdos clínicos só serão publicados com autoria, fontes e transparência sobre a auditoria assistida por IA.</p></div>
+        <div class="principle"><h3>Fontes visíveis</h3><p>Artigos apresentam autoria, fontes, atualização e transparência editorial.</p></div>
         <div class="principle"><h3>Segurança primeiro</h3><p>O portal não oferece diagnóstico, prescrição ou orientação individualizada.</p></div>
         <div class="principle"><h3>Linguagem humana</h3><p>Tratamos a perda gestacional e o luto com respeito à singularidade de cada família.</p></div>
       </div>

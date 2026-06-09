@@ -1,11 +1,11 @@
 {
   "schemaVersion": 2,
-  "id": "12f5935b-97d7-461d-aeca-229f1e3f3fc0",
+  "id": "5727a112-43f9-4f77-abe7-a571824c65ed",
   "target": "articles/investigacao-apos-perdas-recorrentes",
-  "generatedAt": "2026-06-08T18:45:29.912Z",
-  "updatedAt": "2026-06-08T18:46:19.787Z",
-  "contentHash": "101c98b6a1652c3d08a17e0efd16e90b6205d503d0bc5e5c11e1f79e7fcbccd9",
-  "contentStatus": "in_review",
+  "generatedAt": "2026-06-09T11:27:40.173Z",
+  "updatedAt": "2026-06-09T11:27:40.173Z",
+  "contentHash": "18253c666b2f3aaf595ee81abcf62e45b51aa6c335deee74beb02894b77a851a",
+  "contentStatus": "approved",
   "riskDomains": [
     "clinical",
     "psychological"
@@ -41,17 +41,9 @@
   "findings": [],
   "history": [
     {
-      "occurredAt": "2026-06-08T18:45:29.912Z",
+      "occurredAt": "2026-06-09T11:27:40.173Z",
       "action": "review_v2_generated",
       "actor": "codex-editorial-orchestrator"
-    },
-    {
-      "occurredAt": "2026-06-08T18:46:19.787Z",
-      "action": "review_applied",
-      "actor": "codex-editorial-orchestrator",
-      "resultingStatus": "approved"
     }
-  ],
-  "resultingContentHash": "101c98b6a1652c3d08a17e0efd16e90b6205d503d0bc5e5c11e1f79e7fcbccd9",
-  "resultingStatus": "approved"
+  ]
 }

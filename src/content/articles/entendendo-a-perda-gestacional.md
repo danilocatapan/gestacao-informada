@@ -2,6 +2,8 @@
 title: Entendendo a perda gestacional
 description: Informações iniciais sobre perda gestacional, confirmação diagnóstica, acolhimento e sinais para buscar atendimento.
 category: Entender a perda
+journeys: [understand-loss]
+featuredOnHome: true
 objective: Explicar conceitos iniciais com linguagem acolhedora e limites claros.
 audience: Pessoas e famílias que viveram ou estão investigando uma possível perda gestacional.
 contentType: article

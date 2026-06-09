@@ -1,15 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { canPublishGlossary } from '../../lib/publication';
 import { withBaseUrl } from '../../lib/urls';
 
 export async function getStaticPaths() {
-  const approvedArticles = await getCollection('articles', ({ data }) => data.status === 'approved');
-  const approvedTerms = await getCollection('glossary', ({ data }) => data.status === 'approved');
-  return canPublishGlossary(approvedArticles.length, approvedTerms.length)
-    ? [{ params: { path: undefined } }]
-    : [];
+  return [{ params: { path: undefined } }];
 }
 
 const searchIndexUrl = withBaseUrl('busca/indice.json');
@@ -20,7 +14,7 @@ const searchIndexUrl = withBaseUrl('busca/indice.json');
     <div class="container narrow">
       <span class="eyebrow">Conteúdo aprovado</span>
       <h1>Busca</h1>
-      <p class="lead">Encontre informações publicadas e revisadas no Gestação Informada.</p>
+      <p class="lead">Encontre artigos, materiais e páginas públicas do Gestação Informada.</p>
     </div>
   </section>
   <section class="content-section">

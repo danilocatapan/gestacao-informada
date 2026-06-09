@@ -1,11 +1,11 @@
 {
   "schemaVersion": 2,
-  "id": "8b340e45-6ae0-402d-a4b4-2dc2b80d065f",
+  "id": "a25049c4-8d6a-4408-a0f8-aae9f2333a83",
   "target": "articles/entendendo-a-perda-gestacional",
-  "generatedAt": "2026-06-08T18:45:29.893Z",
-  "updatedAt": "2026-06-08T18:46:18.915Z",
-  "contentHash": "0df57c12c7357aa9a74d02c6365f71aa7809c539b8197a2d1dce2547297e6ad5",
-  "contentStatus": "in_review",
+  "generatedAt": "2026-06-09T11:27:40.154Z",
+  "updatedAt": "2026-06-09T11:27:40.154Z",
+  "contentHash": "add9ab5901d9dcfb451ac3b778583bfa65058a2e5666a7db7801180273651e21",
+  "contentStatus": "approved",
   "riskDomains": [
     "clinical",
     "psychological"
@@ -41,17 +41,9 @@
   "findings": [],
   "history": [
     {
-      "occurredAt": "2026-06-08T18:45:29.893Z",
+      "occurredAt": "2026-06-09T11:27:40.154Z",
       "action": "review_v2_generated",
       "actor": "codex-editorial-orchestrator"
-    },
-    {
-      "occurredAt": "2026-06-08T18:46:18.915Z",
-      "action": "review_applied",
-      "actor": "codex-editorial-orchestrator",
-      "resultingStatus": "approved"
     }
-  ],
-  "resultingContentHash": "0df57c12c7357aa9a74d02c6365f71aa7809c539b8197a2d1dce2547297e6ad5",
-  "resultingStatus": "approved"
+  ]
 }

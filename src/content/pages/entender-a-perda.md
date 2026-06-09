@@ -11,12 +11,12 @@ updatedAt: "2026-06-06"
 
 Uma perda gestacional pode trazer dúvidas médicas, práticas e emocionais ao mesmo tempo. Nem toda pergunta precisa ser respondida imediatamente, e cada pessoa atravessa esse momento de uma forma própria.
 
-## O que esta área oferecerá
+## O que você encontra aqui
 
-- explicações acessíveis sobre termos usados por profissionais;
-- perguntas que podem ajudar a preparar uma conversa com a equipe de saúde;
+- explicações acessíveis sobre perda gestacional e termos usados por profissionais;
+- informações sobre investigação após perdas recorrentes;
 - distinção clara entre evidências, diretrizes e experiências pessoais;
-- caminhos de acolhimento para a pessoa e sua rede de apoio.
+- perguntas para organizar uma conversa com a equipe de saúde.
 
 ## Um portal educativo
 
