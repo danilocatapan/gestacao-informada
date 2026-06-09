@@ -14,7 +14,7 @@
 - [x] Simplificar o painel local para correções e um único OK do mantenedor
 - [x] Regenerar os pareceres dos seis artigos iniciais
 - [x] Publicar os seis artigos iniciais (seis rotas confirmadas no GitHub Pages em 8 de junho de 2026)
-- [ ] Publicar vitrine de artigos, busca desacoplada do glossário e navegação por necessidades
+- [x] Publicar vitrine de artigos, busca desacoplada do glossário e navegação por necessidades (rotas e jornadas confirmadas no GitHub Pages em 9 de junho de 2026)
 - [x] Criar páginas dos quatro pilares e checklist de consulta
 - [x] Implementar infraestrutura de glossário e busca
 - [ ] Produzir e publicar seis termos do glossário
