@@ -8,16 +8,16 @@ interface Props {
 const { kind = 'clinical' } = Astro.props;
 const notices = {
   clinical: {
-    title: 'Conteúdo clínico em preparação',
-    body: 'Esta área está sendo construída com fontes rastreáveis e auditoria assistida por IA. As informações disponíveis agora são institucionais e não substituem uma consulta.',
+    title: 'Limites deste conteúdo',
+    body: 'As informações desta página são educativas e não substituem uma consulta ou avaliação individual.',
   },
   psychological: {
-    title: 'Conteúdo de acolhimento em preparação',
-    body: 'Esta área está sendo construída com auditoria editorial e linguagem cuidadosa. O conteúdo disponível agora não substitui apoio psicológico profissional.',
+    title: 'Limites deste conteúdo',
+    body: 'Este espaço oferece informação e acolhimento, mas não substitui apoio psicológico ou atendimento de emergência.',
   },
   legal: {
-    title: 'Conteúdo jurídico em preparação',
-    body: 'Esta área está sendo preparada com fontes oficiais e auditoria assistida por IA. As informações disponíveis agora são institucionais e não substituem orientação profissional sobre uma situação específica.',
+    title: 'Limites deste conteúdo',
+    body: 'As informações são gerais e não substituem orientação jurídica sobre uma situação específica.',
   },
 };
 const notice = notices[kind];

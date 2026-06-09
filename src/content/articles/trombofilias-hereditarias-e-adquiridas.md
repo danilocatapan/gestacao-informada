@@ -2,6 +2,7 @@
 title: Trombofilias hereditárias e adquiridas
 description: Conceitos essenciais sobre trombofilias, risco de trombose, investigação e limites das evidências na gestação.
 category: Trombofilias
+journeys: [recurrent-loss]
 objective: Apresentar diferenças conceituais sem recomendar exames ou tratamentos.
 audience: Pessoas buscando compreender termos usados durante uma investigação.
 contentType: article

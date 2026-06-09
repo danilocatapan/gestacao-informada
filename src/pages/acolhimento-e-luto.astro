@@ -1,5 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
+import ImmediateSupport from '../components/ImmediateSupport.astro';
 import InstitutionalPage from '../layouts/InstitutionalPage.astro';
 const page = await getEntry('pages', 'acolhimento-e-luto');
 if (!page) throw new Error('Página institucional não encontrada.');
@@ -8,9 +9,12 @@ const { Content } = await render(page);
 <InstitutionalPage
   {...page.data}
   path="acolhimento-e-luto/"
-  noticeKind="psychological"
+  showNotice={false}
   nextSteps={[
     { label: 'Organizar uma conversa importante', href: 'materiais/', primary: true },
-    { label: 'Entender a perda gestacional', href: 'entender-a-perda/' },
+    { label: 'Ler sobre perda gestacional', href: 'artigos/entendendo-a-perda-gestacional/' },
   ]}
-><Content /></InstitutionalPage>
+>
+  <ImmediateSupport slot="before-content" />
+  <Content />
+</InstitutionalPage>

@@ -2,6 +2,7 @@
 title: Síndrome Antifosfolípide
 description: Uma introdução à síndrome antifosfolípide, seus critérios, exames e relação com trombose e gestação.
 category: Trombofilias
+journeys: [recurrent-loss]
 objective: Explicar o conceito e preparar perguntas para uma conversa profissional.
 audience: Pessoas que encontraram o termo durante atendimento ou investigação.
 contentType: article

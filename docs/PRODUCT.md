@@ -37,12 +37,20 @@ Checklists para consultas, perguntas para profissionais de saúde, direitos e pr
 ## Arquitetura inicial
 
 - Início
-- Entender a perda
-- Trombofilias e investigação
-- Acolhimento e luto
-- Direitos
-- Materiais e checklists
-- Sobre o projeto
+- Entender
+- Acolhimento
+- Organizar
+- Buscar
+
+Artigos, investigação, direitos e informações institucionais são acessados nos contextos relevantes e no rodapé, sem ampliar a navegação principal.
+
+## Princípios de experiência
+
+- organizar a navegação por necessidades, não pela estrutura editorial interna;
+- permitir que informações introdutórias e acolhimento sejam encontrados em até dois cliques;
+- evitar expor estados internos como “em preparação” ou “auditoria” como mensagem principal;
+- oferecer ajuda imediata de forma discreta, com canais oficiais e sem triagem automatizada;
+- preservar escolha e ritmo de leitura em momentos de vulnerabilidade.
 
 ## Critérios de sucesso do MVP
 

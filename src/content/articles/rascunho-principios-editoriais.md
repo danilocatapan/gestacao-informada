@@ -2,6 +2,7 @@
 title: "Princípios para futuros conteúdos clínicos"
 description: "Rascunho interno usado para validar o fluxo editorial seguro."
 category: "Governança editorial"
+journeys: [understand-loss]
 objective: "Validar o fluxo editorial seguro para futuros conteúdos clínicos."
 audience: "Equipe editorial e mantenedor."
 contentType: "article"

@@ -40,7 +40,9 @@ const {
       {showNotice && <ContentNotice kind={noticeKind} />}
       <article class="prose">
         {printable && <PrintAction />}
+        <slot name="before-content" />
         <slot />
+        <slot name="related" />
         {nextSteps.length > 0 && <NextSteps steps={nextSteps} />}
       </article>
     </div>

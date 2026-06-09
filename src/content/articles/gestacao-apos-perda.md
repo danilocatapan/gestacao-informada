@@ -2,6 +2,8 @@
 title: "Gestação após perda: perguntas para profissionais"
 description: Um roteiro acolhedor para organizar dúvidas e necessidades de apoio em uma gestação após perda.
 category: Gestação após perda
+journeys: [pregnancy-after-loss]
+featuredOnHome: true
 objective: Ajudar famílias a organizar perguntas e necessidades de apoio sem recomendar condutas individuais.
 audience: Pessoas planejando ou vivendo uma gestação após perda.
 contentType: article

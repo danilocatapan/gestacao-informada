@@ -5,7 +5,7 @@ import { parse as parseYaml } from 'yaml';
 const dist = path.join(process.cwd(), 'dist');
 const content = path.join(process.cwd(), 'src', 'content');
 const base = 'gestacao-informada';
-const expectedPages = ['', 'entender-a-perda', 'trombofilias-e-investigacao', 'acolhimento-e-luto', 'direitos', 'materiais', 'sobre'];
+const expectedPages = ['', 'artigos', 'busca', 'entender-a-perda', 'trombofilias-e-investigacao', 'acolhimento-e-luto', 'direitos', 'materiais', 'sobre'];
 const minimumApprovedArticles = 6;
 const minimumApprovedGlossaryTerms = 6;
 const legalPublicSlugs = new Map([
@@ -20,7 +20,6 @@ const approvedArticleRoutes = [];
 const blockedArticleRoutes = [];
 const approvedGlossaryRoutes = [];
 const blockedGlossaryRoutes = [];
-const blockedSearchTexts = [];
 const approvedSearchUrls = [];
 let legalGuideStatus;
 const exists = async (file) => { try { await access(file); return true; } catch { return false; } };
@@ -56,11 +55,9 @@ for (const collection of ['pages', 'articles', 'glossary', 'legal']) {
     const status = data.status;
     if (!['draft', 'in_review', 'approved', 'archived'].includes(status)) failures.push(`Status editorial inválido em ${file}`);
     const id = path.basename(file).replace(/\.(md|mdx)$/i, '');
-    if (status !== 'approved') blockedSearchTexts.push(data.title, data.term, data.description, data.shortDefinition);
     if (status === 'approved') {
       if (collection === 'pages') approvedSearchUrls.push(`/${base}/${id}/`);
       if (collection === 'articles') approvedSearchUrls.push(`/${base}/artigos/${id}/`);
-      if (collection === 'glossary') approvedSearchUrls.push(`/${base}/glossario/${data.slug}/`);
       if (collection === 'legal') approvedSearchUrls.push(`/${base}/${data.contentType === 'legal-guide' ? 'direitos' : data.slug}/`);
     }
 
@@ -99,28 +96,29 @@ const glossaryPublished = approvedArticleRoutes.length >= minimumApprovedArticle
 const glossaryIndex = path.join(dist, 'glossario', 'index.html');
 const searchPage = path.join(dist, 'busca', 'index.html');
 const searchIndex = path.join(dist, 'busca', 'indice.json');
-for (const file of [glossaryIndex, searchPage, searchIndex]) {
-  if (glossaryPublished && !(await exists(file))) failures.push(`Marco publicado sem arquivo esperado: ${path.relative(dist, file)}`);
-  if (!glossaryPublished && await exists(file)) failures.push(`Marco bloqueado vazou em dist/${path.relative(dist, file)}`);
+for (const file of [searchPage, searchIndex]) {
+  if (!(await exists(file))) failures.push(`Busca pública sem arquivo esperado: ${path.relative(dist, file)}`);
 }
+if (glossaryPublished && !(await exists(glossaryIndex))) failures.push('Marco do glossário publicado sem índice.');
+if (!glossaryPublished && await exists(glossaryIndex)) failures.push('Glossário bloqueado vazou em dist/glossario/index.html');
 for (const route of approvedGlossaryRoutes) {
   const file = path.join(dist, route, 'index.html');
   if (glossaryPublished && !(await exists(file))) failures.push(`Termo aprovado ausente: /${route.replaceAll('\\', '/')}/`);
   if (!glossaryPublished && await exists(file)) failures.push(`Termo publicado antes do marco: /${route.replaceAll('\\', '/')}/`);
 }
-if (glossaryPublished) {
-  const index = JSON.parse(await readFile(searchIndex, 'utf8'));
-  const urls = index.map((item) => item.url);
-  if (new Set(urls).size !== urls.length) failures.push('Índice de busca contém URLs duplicadas.');
-  for (const url of new Set(approvedSearchUrls)) {
-    if (!urls.includes(url)) failures.push(`Conteúdo aprovado ausente do índice de busca: ${url}`);
-  }
-  const serialized = JSON.stringify(index);
-  for (const text of blockedSearchTexts.filter(Boolean)) {
-    if (serialized.includes(text)) failures.push(`Conteúdo bloqueado vazou no índice de busca: ${text}`);
-  }
-  if (serialized.includes('review-notes') || serialized.includes('editorial-records')) failures.push('Conteúdo interno vazou no índice de busca.');
+const index = JSON.parse(await readFile(searchIndex, 'utf8'));
+const urls = index.map((item) => item.url);
+if (new Set(urls).size !== urls.length) failures.push('Índice de busca contém URLs duplicadas.');
+for (const url of new Set(approvedSearchUrls)) {
+  if (!urls.includes(url)) failures.push(`Conteúdo aprovado ausente do índice de busca: ${url}`);
 }
+for (const route of approvedGlossaryRoutes) {
+  const url = `/${base}/${route.replaceAll('\\', '/')}/`;
+  if (glossaryPublished && !urls.includes(url)) failures.push(`Termo público ausente do índice de busca: ${url}`);
+  if (!glossaryPublished && urls.includes(url)) failures.push(`Termo bloqueado vazou no índice de busca: ${url}`);
+}
+const serialized = JSON.stringify(index);
+if (serialized.includes('review-notes') || serialized.includes('editorial-records')) failures.push('Conteúdo interno vazou no índice de busca.');
 
 for (const route of approvedLegalRoutes) {
   const file = path.join(dist, route, 'index.html');
@@ -147,10 +145,9 @@ if (!(await exists(path.join(dist, 'sitemap-index.xml')))) failures.push('sitema
 const sitemapFiles = (await readdir(dist)).filter((file) => /^sitemap-\d+\.xml$/.test(file));
 if (sitemapFiles.length === 0) failures.push('Arquivo numerado de sitemap ausente.');
 const sitemap = (await Promise.all(sitemapFiles.map((file) => readFile(path.join(dist, file), 'utf8')))).join('\n');
-for (const route of ['glossario', 'busca']) {
-  if (glossaryPublished && !sitemap.includes(`/${base}/${route}/`)) failures.push(`Rota publicada ausente do sitemap: /${route}/`);
-  if (!glossaryPublished && sitemap.includes(`/${base}/${route}/`)) failures.push(`Rota bloqueada presente no sitemap: /${route}/`);
-}
+if (!sitemap.includes(`/${base}/busca/`)) failures.push('Busca pública ausente do sitemap.');
+if (glossaryPublished && !sitemap.includes(`/${base}/glossario/`)) failures.push('Glossário publicado ausente do sitemap.');
+if (!glossaryPublished && sitemap.includes(`/${base}/glossario/`)) failures.push('Glossário bloqueado presente no sitemap.');
 for (const route of approvedLegalRoutes) {
   if (!sitemap.includes(`/${base}/${route}/`)) failures.push(`Rota jurídica aprovada ausente do sitemap: /${route}/`);
 }

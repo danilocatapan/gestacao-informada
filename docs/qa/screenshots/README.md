@@ -3,6 +3,7 @@
 Esta pasta guarda screenshots gerados pelos testes Playwright.
 
 - `artigo-*-desktop.png` e `artigo-*-mobile.png`: seis artigos aprovados, com fontes, aviso de transparência, console limpo e ausência de overflow.
+- `inicio-*`, `artigos-*`, `busca-*`, `acolhimento-e-luto-*`, `entender-a-perda-*` e `trombofilias-e-investigacao-*`: navegação por necessidades, descoberta dos artigos e jornadas públicas em desktop e mobile.
 - `painel-editorial-fluxo-desktop.png`: fluxo simplificado após o OK do mantenedor.
 - `painel-editorial-mobile.png`: hard blocker sem opção de override em viewport mobile.
 - demais arquivos: rotas institucionais validadas em desktop e mobile.

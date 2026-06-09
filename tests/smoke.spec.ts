@@ -4,6 +4,8 @@ import path from 'node:path';
 
 const routes = {
   inicio: '',
+  artigos: 'artigos/',
+  busca: 'busca/',
   'entender-a-perda': 'entender-a-perda/',
   'trombofilias-e-investigacao': 'trombofilias-e-investigacao/',
   'acolhimento-e-luto': 'acolhimento-e-luto/',
@@ -15,9 +17,6 @@ const routes = {
 const rightsHtmlPath = path.join(process.cwd(), 'dist', 'direitos', 'index.html');
 const rightsGuidePublished = existsSync(rightsHtmlPath) && readFileSync(rightsHtmlPath, 'utf8').includes('data-legal-guide');
 const notices = {
-  'entender-a-perda/': 'clinical',
-  'trombofilias-e-investigacao/': 'clinical',
-  'acolhimento-e-luto/': 'psychological',
   ...(!rightsGuidePublished ? { 'direitos/': 'legal' } : {}),
 };
 
@@ -38,11 +37,9 @@ const searchIndexPath = path.join(process.cwd(), 'dist', 'busca', 'indice.json')
 const searchPublished = existsSync(path.join(process.cwd(), 'dist', 'busca', 'index.html')) && existsSync(searchIndexPath);
 const searchItems = searchPublished ? JSON.parse(readFileSync(searchIndexPath, 'utf8')) as { title: string; url: string }[] : [];
 
-if (!glossaryPublished && !searchPublished) {
-  test('glossário e busca permanecem bloqueados antes dos marcos editoriais', async ({ page }) => {
+if (!glossaryPublished) {
+  test('glossário permanece bloqueado antes do marco editorial', async ({ page }) => {
     expect((await page.goto('glossario/'))?.status()).toBe(404);
-    expect((await page.goto('busca/'))?.status()).toBe(404);
-    expect((await page.goto('busca/indice.json'))?.status()).toBe(404);
   });
 }
 
@@ -73,8 +70,11 @@ for (const viewport of [
           await expect(navigation).toBeVisible();
         }
 
-        if (route) {
-          await expect(page.locator(`nav[aria-label="Navegação principal"] a[href$="/${route}"]`)).toHaveAttribute('aria-current', 'page');
+        const currentNavigationLink = page.locator(`nav[aria-label="Navegação principal"] a[href$="/${route}"]`);
+        if (route && await currentNavigationLink.count() > 0) {
+          await expect(currentNavigationLink).toHaveAttribute('aria-current', 'page');
+        }
+        if (route && route !== 'artigos/' && route !== 'busca/') {
           await expect(page.locator('.next-steps')).toBeVisible();
         }
 
@@ -115,6 +115,7 @@ test.describe('interações mobile', () => {
     await toggle.click();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
     await expect(navigation).toBeVisible();
+    await expect(navigation.locator('a')).toHaveCount(4);
 
     const linkHeights = await navigation.locator('a').evaluateAll((links) => links.map((link) => link.getBoundingClientRect().height));
     expect(linkHeights.every((height) => height >= 44)).toBeTruthy();
@@ -135,6 +136,45 @@ test.describe('interações mobile', () => {
     await page.getByRole('button', { name: 'Imprimir checklist' }).click();
     expect(await page.evaluate(() => (window as typeof window & { printCalled?: boolean }).printCalled)).toBeTruthy();
     await expect(page.getByText('O checklist não salva nem envia informações.')).toBeVisible();
+  });
+});
+
+test.describe('jornadas principais', () => {
+  test('acolhimento oferece ajuda imediata em um clique a partir da home', async ({ page }) => {
+    await page.goto('');
+    await page.getByRole('link', { name: 'Preciso de acolhimento' }).click();
+    await expect(page.locator('.immediate-support')).toBeVisible();
+    await expect(page.getByRole('link', { name: 'SAMU 192' })).toHaveAttribute('href', /gov\.br/);
+    await expect(page.getByRole('link', { name: /CVV atende gratuitamente/ })).toHaveAttribute('href', /gov\.br/);
+  });
+
+  test('pessoa encontra artigo introdutório em até dois cliques', async ({ page }) => {
+    await page.goto('');
+    await page.getByRole('link', { name: 'Quero entender o que aconteceu' }).click();
+    await page.getByRole('link', { name: 'Entendendo a perda gestacional' }).click();
+    await expect(page.locator('main h1')).toHaveText('Entendendo a perda gestacional');
+  });
+
+  test('pessoa encontra investigação recorrente em até dois cliques', async ({ page }) => {
+    await page.goto('');
+    await page.getByRole('link', { name: 'Explorar a investigação' }).click();
+    await page.getByRole('link', { name: 'Investigação após perdas recorrentes' }).click();
+    await expect(page.locator('main h1')).toHaveText('Investigação após perdas recorrentes');
+  });
+
+  test('vitrine exibe somente os seis artigos aprovados', async ({ page }) => {
+    await page.goto('artigos/');
+    await expect(page.locator('.article-card')).toHaveCount(6);
+    await expect(page.getByText('Princípios para futuros conteúdos clínicos')).toHaveCount(0);
+  });
+
+  test('home prioriza leituras introdutórias antes de temas complexos', async ({ page }) => {
+    await page.goto('');
+    const highlights = page.locator('.article-highlight .article-card');
+    await expect(highlights).toHaveCount(3);
+    await expect(highlights.nth(0)).toContainText('Entendendo a perda gestacional');
+    await expect(highlights.nth(1)).toContainText('Gestação após perda');
+    await expect(highlights.nth(2)).toContainText('Investigação após perdas recorrentes');
   });
 });
 
@@ -231,13 +271,13 @@ if (searchPublished && searchItems.length > 0) {
         await page.keyboard.press('Tab');
         await page.keyboard.press('Tab');
         await expect(page.locator('.search-results a').first()).toBeFocused();
+        await page.screenshot({ path: `docs/qa/screenshots/busca-${viewport.name}.png`, fullPage: true });
 
         await input.fill('termo-sem-resultado-publicado');
         await input.press('Enter');
         await expect(page.locator('.search-status')).toHaveText('Nenhum resultado encontrado.');
         expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBeFalsy();
         expect(errors).toEqual([]);
-        await page.screenshot({ path: `docs/qa/screenshots/busca-${viewport.name}.png`, fullPage: true });
       });
     }
   });

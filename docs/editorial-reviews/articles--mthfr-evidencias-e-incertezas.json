@@ -1,11 +1,11 @@
 {
   "schemaVersion": 2,
-  "id": "c14a2c52-179f-4204-bc58-8d3d94a3c399",
+  "id": "dd6506ef-5ad8-4576-9d1d-b23fc2c95220",
   "target": "articles/mthfr-evidencias-e-incertezas",
-  "generatedAt": "2026-06-08T18:45:29.941Z",
-  "updatedAt": "2026-06-08T18:46:18.108Z",
-  "contentHash": "e1540e53968ec9d07ea0c3452ce00a41dbef5587860129d355d30d533b0b8b57",
-  "contentStatus": "in_review",
+  "generatedAt": "2026-06-09T11:27:40.196Z",
+  "updatedAt": "2026-06-09T11:27:40.196Z",
+  "contentHash": "1ec4ac2a3429abe4404057775a1097f62b3925d5c8d72cbc015b6cb98a1450dd",
+  "contentStatus": "approved",
   "riskDomains": [
     "clinical"
   ],
@@ -40,17 +40,9 @@
   "findings": [],
   "history": [
     {
-      "occurredAt": "2026-06-08T18:45:29.941Z",
+      "occurredAt": "2026-06-09T11:27:40.196Z",
       "action": "review_v2_generated",
       "actor": "codex-editorial-orchestrator"
-    },
-    {
-      "occurredAt": "2026-06-08T18:46:18.108Z",
-      "action": "review_applied",
-      "actor": "codex-editorial-orchestrator",
-      "resultingStatus": "approved"
     }
-  ],
-  "resultingContentHash": "e1540e53968ec9d07ea0c3452ce00a41dbef5587860129d355d30d533b0b8b57",
-  "resultingStatus": "approved"
+  ]
 }

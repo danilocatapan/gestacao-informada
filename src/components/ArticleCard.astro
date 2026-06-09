@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBaseUrl } from '../lib/urls';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+---
+
+<article class="article-card">
+  <span class="eyebrow">{article.data.category}</span>
+  <h3><a href={withBaseUrl(`artigos/${article.id}/`)}>{article.data.title}</a></h3>
+  <p>{article.data.description}</p>
+  <span class="article-card-date">Atualizado em {article.data.lastUpdatedAt.toLocaleDateString('pt-BR')}</span>
+</article>

@@ -2,6 +2,7 @@
 title: "MTHFR: evidências, incertezas e divergências"
 description: O que variantes comuns de MTHFR significam, por que o tema gera controvérsia e como avaliar alegações com cuidado.
 category: Evidências e incertezas
+journeys: [recurrent-loss]
 objective: Explicar por que fontes e profissionais podem apresentar perspectivas diferentes.
 audience: Pessoas que receberam resultados ou informações sobre MTHFR.
 contentType: article

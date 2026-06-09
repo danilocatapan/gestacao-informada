@@ -9,15 +9,15 @@ status: "approved"
 updatedAt: "2026-06-06"
 ---
 
-Este tema envolve conceitos complexos e diferentes perspectivas profissionais. Por isso, os materiais desta área serão publicados apenas depois de revisão especializada e com fontes visíveis.
+Este tema envolve conceitos complexos, limites nas evidências e diferentes perspectivas profissionais. Os artigos disponíveis apresentam fontes visíveis e deixam claro onde existem incertezas.
 
-## Como vamos abordar o tema
+## Como abordamos o tema
 
 - diferenciar condições hereditárias e adquiridas;
 - explicar por que diretrizes podem divergir de práticas profissionais;
 - apresentar limites e incertezas das evidências;
 - oferecer perguntas para consultas, sem sugerir uma conduta individual.
 
-## O que não será publicado
+## Limites importantes
 
 Não disponibilizaremos calculadoras, cronogramas terapêuticos, instruções individualizadas ou promessas de resultado.

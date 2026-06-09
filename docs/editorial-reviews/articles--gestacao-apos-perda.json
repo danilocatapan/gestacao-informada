@@ -1,11 +1,11 @@
 {
   "schemaVersion": 2,
-  "id": "4059b44f-ac1a-43cf-bd1b-61acf2f25d29",
+  "id": "a280c10e-19ce-4c64-920f-70d7bedef1b0",
   "target": "articles/gestacao-apos-perda",
-  "generatedAt": "2026-06-08T18:45:29.905Z",
-  "updatedAt": "2026-06-08T18:46:20.202Z",
-  "contentHash": "3d84af0922cfeac9ba6950822cb32900d663c0bdfdc67ab077dba82574ccf28b",
-  "contentStatus": "in_review",
+  "generatedAt": "2026-06-09T11:27:40.165Z",
+  "updatedAt": "2026-06-09T11:27:40.165Z",
+  "contentHash": "527c777a3af1f601af289a9eda86ae09535b3b3f3ad1ccf0e355780f6c524ee0",
+  "contentStatus": "approved",
   "riskDomains": [
     "clinical",
     "psychological"
@@ -41,17 +41,9 @@
   "findings": [],
   "history": [
     {
-      "occurredAt": "2026-06-08T18:45:29.905Z",
+      "occurredAt": "2026-06-09T11:27:40.165Z",
       "action": "review_v2_generated",
       "actor": "codex-editorial-orchestrator"
-    },
-    {
-      "occurredAt": "2026-06-08T18:46:20.202Z",
-      "action": "review_applied",
-      "actor": "codex-editorial-orchestrator",
-      "resultingStatus": "approved"
     }
-  ],
-  "resultingContentHash": "3d84af0922cfeac9ba6950822cb32900d663c0bdfdc67ab077dba82574ccf28b",
-  "resultingStatus": "approved"
+  ]
 }

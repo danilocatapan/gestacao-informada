@@ -1,15 +1,28 @@
 ---
-import { getEntry, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
+import ArticleCollection from '../components/ArticleCollection.astro';
 import InstitutionalPage from '../layouts/InstitutionalPage.astro';
 const page = await getEntry('pages', 'entender-a-perda');
 if (!page) throw new Error('Página institucional não encontrada.');
 const { Content } = await render(page);
+const articles = (await getCollection('articles', ({ data }) =>
+  data.status === 'approved' && data.journeys.includes('understand-loss')));
 ---
 <InstitutionalPage
   {...page.data}
   path="entender-a-perda/"
+  showNotice={false}
   nextSteps={[
-    { label: 'Preparar perguntas para uma consulta', href: 'materiais/', primary: true },
-    { label: 'Conhecer o espaço de acolhimento', href: 'acolhimento-e-luto/' },
+    { label: 'Ver todos os artigos', href: 'artigos/', primary: true },
+    { label: 'Preparar uma conversa', href: 'materiais/' },
   ]}
-><Content /></InstitutionalPage>
+>
+  <Content />
+  <ArticleCollection
+    slot="related"
+    articles={articles}
+    id="leituras-para-entender"
+    title="Para começar a compreender"
+    description="Uma introdução cuidadosa sobre perda gestacional, confirmação e acolhimento."
+  />
+</InstitutionalPage>
